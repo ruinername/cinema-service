@@ -18,7 +18,7 @@ class App extends React.Component {
 			currentFilm: null,
 		};
 	}
-
+	
 	componentDidMount() {
 		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())
