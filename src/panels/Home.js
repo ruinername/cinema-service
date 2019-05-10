@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListItem, Button, Group, Div, PanelHeader, Header, Link, HorizontalScroll, Avatar, Gallery } from '@vkontakte/vkui';
 import banner1 from '../img/banner-1.png';
+import RatingSpan from '../components/RatingSpan';
 
 
 const itemStyle = {
@@ -18,7 +19,7 @@ const itemStyle = {
 const imgStyle = {
 	width: 110,
 	height: 150,
-	borderRadius: 20
+	borderRadius: 15
 };
 
 const nameStyle = {
@@ -58,8 +59,11 @@ const Home = ({ id, openFilm, activePreview, go, futurePreview, setid }) => (
           <div style={{ display: 'flex' }}>
 						{	activePreview &&
 							activePreview.map(function(item, i){
-								return <Link onClick={openFilm} data-fid={item._id} data-to="film" key={i} style={{ ...itemStyle }}>
-		              <img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
+								return <Link onClick={openFilm} data-fid={item.tmdbId} data-to="film" key={i} style={{ ...itemStyle }}>
+									<div style={{position: 'relative'}}>
+										{item.tmdbFullData.vote_average && <RatingSpan rating={item.tmdbFullData.vote_average}/>}
+			              <img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
+									</div>
 									<p style={{...nameStyle, ...genre}}>{item.genre}</p>
 									<p style={nameStyle}>{item.title}</p>
 		            </Link>
@@ -77,8 +81,10 @@ const Home = ({ id, openFilm, activePreview, go, futurePreview, setid }) => (
 						<div style={{ display: 'flex' }}>
 						{	futurePreview &&
 							futurePreview.map(function(item, i){
-								return <Link onClick={openFilm} data-fid={item._id} data-to="film" key={i} style={{ ...itemStyle }}>
-									<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
+								return <Link onClick={openFilm} data-fid={item.tmdbId} data-to="film" key={i} style={{ ...itemStyle }}>
+									<div style={{display: 'relative'}}>
+										<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
+									</div>
 									<p style={{...nameStyle, ...genre}}>{item.genre}</p>
 									<p style={nameStyle}>{item.title}</p>
 								</Link>

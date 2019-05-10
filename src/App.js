@@ -18,7 +18,7 @@ class App extends React.Component {
 			currentFilm: null,
 		};
 	}
-	
+
 	componentDidMount() {
 		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())
@@ -37,7 +37,7 @@ class App extends React.Component {
 		this.setState({ activePanel: e.currentTarget.dataset.to,
 		 								filmid:      e.currentTarget.dataset.fid})
 
-		fetch(`https://cinema.voloshinskii.ru/film/${e.currentTarget.dataset.fid}`)
+		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}`)
 			.then(res => res.json())
 			.then(json => this.setState({ currentFilm: json }));
 	};
