@@ -64,7 +64,7 @@ const Home = ({id, openFilm, activePreview, go, futurePreview, setid }) => (
 										{item.tmdbFullData.vote_average && <RatingSpan rating={item.tmdbFullData.vote_average}/>}
 			              <img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
 									</div>
-									<p style={{...nameStyle, ...genre}}>{item.genre}</p>
+									{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
 									<p style={nameStyle}>{item.title}</p>
 		            </Link>
 							})
@@ -85,7 +85,7 @@ const Home = ({id, openFilm, activePreview, go, futurePreview, setid }) => (
 									<div style={{display: 'relative'}}>
 										<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
 									</div>
-									<p style={{...nameStyle, ...genre}}>{item.genre}</p>
+									{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
 									<p style={nameStyle}>{item.title}</p>
 								</Link>
 							})

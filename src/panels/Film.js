@@ -13,7 +13,6 @@ const osname = platform();
 function watch(token, filmid){
   fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
     .then(res => res.json())
-    .then(json => this.setState({ futureList: json }));
 }
 
 const Film = ({authToken, id, go, currentFilm }) => (

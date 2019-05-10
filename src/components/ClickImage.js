@@ -20,7 +20,8 @@ export default class ClickImage extends React.Component{
               bottom: '-5%',
               left: '8%',
               borderRadius: 10,
-              boxShadow: '0 12px 30px 0 rgba(35,39,42,.4)'
+              boxShadow: '0 12px 30px 0 rgba(35,39,42,.4)',
+              zIndex: 1000
             }}
           />
           <span style={{

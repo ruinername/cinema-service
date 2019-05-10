@@ -1,7 +1,9 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import { View } from '@vkontakte/vkui';
+import { View, Epic, Tabbar, TabbarItem } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import Icon28Favorite from '@vkontakte/icons/dist/28/favorite';
+import Icon24Home from '@vkontakte/icons/dist/24/home';
 
 import Home from './panels/Home';
 import Popular from './panels/Popular';
@@ -50,6 +52,11 @@ class App extends React.Component {
 		this.setState({ activePanel: e.currentTarget.dataset.to })
 	};
 
+	onStoryChange = (e) => {
+	 this.setState({ activePanel: e.currentTarget.dataset.story })
+ }
+
+
 	openFilm = (e) => {
 		this.setState({ activePanel: 'film',
 		 								filmid:      e.currentTarget.dataset.fid})
@@ -61,13 +68,50 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<View activePanel={this.state.activePanel}>
-				<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
-				<Popular id="popular" go={this.go} />
-				<Film authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
-				<Future id="future" go={this.go} openFilm={this.openFilm} />
-				<Active id="active" go={this.go} openFilm={this.openFilm} />
-			</View>
+			<Epic activeStory={this.state.activePanel} tabbar={	this.state.activePanel === 'home' &&
+        <Tabbar>
+          <TabbarItem
+            onClick={this.onStoryChange}
+            selected={this.state.activePanel === 'home'}
+            data-story="home"
+            text="Главная"
+          ><Icon24Home/></TabbarItem>
+					<TabbarItem
+            onClick={this.onStoryChange}
+            selected={this.state.activePanel === 'featured'}
+            data-story="featured"
+            text="Иду"
+          ><Icon28Favorite/></TabbarItem>
+					<TabbarItem
+            onClick={this.onStoryChange}
+            selected={this.state.activePanel === 'featured'}
+            data-story="featured"
+            text="Иду"
+          ><Icon28Favorite/></TabbarItem>
+					<TabbarItem
+            onClick={this.onStoryChange}
+            selected={this.state.activePanel === 'featured'}
+            data-story="featured"
+            text="Иду"
+          ><Icon28Favorite/></TabbarItem>
+        </Tabbar>
+      }>
+				<View id="home" activePanel="home">
+					<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
+				</View>
+				<View id="popular" activePanel="popular">
+					<Popular id="popular" go={this.go} />
+				</View>
+				<View id="film" activePanel="film">
+					<Film authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
+				</View>
+				<View id="future" activePanel="future">
+					<Future id="future" go={this.go} openFilm={this.openFilm} />
+				</View>
+				<View id="active" activePanel="active">
+					<Active id="active" go={this.go} openFilm={this.openFilm} />
+				</View>
+			</Epic>
 		);
 	}
 }
