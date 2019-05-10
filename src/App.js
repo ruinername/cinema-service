@@ -39,7 +39,7 @@ class App extends React.Component {
 
 		fetch(`https://cinema.voloshinskii.ru/film/${e.currentTarget.dataset.fid}`)
 			.then(res => res.json())
-			.then(json => this.setState({ currentFilm: json[0] }));
+			.then(json => this.setState({ currentFilm: json }));
 	};
 
 	render() {
