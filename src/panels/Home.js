@@ -38,7 +38,7 @@ const genre = {
 	fontSize: 14,
 };
 
-const Home = ({ id, openFilm, activePreview, go, futurePreview, setid }) => (
+const Home = ({authToken, id, openFilm, activePreview, go, futurePreview, setid }) => (
 
 
 	<Panel id={id}>
@@ -52,7 +52,7 @@ const Home = ({ id, openFilm, activePreview, go, futurePreview, setid }) => (
 		<Link onClick={go} data-to="popular"><img style={{height: 150, width:'100%'}} src={banner1}/></Link>
     </Gallery>
 		<Group style={{ paddingBottom: 8 }}>
-				<Header level="2" aside={<Link>Показать все</Link>}>
+				<Header level="2" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
 						Сейчас в кино
 				</Header>
         <HorizontalScroll>
@@ -74,9 +74,10 @@ const Home = ({ id, openFilm, activePreview, go, futurePreview, setid }) => (
       </Group>
 
 			<Group style={{ paddingBottom: 8 }}>
-					<Header level="2" aside={<Link>Показать все</Link>}>
+					<Header level="2" aside={<Link data-to='future' onClick={go}>Показать все</Link>}>
 							Скоро в кино
 					</Header>
+					{authToken}
 					<HorizontalScroll>
 						<div style={{ display: 'flex' }}>
 						{	futurePreview &&

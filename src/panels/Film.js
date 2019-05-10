@@ -25,19 +25,43 @@ const Film = ({ id, go, currentFilm }) => (
                     title={currentFilm.title}
         />
       }
-      <Div>
+      <Group style={{marginTop: 0, overflow: 'auto'}}>
+        <Div>
+          {currentFilm && currentFilm.tmdbFullData.vote_average > 0 &&
+            <InfoRow style={{display: 'inline-block'}} title='Рейтинг'>
+              <span style={{color: '#528bcc', fontWeight: 'bold', fontSize: 20}}>
+                {currentFilm.tmdbFullData.vote_average}
+              </span>
+            </InfoRow>
+          }
 
+          {currentFilm && currentFilm.tmdbFullData.runtime > 0 &&
+            <InfoRow style={{display: 'inline-block', float: 'right'}} title='Продолжительность'>
+              <span style={{color: 'grey', fontWeight: 'bold', fontSize: 20}}>
+                {currentFilm.tmdbFullData.runtime} мин
+              </span>
+            </InfoRow>
+          }
+        </Div>
+      </Group>
+
+
+      <Div>
         {currentFilm && currentFilm.tmdbFullData.overview &&
           <CustomTruncate
             text={currentFilm.tmdbFullData.overview}
           />
         }
       </Div>
+
+
       <Group>
         <Div>
           {currentFilm && (currentFilm.tmdbFullData.budget > 0) && <InfoRow title='Общий бюджет'>{currentFilm.tmdbFullData.budget}$</InfoRow>}
         </Div>
       </Group>
+
+
       <Button size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Иду на фильм</Button>
 	</Panel>
 );
