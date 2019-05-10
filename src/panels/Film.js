@@ -10,7 +10,7 @@ import Icon24Info from '@vkontakte/icons/dist/24/info';
 
 const osname = platform();
 
-const Film = ({ id, go, currentFilm }) => (
+const Film = ({authToken, id, go, currentFilm }) => (
   <Panel id={id} theme='white'>
 		<PanelHeader
 			left={<HeaderButton onClick={go} data-to="home">
@@ -61,6 +61,11 @@ const Film = ({ id, go, currentFilm }) => (
         </Div>
       </Group>
 
+      <Group>
+        <Div>
+          {authToken}
+        </Div>
+      </Group>
 
       <Button size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Иду на фильм</Button>
 	</Panel>

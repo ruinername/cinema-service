@@ -38,7 +38,7 @@ const genre = {
 	fontSize: 14,
 };
 
-const Home = ({authToken, id, openFilm, activePreview, go, futurePreview, setid }) => (
+const Home = ({id, openFilm, activePreview, go, futurePreview, setid }) => (
 
 
 	<Panel id={id}>
@@ -77,7 +77,6 @@ const Home = ({authToken, id, openFilm, activePreview, go, futurePreview, setid 
 					<Header level="2" aside={<Link data-to='future' onClick={go}>Показать все</Link>}>
 							Скоро в кино
 					</Header>
-					{authToken}
 					<HorizontalScroll>
 						<div style={{ display: 'flex' }}>
 						{	futurePreview &&

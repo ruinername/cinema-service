@@ -61,9 +61,9 @@ class App extends React.Component {
 	render() {
 		return (
 			<View activePanel={this.state.activePanel}>
-				<Home authToken={this.state.authToken} id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
+				<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 				<Popular id="popular" go={this.go} />
-				<Film currentFilm={this.state.currentFilm} id="film" go={this.go} />
+				<Film authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
 				<Future id="future" go={this.go} openFilm={this.openFilm} />
 				<Active id="active" go={this.go} openFilm={this.openFilm} />
 			</View>
