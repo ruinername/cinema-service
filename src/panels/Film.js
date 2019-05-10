@@ -10,6 +10,12 @@ import Icon24Info from '@vkontakte/icons/dist/24/info';
 
 const osname = platform();
 
+function watch(token, filmid){
+  fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
+    .then(res => res.json())
+    .then(json => this.setState({ futureList: json }));
+}
+
 const Film = ({authToken, id, go, currentFilm }) => (
   <Panel id={id} theme='white'>
 		<PanelHeader
@@ -61,13 +67,7 @@ const Film = ({authToken, id, go, currentFilm }) => (
         </Div>
       </Group>
 
-      <Group>
-        <Div>
-          {authToken}
-        </Div>
-      </Group>
-
-      <Button size="xl" style={{width:"90%", margin: "auto"}} level="secondary" onClick={console.log(authToken)}>Иду на фильм</Button>
+      <Button size="xl" style={{width:"90%", margin: "auto"}} level="secondary" onClick={() => { watch(authToken, currentFilm._id) }}>Иду на фильм</Button>
 	</Panel>
 );
 
