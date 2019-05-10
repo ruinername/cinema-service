@@ -20,11 +20,11 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch(`http://84.201.156.99:1420/active/preview`)
+		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())
       .then(json => this.setState({ activePreview: json }));
 
-		fetch(`http://84.201.156.99:1420/future/preview`)
+		fetch(`https://cinema.voloshinskii.ru/future/preview`)
 	    .then(res => res.json())
 	    .then(json => this.setState({ futurePreview: json }));
 	}
@@ -37,7 +37,7 @@ class App extends React.Component {
 		this.setState({ activePanel: e.currentTarget.dataset.to,
 		 								filmid:      e.currentTarget.dataset.fid})
 
-		fetch(`http://84.201.156.99:1420/film/${e.currentTarget.dataset.fid}`)
+		fetch(`https://cinema.voloshinskii.ru/film/${e.currentTarget.dataset.fid}`)
 			.then(res => res.json())
 			.then(json => this.setState({ currentFilm: json[0] }));
 	};

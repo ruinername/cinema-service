@@ -21,6 +21,7 @@ const Film = ({ id, go, currentFilm }) => (
         <img src={currentFilm.image} style={{width: 200}}/>
       </Group>
       }
+
       <Button size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Иду на фильм</Button>
 	</Panel>
 );
