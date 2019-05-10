@@ -26,7 +26,7 @@ class App extends React.Component {
 
 		connect.subscribe((e) => {
 			switch (e.detail.type) {
-				case 'VKWebAppGetAuthToken':
+				case 'VKWebAppAccessTokenReceived':
 					this.setState({ authToken: e.detail.data.access_token });
 					console.log(e.detail.data.access_token);
 					break;
