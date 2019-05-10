@@ -28,6 +28,7 @@ class App extends React.Component {
 			switch (e.detail.type) {
 				case 'VKWebAppGetAuthToken':
 					this.setState({ authToken: e.detail.data.access_token });
+					console.log(e.detail.data.access_token);
 					break;
 				default:
 					console.log(e.detail.type);

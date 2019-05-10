@@ -67,7 +67,7 @@ const Film = ({authToken, id, go, currentFilm }) => (
         </Div>
       </Group>
 
-      <Button size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Иду на фильм</Button>
+      <Button size="xl" style={{width:"90%", margin: "auto"}} level="secondary" onClick={console.log(authToken)}>Иду на фильм</Button>
 	</Panel>
 );
 
