@@ -11,7 +11,8 @@ const itemStyle = {
 	flexDirection:
 	'column',
 	alignItems: 'center',
-	fontSize: 16
+	fontSize: 16,
+	paddingLeft: 4
 };
 
 const imgStyle = {
@@ -24,7 +25,11 @@ const nameStyle = {
 	width: 100,
 	marginTop: 0,
 	marginBottom: 0,
-	padding: 3
+	padding: 3,
+	overflow: 'hidden',
+	display: '-webkit-box',
+	WebkitLineClamp: 2,
+	WebkitBoxOrient: 'vertical'
 };
 
 const genre = {
@@ -53,10 +58,10 @@ const Home = ({ id, openFilm, activePreview, go, futurePreview, setid }) => (
           <div style={{ display: 'flex' }}>
 						{	activePreview &&
 							activePreview.map(function(item, i){
-								return <Link onClick={openFilm} data-fid={item._id} data-to="film" key={i} style={{ ...itemStyle, paddingLeft: 12 }}>
+								return <Link onClick={openFilm} data-fid={item._id} data-to="film" key={i} style={{ ...itemStyle }}>
 		              <img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
 									<p style={{...nameStyle, ...genre}}>{item.genre}</p>
-		              <p style={nameStyle}>{item.title}</p>
+									<p style={nameStyle}>{item.title}</p>
 		            </Link>
 							})
 						}
@@ -72,7 +77,7 @@ const Home = ({ id, openFilm, activePreview, go, futurePreview, setid }) => (
 						<div style={{ display: 'flex' }}>
 						{	futurePreview &&
 							futurePreview.map(function(item, i){
-								return <Link onClick={openFilm} data-fid={item._id} data-to="film" key={i} style={{ ...itemStyle, paddingLeft: 12 }}>
+								return <Link onClick={openFilm} data-fid={item._id} data-to="film" key={i} style={{ ...itemStyle }}>
 									<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
 									<p style={{...nameStyle, ...genre}}>{item.genre}</p>
 									<p style={nameStyle}>{item.title}</p>
