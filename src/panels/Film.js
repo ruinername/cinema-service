@@ -21,9 +21,6 @@ const Film = ({ id, go, currentFilm }) => (
         <img src={currentFilm.image} style={{width: 200}}/>
       </Group>
       }
-      <Header style={{fontSize: 24}}>
-        Плейлисты
-      </Header>
       <Button size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Иду на фильм</Button>
 	</Panel>
 );
