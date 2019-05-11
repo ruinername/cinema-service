@@ -59,8 +59,17 @@ const Film = ({authToken, id, go, currentFilm }) => (
         }
       </Div>
 
+      <Group title="Видео">
+      {currentFilm && currentFilm.video &&
+        <iframe width="100%" height="450" src={`https://www.youtube.com/embed/${currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
+      }
+      </Group>
+
 
       <Group>
+        <Div>
+          {currentFilm && (currentFilm.tmdbFullData.release_date) && <InfoRow title='Премьера'>{new Date(currentFilm.tmdbFullData.release_date).toLocaleString('ru', {year: 'numeric',month: 'long',day: 'numeric'})}</InfoRow>}
+        </Div>
         <Div>
           {currentFilm && (currentFilm.tmdbFullData.budget > 0) && <InfoRow title='Общий бюджет'>{currentFilm.tmdbFullData.budget}$</InfoRow>}
         </Div>
