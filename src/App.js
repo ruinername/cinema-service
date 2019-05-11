@@ -100,7 +100,7 @@ class App extends React.Component {
       }>
 
 				<View id="featured" activePanel="featured">
-					<Featured token={this.state.token} id="featured" go={this.go} />
+					<Featured token={this.state.authToken} id="featured" go={this.go} />
 				</View>
 				<View id={this.state.activePanel} activePanel={this.state.activePanel}>
 					<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
