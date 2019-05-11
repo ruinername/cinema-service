@@ -10,6 +10,7 @@ import Popular from './panels/Popular';
 import Film from './panels/Film';
 import Future from './panels/Future';
 import Active from './panels/Active';
+import Featured from './panels/Featured';
 
 class App extends React.Component {
 	constructor(props) {
@@ -68,7 +69,8 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<Epic activeStory={this.state.activePanel} tabbar={	this.state.activePanel === 'home' &&
+			<Epic activeStory={this.state.activePanel} tabbar={
+				['home', 'featured'].includes(this.state.activePanel) &&
         <Tabbar>
           <TabbarItem
             onClick={this.onStoryChange}
@@ -80,36 +82,32 @@ class App extends React.Component {
             onClick={this.onStoryChange}
             selected={this.state.activePanel === 'featured'}
             data-story="featured"
-            text="Иду"
+            text="Список"
           ><Icon28Favorite/></TabbarItem>
 					<TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activePanel === 'featured'}
             data-story="featured"
-            text="Иду"
+            text="Список"
           ><Icon28Favorite/></TabbarItem>
 					<TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activePanel === 'featured'}
             data-story="featured"
-            text="Иду"
+            text="Список"
           ><Icon28Favorite/></TabbarItem>
         </Tabbar>
       }>
-				<View id="home" activePanel="home">
+
+				<View id="featured" activePanel="featured">
+					<Featured token={this.state.token} id="featured" go={this.go} />
+				</View>
+				<View id={this.state.activePanel} activePanel={this.state.activePanel}>
 					<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
-				</View>
-				<View id="popular" activePanel="popular">
-					<Popular id="popular" go={this.go} />
-				</View>
-				<View id="film" activePanel="film">
 					<Film authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
-				</View>
-				<View id="future" activePanel="future">
 					<Future id="future" go={this.go} openFilm={this.openFilm} />
-				</View>
-				<View id="active" activePanel="active">
 					<Active id="active" go={this.go} openFilm={this.openFilm} />
+					<Popular id="popular" go={this.go} />
 				</View>
 			</Epic>
 		);
