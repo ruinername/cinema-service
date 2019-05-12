@@ -31,10 +31,15 @@ class App extends React.Component {
 
 		connect.subscribe((e) => {
 			switch (e.detail.type) {
+
+				case 'VKWebAppGetUserInfoResult':
+					this.setState({ user: e.detail.data});
+					break;
+
 				case 'VKWebAppAccessTokenReceived':
 					this.setState({ authToken: e.detail.data.access_token, tokenWithScope: e.detail.data});
-					connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
 					break;
+
 				case 'VKWebAppAccessTokenFailed':
 					connect.send("VKWebAppGetAuthToken", {"app_id": 6977050});
 					break;
@@ -55,8 +60,9 @@ class App extends React.Component {
 
 		});
 
-
+		connect.send("VKWebAppGetUserInfo", {});
 		connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
+
 		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())
       .then(json => this.setState({ activePreview: json }));
@@ -82,7 +88,7 @@ class App extends React.Component {
 		this.setState({ activePanel: 'film',
 		 								filmid:      e.currentTarget.dataset.fid})
 
-		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}`)
+		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}?id=${this.state.user.id}`)
 			.then(res => res.json())
 			.then(json => this.setState({ currentFilm: json }));
 	};

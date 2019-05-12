@@ -94,8 +94,8 @@ const Film = ({authToken, id, go, currentFilm }) => (
         </Div>
       </Group>
       <div style={{width: '90%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Button size="xl" style={{width:"100%", display: "inline-block"}} level="secondary" onClick={() => { watch(authToken, currentFilm._id) }}>Иду на фильм</Button>
-        {currentFilm}<Button size="xl" style={{width:"100%", display: "inline-block"}} level="secondary" onClick={() => { unwatch(authToken, currentFilm._id) }}>Удалить из списка</Button>
+        {currentFilm && !currentFilm.going && <Button size="xl" style={{width:"100%", display: "inline-block"}} level="secondary" onClick={() => { watch(authToken, currentFilm._id) }}>Иду на фильм</Button>}
+        {currentFilm && currentFilm.going && <Button size="xl" style={{width:"100%", display: "inline-block"}} level="secondary" onClick={() => { unwatch(authToken, currentFilm._id) }}>Удалить из списка</Button>}
       </div>
       <Group>
       <Div>

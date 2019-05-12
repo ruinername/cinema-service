@@ -16,7 +16,7 @@ export default class FilmListElem extends React.Component{
 
   render(){
     return(
-      <div style={{padding: '10px', gridGap: "20px", display: 'grid', gridTemplateColumns: '23% 60%'}}>
+      <div data-fid={this.props.datafid} onClick={this.props.onClick} style={{padding: '10px', gridGap: "20px", display: 'grid', gridTemplateColumns: '23% 60%'}}>
         <img style={{width:"100%", marginRight: 10, verticalAlign: 'top', borderRadius: 10}} src={this.props.image}/>
         <div>
           <div style={{verticalAlign: 'top', fontWeight: 'bold', fontSize: 16}}>

@@ -87,7 +87,7 @@ class Popular extends React.Component {
           </CenteredDiv>
         }
         {!this.state.error && this.state.loaded && this.state.response.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.response.map(item =>{
-          return <FilmListElem data-fid={item.tmdbId} onClick={this.props.openFilm} popularCount={item.count} key={item.data._id} title={item.data.title} image={item.data.image}/>
+          return <FilmListElem data-fid={item.tmdbId} datafid={item.tmdbId} onClick={this.props.openFilm} popularCount={item.count} key={item.data._id} title={item.data.title} image={item.data.image}/>
         })}</div>}
 
     	</Panel>
