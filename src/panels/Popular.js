@@ -1,17 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Panel, PanelHeader, HeaderButton, platform, IOS, Search, List, Cell} from '@vkontakte/vkui';
+import {Panel, PanelHeader, HeaderButton, platform, IOS, Spinner, Button} from '@vkontakte/vkui';
+import connect from '@vkontakte/vkui-connect';
 
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
+
+import CenteredDiv from '../components/CenteredDiv';
+import FilmListElem from '../components/FilmListElem';
 
 const osname = platform();
 
 class Popular extends React.Component {
   constructor(props) {
 		super(props);
+    this.state = {
+      error: false,
+      response: [],
+    }
 	}
 
+  componentDidMount() {
+
+    connect.subscribe((e) => {
+      switch (e.detail.type) {
+        case 'VKWebAppAccessTokenReceived':
+          this.setState({ tokenWithScope: e.detail.data, error: false });
+          connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"access_token":e.detail.data.token}});
+          connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
+          break;
+
+        case 'VKWebAppCallAPIMethodResult':
+          var friends = e.detail.data.response;
+          fetch('https://cinema.voloshinskii.ru/popular/friends', {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({friends: friends})
+          }).then(res => res.json())
+            .then(json => this.setState({ response: json, loaded: true }))
+          break;
+
+      }
+    });
+
+    if (this.props.token.scope.search("friends") === -1){
+      this.setState({error: true})
+      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
+    }
+    else{
+      connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"access_token":this.props.token.access_token}});
+    }
+  }
+
+  share(){
+    connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
+    connect.send("VKWebAppShowWallPostBox", {"message": "Я нахожу хорошие фильмы на VKCinema, а ты? https://vk.com/app6977050"});
+  }
 
 	render() {
 		return (
@@ -23,6 +70,20 @@ class Popular extends React.Component {
     		>
     			Популярное среди друзей
     		</PanelHeader>
+
+        {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
+        {this.state.error && <CenteredDiv>Для работы приложению необходимо иметь доступ к списку Ваших друзей</CenteredDiv>}}
+        {!this.state.error && this.state.loaded && this.state.response.length == 0 &&
+          <CenteredDiv>
+            Ни один из Ваших друзей ещё не пользуется нашим сервисом. Но это можно легко исправить!
+            <Button onClick={this.share} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Давайте!</Button>
+          </CenteredDiv>
+        }
+
+        {!this.state.error && this.state.loaded && this.state.response.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.response.map(item =>{
+          return <FilmListElem popularKey={item.count} key={item.data._id} title={item.data.title} image={item.data.image}/>
+        })}</div>}
+
     	</Panel>
 		);
 	}

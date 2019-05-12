@@ -21,7 +21,8 @@ class App extends React.Component {
 			activePreview: null,
 			futurePreview: null,
 			currentFilm: null,
-			authToken: null
+			authToken: null,
+			tokenWithScope: null
 		};
 	}
 
@@ -30,8 +31,11 @@ class App extends React.Component {
 		connect.subscribe((e) => {
 			switch (e.detail.type) {
 				case 'VKWebAppAccessTokenReceived':
-					this.setState({ authToken: e.detail.data.access_token });
-					console.log(e.detail.data.access_token);
+					this.setState({ authToken: e.detail.data.access_token, tokenWithScope: e.detail.data});
+					connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
+					break;
+				case 'VKWebAppAccessTokenFailed':
+					connect.send("VKWebAppGetAuthToken", {"app_id": 6977050});
 					break;
 				default:
 					console.log(e.detail.type);
@@ -57,6 +61,9 @@ class App extends React.Component {
 	 this.setState({ activePanel: e.currentTarget.dataset.story })
  }
 
+ updateToken = (e) => {
+	 console.log(e);
+ };
 
 	openFilm = (e) => {
 		this.setState({ activePanel: 'film',
@@ -84,18 +91,6 @@ class App extends React.Component {
             data-story="featured"
             text="Список"
           ><Icon28Favorite/></TabbarItem>
-					<TabbarItem
-            onClick={this.onStoryChange}
-            selected={this.state.activePanel === 'featured'}
-            data-story="featured"
-            text="Список"
-          ><Icon28Favorite/></TabbarItem>
-					<TabbarItem
-            onClick={this.onStoryChange}
-            selected={this.state.activePanel === 'featured'}
-            data-story="featured"
-            text="Список"
-          ><Icon28Favorite/></TabbarItem>
         </Tabbar>
       }>
 
@@ -107,7 +102,7 @@ class App extends React.Component {
 					<Film authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
 					<Future id="future" go={this.go} openFilm={this.openFilm} />
 					<Active id="active" go={this.go} openFilm={this.openFilm} />
-					<Popular id="popular" go={this.go} />
+					<Popular token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 				</View>
 			</Epic>
 		);

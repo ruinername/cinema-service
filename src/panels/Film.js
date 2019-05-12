@@ -7,10 +7,14 @@ import settings from '../constants.js';
 import ClickImage from '../components/ClickImage';
 import CustomTruncate from '../components/CustomTruncate';
 import Icon24Info from '@vkontakte/icons/dist/24/info';
+import connect from '@vkontakte/vkui-connect';
+import swal from 'sweetalert';
 
 const osname = platform();
 
 function watch(token, filmid){
+  swal("Готово!", "Вы успешно добавили фильм в свой список!", "success");
+  connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
   fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
     .then(res => res.json())
 }
