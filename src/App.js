@@ -108,14 +108,14 @@ class App extends React.Component {
       }>
 
 				<View id="featured" activePanel="featured">
-					<Featured token={this.state.authToken} id="featured" go={this.go} />
+					<Featured openFilm={this.openFilm} token={this.state.authToken} id="featured" go={this.go} />
 				</View>
 				<View id={this.state.activePanel} activePanel={this.state.activePanel}>
 					<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 					<Film authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
 					<Future id="future" go={this.go} openFilm={this.openFilm} />
 					<Active id="active" go={this.go} openFilm={this.openFilm} />
-					<Popular token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
+					<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 				</View>
 			</Epic>
 		);

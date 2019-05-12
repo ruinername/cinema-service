@@ -31,6 +31,7 @@ class Popular extends React.Component {
           break;
 
         case 'VKWebAppCallAPIMethodResult':
+          if(this.state.loaded) break;
           var friends = e.detail.data.response;
           fetch('https://cinema.voloshinskii.ru/popular/friends', {
             method: 'POST',
@@ -85,9 +86,8 @@ class Popular extends React.Component {
             <Button onClick={this.share} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Давайте!</Button>
           </CenteredDiv>
         }
-
         {!this.state.error && this.state.loaded && this.state.response.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.response.map(item =>{
-          return <FilmListElem popularCount={item.count} key={item.data._id} title={item.data.title} image={item.data.image}/>
+          return <FilmListElem data-fid={item.tmdbId} onClick={this.props.openFilm} popularCount={item.count} key={item.data._id} title={item.data.title} image={item.data.image}/>
         })}</div>}
 
     	</Panel>
