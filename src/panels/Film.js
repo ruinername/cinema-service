@@ -25,13 +25,11 @@ export default class Film extends React.Component{
 
   watch(token, filmid){
     if(!this.props.currentFilm.going){
-    swal("Готово!", "Вы успешно добавили фильм в свой список!", "success");
     connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
     fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
       .then(res => res.json())
     }
     else{
-      swal("Готово!", "Вы успешно убрали фильм из своего списка!", "success");
       connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
       fetch(`https://cinema.voloshinskii.ru/unwatch?token=${token}&filmId=${filmid}`)
         .then(res => res.json())
