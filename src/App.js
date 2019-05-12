@@ -22,7 +22,8 @@ class App extends React.Component {
 			futurePreview: null,
 			currentFilm: null,
 			authToken: null,
-			tokenWithScope: null
+			tokenWithScope: null,
+			loaded: false
 		};
 	}
 
@@ -42,8 +43,14 @@ class App extends React.Component {
 			}
 
 		var hash = window.location.href.split('#');
-		if(hash[1]){
-			this.setState({ activePanel: 'film', filmid: hash[1]})
+		if(hash[1] && this.state.loaded === false){
+
+			fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${hash[1]}`)
+				.then(res => res.json())
+				.then(json => this.setState({ currentFilm: json }));
+
+			this.setState({ loaded: true, activePanel: 'film', filmid: hash[1]})
+			connect.send("VKWebAppSetLocation", {"location": "hash"});
 		}
 
 		});
@@ -75,7 +82,7 @@ class App extends React.Component {
 		this.setState({ activePanel: 'film',
 		 								filmid:      e.currentTarget.dataset.fid})
 
-		fetch(`http://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}`)
+		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}`)
 			.then(res => res.json())
 			.then(json => this.setState({ currentFilm: json }));
 	};
