@@ -22,7 +22,7 @@ class Featured extends React.Component {
   componentDidMount(){
     fetch(`https://cinema.voloshinskii.ru/user/getwishlist?token=${this.props.token}`)
       .then(res => res.json())
-      .then(json => this.setState({ list: json.user.films, loaded: true }));
+      .then(json => this.setState({ list: json.user && json.user.films, loaded: true }));
   }
 
 	render() {
@@ -32,9 +32,9 @@ class Featured extends React.Component {
     			Мой список
     		</PanelHeader>
         {!this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
-        {this.state.loaded && !this.state.list.length == 0 &&
+        {this.state.loaded && !this.state.list &&
         <CenteredDiv>В Вашем списке пока что нет ни одного фильма</CenteredDiv>}
-        {this.state.list.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.list.map(item =>{
+        {this.state.list && this.state.list.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.list.map(item =>{
           return <FilmListElem key={item._id} title={item.title} image={item.image}/>
         })}</div>}
     	</Panel>

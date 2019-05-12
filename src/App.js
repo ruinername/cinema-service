@@ -40,6 +40,12 @@ class App extends React.Component {
 				default:
 					console.log(e.detail.type);
 			}
+
+		var hash = window.location.href.split('#');
+		if(hash[1]){
+			this.setState({ activePanel: 'film', filmid: hash[1]})
+		}
+
 		});
 
 
@@ -69,7 +75,7 @@ class App extends React.Component {
 		this.setState({ activePanel: 'film',
 		 								filmid:      e.currentTarget.dataset.fid})
 
-		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}`)
+		fetch(`http://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}`)
 			.then(res => res.json())
 			.then(json => this.setState({ currentFilm: json }));
 	};

@@ -33,15 +33,17 @@ class Popular extends React.Component {
         case 'VKWebAppCallAPIMethodResult':
           var friends = e.detail.data.response;
           fetch('https://cinema.voloshinskii.ru/popular/friends', {
-            method: 'GET',
+            method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({friends: friends})
           }).then(res => res.json())
-            .then(json => this.setState({ response: json, loaded: true }))
+            .then(json => this.setState({ response: Object.values(json.result), loaded: true }))
           break;
+          default:
+  					console.log(e.detail);
 
       }
     });
@@ -51,8 +53,12 @@ class Popular extends React.Component {
       connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
     }
     else{
-      connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"access_token":this.props.token.access_token}});
+      connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}});
     }
+  }
+
+  componentDidUpdate(){
+    console.log(this.state);
   }
 
   share(){
@@ -72,16 +78,16 @@ class Popular extends React.Component {
     		</PanelHeader>
 
         {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
-        {this.state.error && <CenteredDiv>Для работы приложению необходимо иметь доступ к списку Ваших друзей</CenteredDiv>}}
+        {this.state.error && <CenteredDiv>Для работы приложению необходимо иметь доступ к списку Ваших друзей</CenteredDiv>}
         {!this.state.error && this.state.loaded && this.state.response.length == 0 &&
           <CenteredDiv>
-            Ни один из Ваших друзей ещё не пользуется нашим сервисом. Но это можно легко исправить!
+            <span>Ни один из Ваших друзей ещё не пользуется нашим сервисом. Но это можно легко исправить!</span>
             <Button onClick={this.share} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Давайте!</Button>
           </CenteredDiv>
         }
 
         {!this.state.error && this.state.loaded && this.state.response.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.response.map(item =>{
-          return <FilmListElem popularKey={item.count} key={item.data._id} title={item.data.title} image={item.data.image}/>
+          return <FilmListElem popularCount={item.count} key={item.data._id} title={item.data.title} image={item.data.image}/>
         })}</div>}
 
     	</Panel>
