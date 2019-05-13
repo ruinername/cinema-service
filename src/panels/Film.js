@@ -112,7 +112,7 @@ export default class Film extends React.Component{
           </div>
           <Group>
           <Div>
-            {<InfoRow title='Поделиться фильмом'><div style={{width: '256px', margin: 'auto'}} dangerouslySetInnerHTML={{__html: qr.createQR(`https://vk.com/app6977050#1`, 256, 'qr-code-class', true)}}/></InfoRow>}
+            {this.props.currentFilm && <InfoRow title='Поделиться фильмом'><div style={{width: '256px', margin: 'auto'}} dangerouslySetInnerHTML={{__html: qr.createQR(`https://vk.com/app6977050#${this.props.currentFilm.tmdbId}`, 256, 'qr-code-class', true)}}/></InfoRow>}
             <div style={{width: '256px', margin: 'auto', textAlign: 'center', color: 'grey', marginBottom: '20px'}}>Вы можете поделиться данной станицей со своими друзьями. При наведении на QR-код откроется данная страница</div>
             <div style={{width: '90%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <Button size="l" style={{width:"49%"}} level="primary" onClick={() => { this.share(this.props.currentFilm.tmdbId) }}>Поделиться</Button>
