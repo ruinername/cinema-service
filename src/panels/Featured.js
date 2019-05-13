@@ -32,7 +32,7 @@ class Featured extends React.Component {
     			Мой список
     		</PanelHeader>
         {!this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
-        {this.state.loaded && !this.state.list &&
+        {this.state.loaded && this.state.list.length == 0 &&
         <CenteredDiv>В Вашем списке пока что нет ни одного фильма</CenteredDiv>}
         {this.state.list && this.state.list.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.list.map(item =>{
           return <FilmListElem datafid={item.tmdbId} data-fid={item.tmdbId} onClick={this.props.openFilm} key={item._id} title={item.title} image={item.image}/>
