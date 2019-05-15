@@ -105,9 +105,9 @@ export default class Film extends React.Component{
           </Div>
 
           <div style={{width: '90%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width:"48%", display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
-            {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width:"48%", display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
-            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"48%", display: "inline-block"}} level="secondary" before={<Icon24Qr/>}/>}
+            {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width:"61%", display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
+            {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width:"61%", display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
+            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"37%", display: "inline-block"}} level="secondary" before={<Icon24Qr/>}/>}
           </div>
 
           {this.props.currentFilm && this.props.currentFilm.video &&
@@ -132,8 +132,8 @@ export default class Film extends React.Component{
               <InfoRow><div style={{width: '256px', margin: 'auto'}} dangerouslySetInnerHTML={{__html: qr.createQR(`https://vk.com/app6977050#${this.props.currentFilm.tmdbId}`, 256, 'qr-code-class', true)}}/></InfoRow>
               <div style={{width: '256px', margin: 'auto', textAlign: 'center', color: 'grey', marginBottom: '20px'}}>Вы можете поделиться данной станицей со своими друзьями. При наведении на QR-код откроется данная страница</div>
               <div style={{width: '90%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Button size="xl" style={{width:"49%"}} level="primary" onClick={() => { this.share(this.props.currentFilm.tmdbId) }}>Поделиться</Button>
-                <Button size="xl" style={{width:"49%"}} component="a" href="https://vk.com/wall-58810575_52712" level="secondary">Как сканировать?</Button>
+                <Button size="xl" style={{width:"37%"}} level="primary" onClick={() => { this.share(this.props.currentFilm.tmdbId) }}>Поделиться</Button>
+                <Button size="xl" style={{width:"61%"}} component="a" href="https://vk.com/wall-58810575_52712" level="secondary">Как сканировать?</Button>
               </div>
             </Div>
             </DivBottom>
