@@ -21,7 +21,7 @@ export default class DivBottom extends React.Component{
 
           <div style={{display: 'relative', textAlign: 'center', fontWeight: 'bold', margin: '20px 0'}}>
               {this.props.title}
-              <Icon16Clear onClick={this.props.onClose} style={{position: 'absolute', top: '10px', right: '25px'}}/>
+              <Icon16Clear onClick={this.props.onClose} style={{width: '42px', color: '#edeef0', position: 'absolute', top: '10px', right: '15px'}}/>
               <div style={{marginTop: '15px', borderBottom: '1px solid #d7d8d9'}}/>
           </div>
           {this.props.children}

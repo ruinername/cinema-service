@@ -29,6 +29,7 @@
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-text-truncate": "^0.14.1",
+    "react-vk": "^5.0.1",
     "sweetalert": "^2.1.2",
     "sweetalert-react": "^0.4.11"
   },

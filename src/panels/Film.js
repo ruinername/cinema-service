@@ -4,6 +4,7 @@ import qr from '@vkontakte/vk-qr';
 
 import settings from '../constants.js';
 import connect from '@vkontakte/vkui-connect';
+import VK, { Playlist } from "react-vk";
 
 
 import Icon24Qr from '@vkontakte/icons/dist/24/qr';
@@ -11,7 +12,7 @@ import Icon24Info from '@vkontakte/icons/dist/24/info';
 import Icon24Like from '@vkontakte/icons/dist/24/like';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
-
+import Icon24LogoLivejournal from '@vkontakte/icons/dist/24/logo_livejournal';
 
 import ClickImage from '../components/ClickImage';
 import CustomTruncate from '../components/CustomTruncate';
@@ -34,13 +35,13 @@ export default class Film extends React.Component{
 
 
   watch(token, filmid){
-    if(!this.props.currentFilm.going){
     connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
+
+    if(!this.props.currentFilm.going){
     fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
       .then(res => res.json())
     }
     else{
-      connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
       fetch(`https://cinema.voloshinskii.ru/unwatch?token=${token}&filmId=${filmid}`)
         .then(res => res.json())
     }
@@ -105,13 +106,26 @@ export default class Film extends React.Component{
           </Div>
 
           <div style={{width: '90%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width:"78%", display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
-            {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width:"78%", display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
-            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"20%", display: "inline-block"}} level="secondary"><Icon24Qr/></Button>}
+            {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width:"72%", display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
+            {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width:"72%", display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
+            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"13%", display: "inline-block"}} level="secondary"><Icon24Qr/></Button>}
+            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"13%", display: "inline-block"}} level="secondary"><Icon24LogoLivejournal/></Button>}
           </div>
 
+          <Group style={{marginTop: 0, overflow: 'auto'}}>
+            <Div>
+              {this.props.currentFilm && this.props.currentFilm.watch &&
+                <InfoRow style={{display: 'inline-block', textAlign: 'center'}} title='Посмотрят'>
+                  <span style={{color: 'grey', fontWeight: 'bold', fontSize: 20}}>
+                    {this.props.currentFilm.watch}
+                  </span>
+                </InfoRow>
+              }
+            </Div>
+          </Group>
+
           {this.props.currentFilm && this.props.currentFilm.video &&
-            <Group title="Трейлер"><iframe width="100%" height="204" style={{margin:'auto'}} src={`https://www.youtube.com/embed/${this.props.currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/></Group>
+            <iframe width="100%" height="204" style={{margin:'auto'}} src={`https://www.youtube.com/embed/${this.props.currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
           }
 
           <Group>
@@ -125,6 +139,19 @@ export default class Film extends React.Component{
               {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.revenue > 0) && <InfoRow title='Сборы'>{this.props.currentFilm.tmdbFullData.revenue.toLocaleString('ru')}$</InfoRow>}
             </Div>
           </Group>
+
+          {this.props.currentFilm && this.props.currentFilm.playlist &&
+            <Group title='Плейлист'>
+              <Div>
+                <VK>
+                  <Playlist ownerId={this.props.currentFilm.playlist.owner}
+                            playlistId={this.props.currentFilm.playlist.playlist}
+                            hash={'f61be84a9faff53712'}
+                  />
+                </VK>
+              </Div>
+            </Group>
+          }
 
           { this.state.qr &&
             <DivBottom title='Поделиться фильмом' onClose={this.QRModal}>
