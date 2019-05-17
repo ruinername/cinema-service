@@ -63,8 +63,8 @@ class Popular extends React.Component {
   }
 
   share(){
-    connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
-    connect.send("VKWebAppShowWallPostBox", {"message": "Я нахожу хорошие фильмы на VKCinema, а ты? https://vk.com/app6977050"});
+    connect.send("VKWebAppTapticImpactOccurred", {"style": "light"});
+    connect.send("VKWebAppShare");
   }
 
 	render() {

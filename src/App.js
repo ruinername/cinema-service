@@ -43,6 +43,13 @@ class App extends React.Component {
 				case 'VKWebAppAccessTokenFailed':
 					connect.send("VKWebAppGetAuthToken", {"app_id": 6977050});
 					break;
+
+				case 'VKWebAppAllowNotificationsResult':
+					if(e.detail.data.result){
+						fetch(`https://cinema.voloshinskii.ru/user/subscribe?token=${this.state.authToken}`)
+					}
+					break;
+
 				default:
 					console.log(e.detail.type);
 			}
@@ -62,6 +69,7 @@ class App extends React.Component {
 
 		connect.send("VKWebAppGetUserInfo", {});
 		connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
+		connect.send("VKWebAppAllowNotifications", {});
 
 		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())

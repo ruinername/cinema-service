@@ -51,7 +51,7 @@ export default class Film extends React.Component{
 
 
   share(filmid){
-      connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
+    connect.send("VKWebAppTapticImpactOccurred", {"style": "light"});
       connect.send("VKWebAppShowWallPostBox", {"message": `https://vk.com/app6977050#${filmid}`});
   }
 
