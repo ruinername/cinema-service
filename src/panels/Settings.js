@@ -12,8 +12,9 @@ class Settings extends React.Component {
   constructor(props) {
 		super(props);
     this.state = {
-      notifications: false
+      loaded: false
     }
+    this.subscribe = this.subscribe.bind(this);
 	}
 
   componentDidMount() {
@@ -24,6 +25,7 @@ class Settings extends React.Component {
       switch (e.detail.type) {
 
         case 'VKWebAppCallAPIMethodResult':
+          console.log(e.detail)
           this.setState({notifications: e.detail.data.response.is_allowed})
         break;
 
@@ -45,7 +47,7 @@ class Settings extends React.Component {
 
   subscribe(event){
     connect.send("VKWebAppTapticImpactOccurred", {"style": "heavy"});
-    if(this.state.notifications){
+    if(!this.state.notifications){
       connect.send("VKWebAppAllowNotifications", {});
 
     }
@@ -68,9 +70,11 @@ class Settings extends React.Component {
 
         <Group title="Настройки профиля">
         <List>
-          <Cell asideContent={<Switch value={this.state.notifications} onClick={this.subscribe}/>}>
+        {this.state.notifications !== null &&
+          <Cell asideContent={<Switch defaultChecked={this.state.notifications} onClick={this.subscribe}/>}>
             Уведомления
           </Cell>
+        }
         </List>
         </Group>
 
