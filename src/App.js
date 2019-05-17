@@ -125,6 +125,9 @@ class App extends React.Component {
 				<View id="featured" activePanel="featured">
 					<Featured openFilm={this.openFilm} token={this.state.authToken} id="featured" go={this.go} />
 				</View>
+				<View id="settings" activePanel="settings">
+					<Settings id="settings" go={this.go} />
+				</View>
 				<View id={this.state.activePanel} activePanel={this.state.activePanel}>
 					<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 					<Film authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
