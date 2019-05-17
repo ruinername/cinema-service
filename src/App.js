@@ -4,6 +4,7 @@ import { View, Epic, Tabbar, TabbarItem } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import Icon28Favorite from '@vkontakte/icons/dist/28/favorite';
 import Icon24Home from '@vkontakte/icons/dist/24/home';
+import Icon28Settings from '@vkontakte/icons/dist/28/settings';
 
 import Home from './panels/Home';
 import Popular from './panels/Popular';
@@ -11,6 +12,7 @@ import Film from './panels/Film';
 import Future from './panels/Future';
 import Active from './panels/Active';
 import Featured from './panels/Featured';
+import Settings from './panels/Settings';
 
 class App extends React.Component {
 	constructor(props) {
@@ -44,12 +46,6 @@ class App extends React.Component {
 					connect.send("VKWebAppGetAuthToken", {"app_id": 6977050});
 					break;
 
-				case 'VKWebAppAllowNotificationsResult':
-					if(e.detail.data.result){
-						fetch(`https://cinema.voloshinskii.ru/user/subscribe?token=${this.state.authToken}`)
-					}
-					break;
-
 				default:
 					console.log(e.detail.type);
 			}
@@ -69,7 +65,6 @@ class App extends React.Component {
 
 		connect.send("VKWebAppGetUserInfo", {});
 		connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
-		connect.send("VKWebAppAllowNotifications", {});
 
 		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())
@@ -104,7 +99,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<Epic activeStory={this.state.activePanel} tabbar={
-				['home', 'featured'].includes(this.state.activePanel) &&
+				['home', 'featured', 'settings'].includes(this.state.activePanel) &&
         <Tabbar>
           <TabbarItem
             onClick={this.onStoryChange}
@@ -118,6 +113,12 @@ class App extends React.Component {
             data-story="featured"
             text="Список"
           ><Icon28Favorite/></TabbarItem>
+					<TabbarItem
+						onClick={this.onStoryChange}
+						selected={this.state.activePanel === 'settings'}
+						data-story="settings"
+						text="Настройки"
+					><Icon28Settings/></TabbarItem>
         </Tabbar>
       }>
 

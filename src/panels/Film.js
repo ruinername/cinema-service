@@ -105,11 +105,11 @@ export default class Film extends React.Component{
             }
           </Div>
 
-          <div style={{width: '90%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-            {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width:"72%", display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
-            {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width:"72%", display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
-            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"13%", display: "inline-block"}} level="secondary"><Icon24Qr/></Button>}
-            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"13%", display: "inline-block"}} level="secondary"><Icon24LogoLivejournal/></Button>}
+          <div style={{width: '100%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width:"61%", display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
+            {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width:"61%", display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
+            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"18%", display: "inline-block"}} level="secondary"><Icon24Qr/></Button>}
+            {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"18%", display: "inline-block"}} level="secondary"><Icon24LogoLivejournal/></Button>}
           </div>
 
           <Group style={{marginTop: 0, overflow: 'auto'}}>
