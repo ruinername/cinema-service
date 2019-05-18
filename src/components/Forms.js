@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormLayout, Input, FormLayoutGroup, Select, Radio, Textarea, Checkbox, Link, Button, Slider, Div} from '@vkontakte/vkui';
+import {FormLayout, Input, FormLayoutGroup, Select, Radio, Textarea, Checkbox, Link, Button, Slider, Div, FormStatus} from '@vkontakte/vkui';
 import connect from '@vkontakte/vkui-connect';
 
 export class FeedBackForm extends React.Component {
@@ -43,12 +43,15 @@ export class FeedBackForm extends React.Component {
     const rateList = ["без оценки", "🤬", "🤮", "🤢", "😟", "😕", "😐", "🙂", "😃", "👍", "😍"];
     return (
           <FormLayout>
+            <FormStatus title="Модерация">
+              Ваш отзыв будет опубликован сразу же после прохождения модерации. Обычно она занимает не более часа
+            </FormStatus>
             <Textarea
-              type="text"
-              top="Отзыв"
-              name="feedback"
-              onChange={this.onChange}
-              placeholder="Напиши всё, что думаешь об этом фильме, но в то же время не забывай про рамки приличия"
+                type="text"
+                top="Отзыв"
+                name="feedback"
+                onChange={this.onChange}
+                placeholder="Напиши всё, что думаешь об этом фильме. В рамках приличия, конечно же"
             />
             <Slider
                 min={0}
@@ -63,7 +66,6 @@ export class FeedBackForm extends React.Component {
             >
               Анонимно
             </Checkbox>
-
             <Button size="xl" onClick={this.submit}>Опубликовать</Button>
           </FormLayout>
     );
