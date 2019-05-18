@@ -61,9 +61,6 @@ class Settings extends React.Component {
 		return (
       <Panel theme="white" id={this.props.id}>
     		<PanelHeader
-    			left={<HeaderButton onClick={this.props.go} data-to="home">
-    				{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
-    			</HeaderButton>}
     		>
     			Настройки
     		</PanelHeader>
