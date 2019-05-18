@@ -83,34 +83,24 @@ class App extends React.Component {
 	}
 
 	goBack = () => {
-    const history = [...this.state.history];
-    history.pop();
+    const historyv = [...this.state.history];
+    historyv.pop();
     const activePanel = history[history.length - 1];
     if (activePanel === 'main') {
       connect.send('VKWebAppDisableSwipeBack');
     }
-    this.setState({ history, activePanel });
-  }
-
-  goForward = (activePanel) => {
-    const history = [...this.state.history];
-    history.push(activePanel);
-    if (this.state.activePanel === 'main') {
-      connect.send('VKWebAppEnableSwipeBack');
-    }
-    this.setState({ history, activePanel });
+    this.setState({ historyv, activePanel });
   }
 
 	go = (e) => {
-		const history = [...this.state.history];
-    history.push(e.currentTarget.dataset.to);
+		const historyv = [...this.state.history];
+    historyv.push(e.currentTarget.dataset.to);
     if (this.state.activePanel === 'main') {
       connect.send('VKWebAppEnableSwipeBack');
     }
-    this.setState({ history, activePanel: e.currentTarget.dataset.to });
+    this.setState({ historyv, activePanel: e.currentTarget.dataset.to });
 		connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
 		history.push(`/#${e.currentTarget.dataset.to}`);
-
 	};
 
 	onStoryChange = (e) => {
