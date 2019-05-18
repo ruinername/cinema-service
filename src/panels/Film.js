@@ -61,7 +61,7 @@ export default class Film extends React.Component{
 
   share(filmid){
     connect.send("VKWebAppTapticImpactOccurred", {"style": "light"});
-      connect.send("VKWebAppShowWallPostBox", {"message": `https://vk.com/app6977050#${filmid}`});
+      connect.send("VKWebAppShowWallPostBox", {"message": `https://vk.com/app6977050#film_${filmid}`});
   }
 
   QRModal(){
@@ -206,7 +206,7 @@ export default class Film extends React.Component{
           { this.state.qr &&
             <DivBottom title='Поделиться фильмом' onClose={this.QRModal}>
             <Div>
-              <InfoRow><div style={{width: '256px', margin: 'auto', marginBottom: '10px'}} dangerouslySetInnerHTML={{__html: qr.createQR(`https://vk.com/app6977050#${this.props.currentFilm.tmdbId}`, 256, 'qr-code-class', true)}}/></InfoRow>
+              <InfoRow><div style={{width: '256px', margin: 'auto', marginBottom: '10px'}} dangerouslySetInnerHTML={{__html: qr.createQR(`https://vk.com/app6977050#film_${this.props.currentFilm.tmdbId}`, 256, 'qr-code-class', true)}}/></InfoRow>
               <div style={{width: '256px', margin: 'auto', textAlign: 'center', color: 'grey', marginBottom: '20px'}}>Вы можете поделиться данной станицей со своими друзьями. При наведении на QR-код откроется данная страница</div>
               <div style={{width: '90%', margin: 'auto', display: 'flex', flexDirection: 'column'}}>
                 <Button size="xl" style={{width:"100%", marginBottom: '10px'}} level="primary" onClick={() => { this.share(this.props.currentFilm.tmdbId) }}>Поделиться</Button>
