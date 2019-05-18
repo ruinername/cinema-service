@@ -1,6 +1,7 @@
 import React from 'react';
 import {Cell, Avatar, Div, Group, Link} from '@vkontakte/vkui';
 import connect from '@vkontakte/vkui-connect';
+import Icon28User from '@vkontakte/icons/dist/28/user';
 
 export default class FeedBackCard extends React.Component{
   constructor(props) {
@@ -34,7 +35,7 @@ export default class FeedBackCard extends React.Component{
   renderPreparedUser(rateList){
     return(
       <div>
-        <Cell description={rateList[this.props.rate]} before={<Avatar src={this.props.user.user.photo_50}/>}>
+        <Cell description={rateList[this.props.rate]} before={<Avatar><Icon28User/></Avatar>}>
           {this.props.user.user.first_name} {this.props.user.user.last_name}
         </Cell>
         <p style={{padding: "0 12px"}}>{this.props.text}</p>
