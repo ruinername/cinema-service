@@ -89,7 +89,7 @@ class App extends React.Component {
     if (activePanel === 'home') {
       connect.send('VKWebAppDisableSwipeBack');
     }
-    this.setState({ historyv, activePanel });
+    this.setState({ historyv, activePanel, currentFilm: null });
   }
 
 	go = (e) => {
@@ -102,7 +102,7 @@ class App extends React.Component {
 	    if (this.state.activePanel === 'home') {
 	      connect.send('VKWebAppEnableSwipeBack');
 	    }
-	    this.setState({ historyv, activePanel: e.currentTarget.dataset.to });
+	    this.setState({ historyv, activePanel: e.currentTarget.dataset.to, currentFilm: null });
 			connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
 			history.push(`/#${e.currentTarget.dataset.to}`);
 		}
