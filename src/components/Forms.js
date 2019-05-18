@@ -40,7 +40,7 @@ export class FeedBackForm extends React.Component {
   }
 
   render() {
-    const rateList = ["без оценки", "🤬", "🤮", "🤢", "😟", "😕", "😐", "🙂", "😃", "👍", "😍"];
+    const rateList = ["без оценки", "🤬 (1)", "🤮 (2)", "🤢 (3)", "😟 (4)", "😕 (5)", "😐 (6)", "🙂 (7)", "😃 (8)", "👍 (9)", "😍 (10)"];
     return (
           <FormLayout>
             <FormStatus title="Модерация">
@@ -56,7 +56,7 @@ export class FeedBackForm extends React.Component {
             <Slider
                 min={0}
                 max={10}
-                onChange={rate => this.setState({rate})}
+                onChange={rate => {this.setState({rate}); connect.send("VKWebAppTapticImpactOccurred", {"style": "heavy"});}}
                 top={`Ваша оценка: ${rateList[this.state.rate]}`}
                 step={1}
               />
