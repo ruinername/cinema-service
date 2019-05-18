@@ -218,7 +218,7 @@ export default class Film extends React.Component{
 
           { this.state.feedBack &&
             <DivBottom title='Написать отзыв' onClose={this.feedBackModal}>
-            <FeedBackForm filmid={this.props.currentFilm._id} close={this.feedBackModal} token={this.props.authToken}/>
+              <FeedBackForm filmid={this.props.currentFilm._id} close={this.feedBackModal} token={this.props.authToken}/>
             </DivBottom>
           }
       </Panel>

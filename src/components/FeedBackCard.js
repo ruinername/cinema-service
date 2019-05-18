@@ -1,6 +1,6 @@
 import React from 'react';
 import {Cell, Avatar, Div, Group, Link} from '@vkontakte/vkui';
-import connect from '@vkontakte/vkui-connect';
+import connect from '@vkontakte/vkui-connect-promise';
 import Icon28User from '@vkontakte/icons/dist/28/user';
 
 export default class FeedBackCard extends React.Component{
@@ -15,20 +15,9 @@ export default class FeedBackCard extends React.Component{
 
   componentDidMount(){
 
-    connect.subscribe((e) => {
-      switch (e.detail.type) {
-
-        case 'VKWebAppCallAPIMethodResult':
-          this.setState({user: e.detail.data.response[0]})
-          break;
-
-        default:
-          console.log(e.detail.type);
-      }
-    });
-
     if(!this.props.user.user){
-      connect.send("VKWebAppCallAPIMethod", {"method": "users.get", "params": {"fields": "photo_50", "user_ids": this.props.user.vkId, "v":"5.95", "access_token":this.props.token}});
+      connect.send("VKWebAppCallAPIMethod", {"method": "users.get", "params": {"fields": "photo_50", "user_ids": this.props.user.vkId, "v":"5.95", "access_token":this.props.token}})
+      .then(data => this.setState({user: data.data.response[0]}))
     }
   }
 
