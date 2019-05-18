@@ -39,6 +39,11 @@ export class FeedBackForm extends React.Component {
     this.props.close();
   }
 
+  changeRate(rate){
+    if(rate != this.state.rate) connect.send("VKWebAppTapticImpactOccurred", {"style": "heavy"})
+    this.setState({rate: rate});
+  }
+
   render() {
     const rateList = ["без оценки", "🤬 (1)", "🤮 (2)", "🤢 (3)", "😟 (4)", "😕 (5)", "😐 (6)", "🙂 (7)", "😃 (8)", "👍 (9)", "😍 (10)"];
     return (
@@ -56,7 +61,7 @@ export class FeedBackForm extends React.Component {
             <Slider
                 min={0}
                 max={10}
-                onChange={rate => {this.setState({rate}); connect.send("VKWebAppTapticImpactOccurred", {"style": "heavy"});}}
+                onChange={rate => this.changeRate({rate})}
                 top={`Ваша оценка: ${rateList[this.state.rate]}`}
                 step={1}
               />
