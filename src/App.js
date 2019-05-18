@@ -85,7 +85,7 @@ class App extends React.Component {
 	goBack = () => {
     const historyv = [...this.state.historyv];
     historyv.pop();
-    const activePanel = history[history.length - 1];
+    const activePanel = historyv[historyv.length - 1];
     if (activePanel === 'main') {
       connect.send('VKWebAppDisableSwipeBack');
     }
