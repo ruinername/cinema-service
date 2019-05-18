@@ -66,16 +66,24 @@ export default class Film extends React.Component{
 
   QRModal(){
     var value = !this.state.qr;
-    if(value) connect.send('VKWebAppDisableSwipeBack')
-    else connect.send('VKWebAppEnableSwipeBack')
+    if(value){
+      connect.send('VKWebAppDisableSwipeBack');
+    }
+    else{
+      connect.send('VKWebAppEnableSwipeBack');
+    }
 
     this.setState({qr: value});
   }
 
   feedBackModal(){
     var value = !this.state.feedBack;
-    if(value) connect.send('VKWebAppDisableSwipeBack')
-    else connect.send('VKWebAppEnableSwipeBack')
+    if(value){
+      connect.send('VKWebAppDisableSwipeBack');
+    }
+    else{
+      connect.send('VKWebAppEnableSwipeBack');
+    }
 
     this.setState({feedBack: value});
   }
