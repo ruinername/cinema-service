@@ -93,14 +93,19 @@ class App extends React.Component {
   }
 
 	go = (e) => {
-		const historyv = [...this.state.historyv];
-    historyv.push(e.currentTarget.dataset.to);
-    if (this.state.activePanel === 'home') {
-      connect.send('VKWebAppEnableSwipeBack');
-    }
-    this.setState({ historyv, activePanel: e.currentTarget.dataset.to });
-		connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
-		history.push(`/#${e.currentTarget.dataset.to}`);
+		if(e.currentTarget.dataset.to === 'home'){
+			this.goBack()
+		}
+		else{
+			const historyv = [...this.state.historyv];
+	    historyv.push(e.currentTarget.dataset.to);
+	    if (this.state.activePanel === 'home') {
+	      connect.send('VKWebAppEnableSwipeBack');
+	    }
+	    this.setState({ historyv, activePanel: e.currentTarget.dataset.to });
+			connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
+			history.push(`/#${e.currentTarget.dataset.to}`);
+		}
 	};
 
 	onStoryChange = (e) => {
@@ -114,10 +119,7 @@ class App extends React.Component {
 	openFilm = (e) => {
 		const historyv = [...this.state.historyv];
     historyv.push(e.currentTarget.dataset.to);
-    if (this.state.activePanel === 'home') {
-      connect.send('VKWebAppEnableSwipeBack');
-    }
-		
+
 		this.setState({ historyv, activePanel: 'film',
 		 								filmid:      e.currentTarget.dataset.fid})
 
@@ -159,9 +161,11 @@ class App extends React.Component {
 					<View id="settings" activePanel="settings">
 						<Settings token={this.state.authToken} id="settings" go={this.go} />
 					</View>
+					<View id="film" activePanel="film">
+						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
+					</View>
 					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.goBack} history={this.state.historyv}>
 						<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
-						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
 						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
