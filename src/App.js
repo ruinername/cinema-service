@@ -36,6 +36,18 @@ class App extends React.Component {
 
 				case 'VKWebAppGetUserInfoResult':
 					this.setState({ user: e.detail.data});
+
+					var hash = window.location.href.split('#');
+					if(hash[1] && this.state.loaded === false){
+
+						fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${hash[1]}?id=${this.state.user.id}`)
+							.then(res => res.json())
+							.then(json => this.setState({ currentFilm: json }));
+
+						this.setState({ loaded: true, activePanel: 'film', filmid: hash[1]})
+						connect.send("VKWebAppSetLocation", {"location": "hash"});
+					}
+
 					break;
 
 				case 'VKWebAppAccessTokenReceived':
@@ -49,18 +61,6 @@ class App extends React.Component {
 				default:
 					console.log(e.detail.type);
 			}
-
-		var hash = window.location.href.split('#');
-		if(hash[1] && this.state.loaded === false){
-
-			fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${hash[1]}`)
-				.then(res => res.json())
-				.then(json => this.setState({ currentFilm: json }));
-
-			this.setState({ loaded: true, activePanel: 'film', filmid: hash[1]})
-			connect.send("VKWebAppSetLocation", {"location": "hash"});
-		}
-
 		});
 
 		connect.send("VKWebAppGetUserInfo", {});
