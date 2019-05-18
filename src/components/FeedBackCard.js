@@ -19,7 +19,7 @@ export default class FeedBackCard extends React.Component{
       switch (e.detail.type) {
 
         case 'VKWebAppCallAPIMethodResult':
-          this.setState({user: e.detail.data.response})
+          this.setState({user: e.detail.data.response[0]})
           break;
 
         default:
@@ -28,7 +28,7 @@ export default class FeedBackCard extends React.Component{
     });
 
     if(!this.props.user.user){
-      connect.send("VKWebAppCallAPIMethod", {"method": "users.get", "params": {"user_ids": this.props.user.vkId, "v":"5.95", "access_token":this.props.token}});
+      connect.send("VKWebAppCallAPIMethod", {"method": "users.get", "params": {"fields": "photo_50", "user_ids": this.props.user.vkId, "v":"5.95", "access_token":this.props.token}});
     }
   }
 
