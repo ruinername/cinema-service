@@ -23,6 +23,7 @@ export class FeedBackForm extends React.Component {
   }
 
   anonF(){
+    connect.send("VKWebAppTapticImpactOccurred", {"style": "heavy"});
     var val = !this.state.anon;
     this.setState({anon: val});
   }
