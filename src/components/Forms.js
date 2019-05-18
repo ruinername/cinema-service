@@ -14,6 +14,7 @@ export class FeedBackForm extends React.Component {
     this.submit = this.submit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.anonF = this.anonF.bind(this);
+    this.changeRate = this.changeRate.bind(this);
   }
 
   onChange(e) {
