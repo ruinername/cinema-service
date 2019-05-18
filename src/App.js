@@ -28,7 +28,7 @@ class App extends React.Component {
 			authToken: null,
 			tokenWithScope: null,
 			loaded: false,
-			history: ['home']
+			historyv: ['home']
 		};
 	}
 
@@ -83,7 +83,7 @@ class App extends React.Component {
 	}
 
 	goBack = () => {
-    const historyv = [...this.state.history];
+    const historyv = [...this.state.historyv];
     historyv.pop();
     const activePanel = history[history.length - 1];
     if (activePanel === 'main') {
@@ -93,7 +93,7 @@ class App extends React.Component {
   }
 
 	go = (e) => {
-		const historyv = [...this.state.history];
+		const historyv = [...this.state.historyv];
     historyv.push(e.currentTarget.dataset.to);
     if (this.state.activePanel === 'main') {
       connect.send('VKWebAppEnableSwipeBack');
@@ -147,13 +147,13 @@ class App extends React.Component {
 	        </Tabbar>
 	      }>
 
-					<View id="featured" activePanel="featured" onSwipeBack={this.goBack} history={this.state.history} >
+					<View id="featured" activePanel="featured">
 						<Featured openFilm={this.openFilm} token={this.state.authToken} id="featured" go={this.go} />
 					</View>
-					<View id="settings" activePanel="settings" onSwipeBack={this.goBack} history={this.state.history}>
+					<View id="settings" activePanel="settings">
 						<Settings token={this.state.authToken} id="settings" go={this.go} />
 					</View>
-					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.goBack} history={this.state.history}>
+					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.goBack} history={this.state.historyv}>
 						<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
