@@ -96,7 +96,7 @@ export default class Film extends React.Component{
     				{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
     			</HeaderButton>}
     		>
-    			{this.props.currentFilm && this.props.currentFilm.title}
+    			Фильм
     		</PanelHeader>
         <div style={{background: 'white'}}>
             {!this.props.currentFilm && <Spinner size="large" style={{marginTop: 30}}/>}
