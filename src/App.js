@@ -37,6 +37,8 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
+		connect.send('VKWebAppEnableSwipeBack');
+
 		connect.subscribe((e) => {
 			switch (e.detail.type) {
 
@@ -107,7 +109,7 @@ class App extends React.Component {
     }
     this.setState({ history, activePanel: e.currentTarget.dataset.to });
 		connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
-		history.push(`/#${e.currentTarget.dataset.to}`);		
+		history.push(`/#${e.currentTarget.dataset.to}`);
 
 	};
 
