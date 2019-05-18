@@ -45,10 +45,12 @@ export default class Film extends React.Component{
     connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
 
     if(!this.props.currentFilm.going){
+    this.props.currentFilm.watch++;
     fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
       .then(res => res.json())
     }
     else{
+      this.props.currentFilm.watch--;
       fetch(`https://cinema.voloshinskii.ru/unwatch?token=${token}&filmId=${filmid}`)
         .then(res => res.json())
     }
@@ -64,11 +66,15 @@ export default class Film extends React.Component{
 
   QRModal(){
     var value = !this.state.qr;
+    value ? connect.send('VKWebAppDisableSwipeBack') : connect.send('VKWebAppEnableSwipeBack');
+
     this.setState({qr: value});
   }
 
   feedBackModal(){
     var value = !this.state.feedBack;
+    value ? connect.send('VKWebAppDisableSwipeBack') : connect.send('VKWebAppEnableSwipeBack');
+
     this.setState({feedBack: value});
   }
 
