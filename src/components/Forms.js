@@ -42,7 +42,7 @@ export class FeedBackForm extends React.Component {
   }
 
   changeRate(rate){
-    if(rate.rate != this.state.rate) connect.send("VKWebAppTapticImpactOccurred", {"style": "light"});
+    if(rate.rate != this.state.rate) connect.send("VKWebAppTapticImpactOccurred", {"style": "medium"});
     this.setState({rate: rate.rate});
   }
 
