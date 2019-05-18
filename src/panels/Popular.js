@@ -75,7 +75,7 @@ class Popular extends React.Component {
     				{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
     			</HeaderButton>}
     		>
-    			Популярное среди друзей
+    			Популярное
     		</PanelHeader>
 
         {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}

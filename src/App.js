@@ -86,7 +86,7 @@ class App extends React.Component {
     const historyv = [...this.state.historyv];
     historyv.pop();
     const activePanel = historyv[historyv.length - 1];
-    if (activePanel === 'main') {
+    if (activePanel === 'home') {
       connect.send('VKWebAppDisableSwipeBack');
     }
     this.setState({ historyv, activePanel });
@@ -95,7 +95,7 @@ class App extends React.Component {
 	go = (e) => {
 		const historyv = [...this.state.historyv];
     historyv.push(e.currentTarget.dataset.to);
-    if (this.state.activePanel === 'main') {
+    if (this.state.activePanel === 'home') {
       connect.send('VKWebAppEnableSwipeBack');
     }
     this.setState({ historyv, activePanel: e.currentTarget.dataset.to });
@@ -112,7 +112,13 @@ class App extends React.Component {
  };
 
 	openFilm = (e) => {
-		this.setState({ activePanel: 'film',
+		const historyv = [...this.state.historyv];
+    historyv.push(e.currentTarget.dataset.to);
+    if (this.state.activePanel === 'home') {
+      connect.send('VKWebAppEnableSwipeBack');
+    }
+		
+		this.setState({ historyv, activePanel: 'film',
 		 								filmid:      e.currentTarget.dataset.fid})
 
 		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}?id=${this.state.user.id}`)

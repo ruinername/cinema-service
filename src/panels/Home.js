@@ -72,7 +72,6 @@ const Home = ({id, openFilm, activePreview, go, futurePreview, setid }) => (
           </div>
         </HorizontalScroll>
       </Group>
-
 			<Group style={{ paddingBottom: 8 }}>
 					<Header level="2" aside={<Link data-to='future' onClick={go}>Показать все</Link>}>
 							Скоро в кино
