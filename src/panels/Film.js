@@ -37,6 +37,9 @@ export default class Film extends React.Component{
     this.feedBackModal = this.feedBackModal.bind(this);
 	}
 
+  componentDidMount(){
+    connect.send("VKWebAppSetLocation", {"location": `film_${this.props.filmid}`});
+  }
 
   watch(token, filmid){
     connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
@@ -106,6 +109,7 @@ export default class Film extends React.Component{
                 }
               </Div>
             </Group>
+
             <Div>
               {this.props.currentFilm && this.props.currentFilm.tmdbFullData.overview &&
                 <CustomTruncate
