@@ -26,7 +26,7 @@ class Popular extends React.Component {
       switch (e.detail.type) {
         case 'VKWebAppAccessTokenReceived':
           this.setState({ tokenWithScope: e.detail.data, error: false });
-          connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":e.detail.data.token}});
+          connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":e.detail.data.access_token}});
           break;
 
         case 'VKWebAppCallAPIMethodResult':
