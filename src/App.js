@@ -50,9 +50,7 @@ class App extends React.Component {
 						this.setState({ historyv: ['home', 'film'], loaded: true, activePanel: 'film', filmid: hash[1].split('_')[1]})
 						connect.send("VKWebAppSetLocation", {"location": "home"});
 					}
-
 					break;
-
 				case 'VKWebAppAccessTokenReceived':
 					this.setState({ authToken: e.detail.data.access_token, tokenWithScope: e.detail.data});
 					break;
