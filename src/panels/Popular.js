@@ -22,14 +22,13 @@ class Popular extends React.Component {
 	}
 
   componentDidMount() {
-    connect.send('VKWebAppInit', {})
     if (this.props.token.scope.search("friends") === -1){
       this.setState({error: true});
       connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"}).then(data => {
         this.setState({tokenWithScope: data.data, error: false});
         connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":data.data.access_token}})
           .then(data => this.getList(data));
-      }).catch(error => this.setState({errorText: error}))
+      })
     }
     else{
       connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}}).then(data => this.getList(data));
