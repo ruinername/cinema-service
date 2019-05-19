@@ -26,6 +26,7 @@ class Popular extends React.Component {
       switch (e.detail.type) {
         case 'VKWebAppAccessTokenReceived':
           this.setState({ tokenWithScope: e.detail.data, error: false });
+          this.setState({ errorText: e.detail });
           connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":e.detail.data.access_token}});
           break;
 
@@ -74,7 +75,7 @@ class Popular extends React.Component {
     		>
     			Популярное
     		</PanelHeader>
-
+        {this.state.errorText && JSON.stringify(this.state.errorText)}
         {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
         {this.state.error && <CenteredDiv>Для работы приложению необходимо иметь доступ к списку Ваших друзей</CenteredDiv>}
         {!this.state.error && this.state.loaded && this.state.response.length == 0 &&
