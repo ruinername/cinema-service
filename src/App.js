@@ -57,9 +57,6 @@ class App extends React.Component {
 					this.setState({ authToken: e.detail.data.access_token, tokenWithScope: e.detail.data});
 					break;
 
-				case 'VKWebAppAccessTokenFailed':
-					connect.send("VKWebAppGetAuthToken", {"app_id": 6977050});
-					break;
 			}
 		});
 
