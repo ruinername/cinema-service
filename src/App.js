@@ -51,7 +51,7 @@ class App extends React.Component {
 							.then(res => res.json())
 							.then(json => this.setState({ currentFilm: json }));
 
-						this.setState({ loaded: true, activePanel: 'film', filmid: hash[1].split('_')[1]})
+						this.setState({ historyv: ['home', 'film'], loaded: true, activePanel: 'film', filmid: hash[1].split('_')[1]})
 						connect.send("VKWebAppSetLocation", {"location": "home"});
 					}
 
