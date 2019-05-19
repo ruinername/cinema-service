@@ -24,6 +24,11 @@ class Popular extends React.Component {
 
     connect.subscribe((e) => {
       switch (e.detail.type) {
+        case 'VKWebAppAccessTokenReceived':
+          this.setState({ tokenWithScope: e.detail.data, error: false });
+          connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"access_token":e.detail.data.token}});
+          break;
+
         case 'VKWebAppCallAPIMethodResult':
           if(this.state.loaded) break;
           var friends = e.detail.data.response;
@@ -37,6 +42,7 @@ class Popular extends React.Component {
           }).then(res => res.json())
             .then(json => this.setState({ response: Object.values(json.result), loaded: true }))
           break;
+
       }
     });
 
