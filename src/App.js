@@ -92,7 +92,6 @@ class App extends React.Component {
 	    }
 	    this.setState({ historyv, activePanel: e.currentTarget.dataset.to, currentFilm: null });
 			connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
-			history.push(`/#${e.currentTarget.dataset.to}`);
 		}
 	};
 

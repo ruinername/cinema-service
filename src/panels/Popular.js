@@ -30,7 +30,7 @@ class Popular extends React.Component {
         connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":data.data.access_token}})
           .then(data => this.getList(data));
           connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
-      }).catch(error => {this.setState({errorText: error})});
+      })
     }
     else{
       connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}}).then(data => this.getList(data));
