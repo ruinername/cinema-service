@@ -19,15 +19,24 @@ class Settings extends React.Component {
 
   componentDidMount() {
 
+    if (!this.props.token){
+      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""});
+    }
+
     connect.send("VKWebAppCallAPIMethod", {"method": "apps.isNotificationsAllowed", "params": {"v":"5.95", "access_token":this.props.token}});
 
     connect.subscribe((e) => {
       switch (e.detail.type) {
 
+        case 'VKWebAppAccessTokenReceived':
+          this.setState({ tokenWithScope: e.detail.data, error: false });
+          this.props.token = e.detail.date.access_token
+          break;
+
         case 'VKWebAppCallAPIMethodResult':
           console.log(e.detail)
           this.setState({notifications: e.detail.data.response.is_allowed})
-        break;
+          break;
 
         case 'VKWebAppAllowNotificationsResult':
           if(e.detail.data.result){
@@ -35,7 +44,7 @@ class Settings extends React.Component {
             fetch(`https://cinema.voloshinskii.ru/user/subscribe?token=${this.props.token}`)
             this.setState({notifications: true});
           }
-        break;
+            break;
 
         case 'VKWebAppDenyNotificationsResult':
           fetch(`https://cinema.voloshinskii.ru/user/unsubscribe?token=${this.props.token}`)
@@ -74,7 +83,7 @@ class Settings extends React.Component {
         }
         </List>
         </Group>
-        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.1-1</p>
+        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.2</p>
     	</Panel>
 		);
 	}
