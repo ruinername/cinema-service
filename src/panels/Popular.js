@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Panel, PanelHeader, HeaderButton, platform, IOS, Spinner, Button} from '@vkontakte/vkui';
-import connect from '@vkontakte/vkui-connect';
+import connect from '@vkontakte/vkui-connect-promise';
 
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
@@ -22,32 +22,26 @@ class Popular extends React.Component {
 
   componentDidMount() {
 
-    connect.subscribe((e) => {
-      switch (e.detail.type) {
-        case 'VKWebAppAccessTokenReceived':
-          this.setState({ tokenWithScope: e.detail.data, error: false });
-          connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"access_token":e.detail.data.token}});
-          connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
-          break;
 
-        case 'VKWebAppCallAPIMethodResult':
-          if(this.state.loaded) break;
-          var friends = e.detail.data.response;
-          fetch('https://cinema.voloshinskii.ru/popular/friends', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({friends: friends})
-          }).then(res => res.json())
-            .then(json => this.setState({ response: Object.values(json.result), loaded: true }))
-          break;
-          default:
-  					console.log(e.detail);
+        connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"})
+        .then(data => {
+          this.setState({tokenWithScope: data.data});
+          connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":data.data.access_token}})
+            .then(data => {
+              var friends = data.data.response;
+              fetch('https://cinema.voloshinskii.ru/popular/friends', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({friends: friends})
+              }).then(res => res.json())
+                .then(json => this.setState({ response: Object.values(json.result), loaded: true, error: false }))
+            });
+            connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
+          });
 
-      }
-    });
 
     if (this.props.token.scope.search("friends") === -1){
       this.setState({error: true})
@@ -56,10 +50,6 @@ class Popular extends React.Component {
     else{
       connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}});
     }
-  }
-
-  componentDidUpdate(){
-    console.log(this.state);
   }
 
   share(){

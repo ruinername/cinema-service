@@ -32,10 +32,6 @@ class App extends React.Component {
 		};
 	}
 
-	componentDidUpdate(){
-		console.log(window.location.hash)
-	}
-
 	componentDidMount() {
 		connect.send('VKWebAppEnableSwipeBack');
 
@@ -71,7 +67,7 @@ class App extends React.Component {
 		});
 
 		connect.send("VKWebAppGetUserInfo", {});
-		connect.send("VKWebAppGetAuthToken", {"app_id": 6977050});
+		connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""});
 
 		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())
