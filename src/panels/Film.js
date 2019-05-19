@@ -39,23 +39,37 @@ export default class Film extends React.Component{
 
   componentDidMount(){
     connect.send("VKWebAppSetLocation", {"location": `film_${this.props.filmid}`});
+
+    connect.subscribe((e) => {
+      switch (e.detail.type) {
+        case 'VKWebAppAccessTokenReceived':
+          this.watch(e.detail.data.access_token, this.props.currentFilm._id);
+          this.props.authToken = e.detail.data.access_token;
+        break;
+      }
+    });
   }
 
   watch(token, filmid){
-    connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
+    if(token){
+      connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
 
-    if(!this.props.currentFilm.going){
-    this.props.currentFilm.watch++;
-    fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
-      .then(res => res.json())
+      if(!this.props.currentFilm.going){
+      this.props.currentFilm.watch++;
+      fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
+        .then(res => res.json())
+      }
+      else{
+        this.props.currentFilm.watch--;
+        fetch(`https://cinema.voloshinskii.ru/unwatch?token=${token}&filmId=${filmid}`)
+          .then(res => res.json())
+      }
+      this.props.currentFilm.going = !this.props.currentFilm.going;
+      this.setState({going: this.props.currentFilm.going});
     }
     else{
-      this.props.currentFilm.watch--;
-      fetch(`https://cinema.voloshinskii.ru/unwatch?token=${token}&filmId=${filmid}`)
-        .then(res => res.json())
+      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""});
     }
-    this.props.currentFilm.going = !this.props.currentFilm.going;
-    this.setState({going: this.props.currentFilm.going});
   }
 
 
@@ -135,8 +149,8 @@ export default class Film extends React.Component{
             </Div>
 
             <div style={{width: '95%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-              {this.props.currentFilm && this.props.authToken && !this.props.currentFilm.going && <Button size="xl" style={{width:"61%", display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
-              {this.props.currentFilm && this.props.authToken && this.props.currentFilm.going && <Button size="xl" style={{width:"61%", display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
+              {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width:"61%", display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
+              {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width:"61%", display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
               {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"18%", display: "inline-block"}} level="secondary"><Icon24Qr/></Button>}
               {this.props.currentFilm && this.props.authToken && new Date(this.props.currentFilm.date) < new Date() && <Button size="xl" onClick={this.feedBackModal} style={{width:"18%", display: "inline-block"}} level="secondary"><Icon24LogoLivejournal/></Button>}
             </div>
