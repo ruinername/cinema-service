@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Panel, PanelHeader, HeaderButton, platform, IOS, Spinner, Button} from '@vkontakte/vkui';
-import connect from '@vkontakte/vkui-connect-promise';
+import connect from '@vkontakte/vkui-connect';
 
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
@@ -18,39 +18,39 @@ class Popular extends React.Component {
       error: false,
       response: [],
     }
-    this.getList = this.getList.bind(this);
-    this.step2 = this.step2.bind(this);
 	}
 
   componentDidMount() {
+
+    connect.subscribe((e) => {
+      switch (e.detail.type) {
+        case 'VKWebAppCallAPIMethodResult':
+          if(this.state.loaded) break;
+          var friends = e.detail.data.response;
+          fetch('https://cinema.voloshinskii.ru/popular/friends', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({friends: friends})
+          }).then(res => res.json())
+            .then(json => this.setState({ response: Object.values(json.result), loaded: true }))
+          break;
+      }
+    });
+
     if (this.props.token.scope.search("friends") === -1){
-      this.setState({error: true});
-      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"})
-        .then(data => this.step2(data)).catch(error => this.setState({errorText: error}))
+      this.setState({error: true})
+      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
     }
     else{
-      connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}}).then(data => this.getList(data));
+      connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}});
     }
   }
 
-  step2(data){
-    this.setState({errorText: data.data});
-    this.setState({tokenWithScope: data.data, error: false});
-    connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":data.data.access_token}})
-      .then(data => this.getList(data)).catch(error => this.setState({errorText: error}))
-  }
-
-  getList(data){
-    var friends = data.data.response;
-    fetch('https://cinema.voloshinskii.ru/popular/friends', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({friends: friends})
-    }).then(res => res.json())
-      .then(json => this.setState({ response: Object.values(json.result), loaded: true, error: false }))
+  componentDidUpdate(){
+    console.log(this.state);
   }
 
   share(){
@@ -68,7 +68,7 @@ class Popular extends React.Component {
     		>
     			Популярное
     		</PanelHeader>
-        {this.state.errorText && JSON.stringify(this.state.errorText)}
+
         {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
         {this.state.error && <CenteredDiv>Для работы приложению необходимо иметь доступ к списку Ваших друзей</CenteredDiv>}
         {!this.state.error && this.state.loaded && this.state.response.length == 0 &&
