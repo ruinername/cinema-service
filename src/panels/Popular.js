@@ -46,7 +46,7 @@ class Popular extends React.Component {
       }
     });
 
-    if (this.props.token.scope.search("friends") === -1){
+    if (!this.props.token || this.props.token.scope.search("friends") === -1){
       this.setState({error: true})
       connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
     }
