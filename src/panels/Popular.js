@@ -18,6 +18,7 @@ class Popular extends React.Component {
       error: false,
       response: [],
     }
+    this.getList = this.getList.bind(this);
 	}
 
   componentDidMount() {
@@ -30,24 +31,26 @@ class Popular extends React.Component {
       .then(data => {
         this.setState({tokenWithScope: data.data, error: false});
         connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":data.data.access_token}})
-          .then(data => {
-            var friends = data.data.response;
-            fetch('https://cinema.voloshinskii.ru/popular/friends', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({friends: friends})
-            }).then(res => res.json())
-              .then(json => this.setState({ response: Object.values(json.result), loaded: true, error: false }))
-          });
+          .then(data => this.getList(data));
           connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
         });
     }
     else{
-      connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}});
+      connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}}).then(data => this.getList(data));
     }
+  }
+
+  getList(data){
+    var friends = data.data.response;
+    fetch('https://cinema.voloshinskii.ru/popular/friends', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({friends: friends})
+    }).then(res => res.json())
+      .then(json => this.setState({ response: Object.values(json.result), loaded: true, error: false }))
   }
 
   share(){
