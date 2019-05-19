@@ -30,7 +30,7 @@ class Popular extends React.Component {
         connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":data.data.access_token}})
           .then(data => this.getList(data));
           connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
-      });
+      }).catch(error => {this.setState({errorText: error})});
     }
     else{
       connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}}).then(data => this.getList(data));
@@ -65,7 +65,7 @@ class Popular extends React.Component {
     		>
     			Популярное
     		</PanelHeader>
-
+        {this.state.errorText && this.state.errorText.type}
         {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
         {this.state.error && <CenteredDiv>Для работы приложению необходимо иметь доступ к списку Ваших друзей</CenteredDiv>}
         {!this.state.error && this.state.loaded && this.state.response.length == 0 &&
