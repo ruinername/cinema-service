@@ -71,7 +71,7 @@ class App extends React.Component {
 		});
 
 		connect.send("VKWebAppGetUserInfo", {});
-		connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
+		connect.send("VKWebAppGetAuthToken", {"app_id": 6977050});
 
 		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())
