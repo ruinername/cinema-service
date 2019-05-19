@@ -60,9 +60,6 @@ class App extends React.Component {
 				case 'VKWebAppAccessTokenFailed':
 					connect.send("VKWebAppGetAuthToken", {"app_id": 6977050});
 					break;
-
-				default:
-					console.log(e.detail.type);
 			}
 		});
 
