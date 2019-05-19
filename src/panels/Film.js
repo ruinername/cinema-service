@@ -190,7 +190,7 @@ export default class Film extends React.Component{
           }
 
 
-          {this.props.currentFilm && this.props.currentFilm.feedbacks &&
+          {this.props.currentFilm && this.props.currentFilm.feedbacks.length > 0 &&
             <div>
             <Group style={{marginTop: "40px"}}>
                <Header level="2" indicator={<Counter>{this.props.currentFilm.feedbacks.length}</Counter>}>
