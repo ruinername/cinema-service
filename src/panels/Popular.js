@@ -19,21 +19,25 @@ class Popular extends React.Component {
       response: [],
     }
     this.getList = this.getList.bind(this);
+    this.step2 = this.step2.bind(this);
 	}
 
   componentDidMount() {
     if (this.props.token.scope.search("friends") === -1){
       this.setState({error: true});
-      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"}).then(data => {
-        this.setState({errorText: data.data});
-        this.setState({tokenWithScope: data.data, error: false});
-        connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":data.data.access_token}})
-          .then(data => this.getList(data)).catch(error => this.setState({errorText: error}))
-      }).catch(error => this.setState({errorText: error}))
+      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"})
+        .then(data => this.step2(data)).catch(error => this.setState({errorText: error}))
     }
     else{
       connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}}).then(data => this.getList(data));
     }
+  }
+
+  step2(data){
+    this.setState({errorText: data.data});
+    this.setState({tokenWithScope: data.data, error: false});
+    connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":data.data.access_token}})
+      .then(data => this.getList(data)).catch(error => this.setState({errorText: error}))
   }
 
   getList(data){

@@ -74,7 +74,7 @@ class Settings extends React.Component {
         }
         </List>
         </Group>
-        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.0-4</p>
+        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.0-5</p>
     	</Panel>
 		);
 	}
