@@ -65,7 +65,7 @@ class Popular extends React.Component {
     		>
     			Популярное
     		</PanelHeader>
-        {this.state.errorText && this.state.errorText.type}
+        {this.state.errorText && JSON.stringify(this.state.errorText)}
         {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
         {this.state.error && <CenteredDiv>Для работы приложению необходимо иметь доступ к списку Ваших друзей</CenteredDiv>}
         {!this.state.error && this.state.loaded && this.state.response.length == 0 &&
