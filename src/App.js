@@ -41,6 +41,15 @@ class App extends React.Component {
 				case 'VKWebAppGetUserInfoResult':
 					this.setState({ user: e.detail.data});
 					var hash = window.location.href.split('#');
+
+					fetch(`https://cinema.voloshinskii.ru/user/active?id=${e.detail.data.id}`)
+						.then(res => res.json())
+						.then(json => {
+							if(json.result){
+								connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""});
+							}
+						});
+
 					if(hash[1] && hash[1].split('_')[0] === 'film' && this.state.loaded === false){
 
 						fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${hash[1].split('_')[1]}?id=${this.state.user.id}`)
@@ -59,7 +68,7 @@ class App extends React.Component {
 		});
 
 		connect.send("VKWebAppGetUserInfo", {});
-		
+
 		fetch(`https://cinema.voloshinskii.ru/active/preview`)
       .then(res => res.json())
       .then(json => this.setState({ activePreview: json }));
