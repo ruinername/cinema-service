@@ -52,8 +52,6 @@ export default class Film extends React.Component{
 
   watch(token, filmid){
     if(token){
-      connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
-
       if(!this.props.currentFilm.going){
       this.props.currentFilm.watch++;
       fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
@@ -103,7 +101,6 @@ export default class Film extends React.Component{
   }
 
   render(){
-    var buttonSize = (this.props.currentFilm && this.props.authToken && new Date(this.props.currentFilm.date)) ? '61%' : '80%';
     return(
       <Panel id={this.props.id}>
     		<PanelHeader
@@ -150,10 +147,10 @@ export default class Film extends React.Component{
             </Div>
 
             <div style={{width: '95%', margin: 'auto', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-              {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width:buttonSize, display: "inline-block"}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
-              {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width:buttonSize, display: "inline-block"}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
+              {this.props.currentFilm && !this.props.currentFilm.going && <Button size="xl" style={{width: '100%', display: "inline-block", marginRight:'2%'}} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>Иду на фильм</Button>}
+              {this.props.currentFilm && this.props.currentFilm.going && <Button size="xl" style={{width: '100%', display: "inline-block",  marginRight:'2%'}} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>Удалить из списка</Button>}
               {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"18%", display: "inline-block"}} level="secondary"><Icon24Qr/></Button>}
-              {this.props.currentFilm && this.props.authToken && new Date(this.props.currentFilm.date) < new Date() && <Button size="xl" onClick={this.feedBackModal} style={{width:"18%", display: "inline-block"}} level="secondary"><Icon24LogoLivejournal/></Button>}
+              {this.props.currentFilm && this.props.authToken && new Date(this.props.currentFilm.date) < new Date() && <Button size="xl" onClick={this.feedBackModal} style={{width:"18%", display: "inline-block", marginLeft:'2%'}} level="secondary"><Icon24LogoLivejournal/></Button>}
             </div>
 
             <Group>
