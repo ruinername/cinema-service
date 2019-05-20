@@ -52,6 +52,7 @@ export default class Film extends React.Component{
 
   watch(token, filmid){
     if(token){
+      connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
       if(!this.props.currentFilm.going){
       this.props.currentFilm.watch++;
       fetch(`https://cinema.voloshinskii.ru/watch?token=${token}&filmId=${filmid}`)
