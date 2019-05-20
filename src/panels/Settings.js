@@ -77,13 +77,13 @@ class Settings extends React.Component {
         <Group title="Настройки профиля">
         <List>
         {this.state.notifications !== null &&
-          <Cell description={this.state.notifications ? "Молодец, так держать! Теперь ты будешь в курсе всех интересующих тебя новинок 😎" : "Включите, чтобы мы могли отправлять тебе уведомления о вышедших фильмах из Вашего списка"} asideContent={<Switch defaultChecked={this.state.notifications} onClick={this.subscribe}/>}>
+          <Cell multiline={true} description={this.state.notifications ? "Молодец, так держать! Теперь ты будешь в курсе всех интересующих тебя новинок 😎" : "Включите, чтобы мы могли отправлять тебе уведомления о вышедших фильмах из Вашего списка"} asideContent={<Switch defaultChecked={this.state.notifications} onClick={this.subscribe}/>}>
             Уведомления
           </Cell>
         }
         </List>
         </Group>
-        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.3</p>
+        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.3-1</p>
     	</Panel>
 		);
 	}
