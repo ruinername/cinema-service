@@ -19,6 +19,7 @@ import CustomTruncate from '../components/CustomTruncate';
 import DivBottom from '../components/DivBottom';
 import {FeedBackForm} from '../components/Forms';
 import FeedBackCard from '../components/FeedBackCard';
+import {Genres} from '../components/Exporter';
 
 const osname = platform();
 
@@ -177,6 +178,7 @@ export default class Film extends React.Component{
               <iframe width="100%" height="204" style={{margin:'auto'}} src={`https://www.youtube.com/embed/${this.props.currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
             }
           </div>
+          {this.props.currentFilm && this.props.currentFilm.tmdbFullData.genres && <Genres genres={this.props.currentFilm.tmdbFullData.genres}/>}
           <Group>
             <Div>
               {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.release_date) && <InfoRow title='Премьера'>{new Date(this.props.currentFilm.tmdbFullData.release_date).toLocaleString('ru', {year: 'numeric',month: 'long',day: 'numeric'})}</InfoRow>}

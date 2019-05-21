@@ -34,7 +34,6 @@ class App extends React.Component {
 
 	componentDidUpdate(){
 		window.onpopstate  = (e) => {
-			 console.log('kkkk');
 			 e.preventDefault();
 			 this.goBack();
 		 }
@@ -126,7 +125,7 @@ class App extends React.Component {
     historyv.push(e.currentTarget.dataset.to);
 
 		this.setState({ historyv, activePanel: 'film',
-		 								filmid:      e.currentTarget.dataset.fid})
+		 								filmid:      e.currentTarget.dataset.fid});
 
 		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}?id=${this.state.user.id}`)
 			.then(res => res.json())
