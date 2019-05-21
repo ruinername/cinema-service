@@ -32,6 +32,14 @@ class App extends React.Component {
 		};
 	}
 
+	componentDidUpdate(){
+		window.onpopstate  = (e) => {
+			 console.log('kkkk');
+			 e.preventDefault();
+			 this.goBack();
+		 }
+	}
+
 	componentDidMount() {
 		connect.send('VKWebAppEnableSwipeBack');
 
@@ -90,9 +98,10 @@ class App extends React.Component {
 
 	go = (e) => {
 		if(e.currentTarget.dataset.to === 'home'){
-			this.goBack()
+			this.goBack();
 		}
 		else{
+			window.history.pushState({lol: 1}, "lol 1");
 			const historyv = [...this.state.historyv];
 	    historyv.push(e.currentTarget.dataset.to);
 	    if (this.state.activePanel === 'home') {
@@ -112,6 +121,7 @@ class App extends React.Component {
  };
 
 	openFilm = (e) => {
+		window.history.pushState({lol: 1}, "lol 1");
 		const historyv = [...this.state.historyv];
     historyv.push(e.currentTarget.dataset.to);
 
