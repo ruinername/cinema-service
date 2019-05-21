@@ -9,22 +9,33 @@ export default class GenresRender extends React.Component{
 
   render(){
     return(
-      <HorizontalScroll style={{ paddingLeft: '10px', margin: '10px 0' }}>
-        {this.props.genres.map(item => {
-          return <Link key={item.id} style={genreStyle}>{this.capitalizeFirstLetter(item.name)}</Link>
-        })}
-      </HorizontalScroll>
+      <div style={{margin: '10px 0' }}>
+        <HorizontalScroll style={{overflow: 'unset'}}>
+          <div style={{ display: 'flex', paddingLeft: '10px'}}>
+            {this.props.genres.map(item => {
+              return <div style={itemStyle}><Link key={item.id} style={genreStyle}>{this.capitalizeFirstLetter(item.name)}</Link></div>
+            })}
+          </div>
+        </HorizontalScroll>
+      </div>
   )}
 
 }
 
+const itemStyle = {
+  flexShrink: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+};
+
 const genreStyle = {
   display: 'inline-block',
-	backgroundColor: 'white',
-  padding: '10px 16px',
+	backgroundColor: '#f7f7f7',
+  padding: '12px 20px',
   marginRight: '10px',
   color: 'grey',
-  fontSize: 18,
-  fontWeight: '400',
-  borderRadius: 20
+  fontSize: 17,
+  fontWeight: 'bold',
+  borderRadius: 20,
 };

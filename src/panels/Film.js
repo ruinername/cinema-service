@@ -3,7 +3,7 @@ import {Panel, PanelHeader, HeaderButton, platform, IOS, Group, Button, Header, 
 import qr from '@vkontakte/vk-qr';
 
 import settings from '../constants.js';
-import connect from '@vkontakte/vkui-connect';
+import connect from '@vkontakte/vkui-connect-promise';
 import VK, { Playlist } from "react-vk";
 
 
@@ -40,15 +40,6 @@ export default class Film extends React.Component{
 
   componentDidMount(){
     connect.send("VKWebAppSetLocation", {"location": `film_${this.props.filmid}`});
-
-    connect.subscribe((e) => {
-      switch (e.detail.type) {
-        case 'VKWebAppAccessTokenReceived':
-          this.watch(e.detail.data.access_token, this.props.currentFilm._id);
-          this.props.authToken = e.detail.data.access_token;
-        break;
-      }
-    });
   }
 
   watch(token, filmid){
@@ -68,7 +59,10 @@ export default class Film extends React.Component{
       this.setState({going: this.props.currentFilm.going});
     }
     else{
-      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""});
+      connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""}).then(data => {
+        this.watch(data.data.access_token, this.props.currentFilm._id);
+        this.props.authToken = data.data.access_token;
+      });
     }
   }
 
@@ -173,12 +167,12 @@ export default class Film extends React.Component{
                 }
               </Div>
             </Group>
-
+            {this.props.currentFilm && this.props.currentFilm.tmdbFullData.genres && <Genres genres={this.props.currentFilm.tmdbFullData.genres}/>}
             {this.props.currentFilm && this.props.currentFilm.video &&
               <iframe width="100%" height="204" style={{margin:'auto'}} src={`https://www.youtube.com/embed/${this.props.currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
             }
           </div>
-          {this.props.currentFilm && this.props.currentFilm.tmdbFullData.genres && <Genres genres={this.props.currentFilm.tmdbFullData.genres}/>}
+
           <Group>
             <Div>
               {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.release_date) && <InfoRow title='Премьера'>{new Date(this.props.currentFilm.tmdbFullData.release_date).toLocaleString('ru', {year: 'numeric',month: 'long',day: 'numeric'})}</InfoRow>}
