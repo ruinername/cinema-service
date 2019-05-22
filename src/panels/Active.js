@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Panel, PanelHeader, HeaderButton, platform, IOS, Search, List, Cell} from '@vkontakte/vkui';
+import {Panel, PanelHeader, HeaderButton, platform, IOS, Search, List, Cell, Spinner} from '@vkontakte/vkui';
 
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
@@ -44,6 +44,7 @@ class Active extends React.Component {
     			Сейчас в кино
     		</PanelHeader>
         <Search value={this.state.search} onChange={this.onChange}/>
+        {this.state.activeList.length == 0 && <Spinner size="large" style={{marginTop: 30}}/>}
         {this.state.activeList.length > 0 &&
           <List>
             {this.searchRes().map(item => <Cell data-fid={item.tmdbId} key={item.tmdbId} onClick={this.props.openFilm}>{item.title}</Cell>)}

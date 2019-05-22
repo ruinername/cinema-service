@@ -18,6 +18,7 @@ export default class FeedBackCard extends React.Component{
     if(!this.props.user.user){
       connect.send("VKWebAppCallAPIMethod", {"method": "users.get", "params": {"fields": "photo_50", "user_ids": this.props.user.vkId, "v":"5.95", "access_token":this.props.token}})
       .then(data => this.setState({user: data.data.response[0]}))
+      .catch(() => this.setState({user: {id: 0, first_name: 'Приватный', last_name: 'аккаунт', photo_50: 'https://sun1-19.userapi.com/c847124/v847124728/335f9/8POFsScEtc8.jpg?ava=1'}}))
     }
   }
 

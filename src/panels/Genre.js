@@ -7,7 +7,7 @@ import Icon24Back from '@vkontakte/icons/dist/24/back';
 
 const osname = platform();
 
-class Future extends React.Component {
+class Genre extends React.Component {
   constructor(props) {
 		super(props);
 
@@ -28,7 +28,7 @@ class Future extends React.Component {
     }
 
   componentDidMount(){
-    fetch(`https://cinema.voloshinskii.ru/future/preview?limit=10000`)
+    fetch(`https://cinema.voloshinskii.ru/search/genre/${this.props.search}`)
       .then(res => res.json())
       .then(json => this.setState({ futureList: json }));
   }
@@ -41,7 +41,7 @@ class Future extends React.Component {
     				{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
     			</HeaderButton>}
     		>
-    			Скоро в кино
+    			Поиск по жанру
     		</PanelHeader>
         <Search value={this.state.search} onChange={this.onChange}/>
         {this.state.futureList.length == 0 && <Spinner size="large" style={{marginTop: 30}}/>}
@@ -55,4 +55,4 @@ class Future extends React.Component {
 	}
 }
 
-export default Future;
+export default Genre;

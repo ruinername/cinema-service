@@ -13,7 +13,7 @@ export default class GenresRender extends React.Component{
         <HorizontalScroll style={{overflow: 'unset'}}>
           <div style={{ display: 'flex', paddingLeft: '10px'}}>
             {this.props.genres.map(item => {
-              return <div style={itemStyle}><Link key={item.id} style={genreStyle}>{this.capitalizeFirstLetter(item.name)}</Link></div>
+              return <div key={item.id} style={itemStyle}><div onClick={this.props.go} data-to={this.props.to} data-search={item.id} key={item.id} style={genreStyle}>{this.capitalizeFirstLetter(item.name)}</div></div>
             })}
           </div>
         </HorizontalScroll>

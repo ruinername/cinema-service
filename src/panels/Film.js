@@ -107,7 +107,7 @@ export default class Film extends React.Component{
     			Фильм
     		</PanelHeader>
         <div style={{background: 'white'}}>
-            {!this.props.currentFilm && <Spinner size="large" style={{marginTop: 30}}/>}
+            {!this.props.currentFilm && <div style={{zIndex: 10000, position: 'absolute', background: 'white', top: 0, width: '100%', height: '100%'}}><Spinner size="large" style={{marginTop: 30}}/></div>}
             {this.props.currentFilm &&
               <ClickImage back={settings.image_url + this.props.currentFilm.tmdbFullData.backdrop_path}
                           front={this.props.currentFilm.image}
@@ -167,7 +167,7 @@ export default class Film extends React.Component{
                 }
               </Div>
             </Group>
-            {this.props.currentFilm && this.props.currentFilm.tmdbFullData.genres && <Genres genres={this.props.currentFilm.tmdbFullData.genres}/>}
+            {this.props.currentFilm && this.props.currentFilm.tmdbFullData.genres && <Genres to="genre" go={this.props.go} data-to="genre" genres={this.props.currentFilm.tmdbFullData.genres}/>}
             {this.props.currentFilm && this.props.currentFilm.video &&
               <iframe width="100%" height="204" style={{margin:'auto'}} src={`https://www.youtube.com/embed/${this.props.currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
             }

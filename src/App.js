@@ -14,6 +14,7 @@ import Future from './panels/Future';
 import Active from './panels/Active';
 import Featured from './panels/Featured';
 import Settings from './panels/Settings';
+import Genre from './panels/Genre';
 import history from './history';
 
 class App extends React.Component {
@@ -25,10 +26,13 @@ class App extends React.Component {
 			activePreview: null,
 			futurePreview: null,
 			currentFilm: null,
+			loading: true,
 			authToken: null,
 			tokenWithScope: null,
 			loaded: false,
-			historyv: ['home']
+			historyv: ['home'],
+			search: null,
+			filmhistory: []
 		};
 	}
 
@@ -63,7 +67,10 @@ class App extends React.Component {
 							.then(res => res.json())
 							.then(json => this.setState({ currentFilm: json }));
 
-						this.setState({ historyv: ['home', 'film'], loaded: true, activePanel: 'film', filmid: hash[1].split('_')[1]})
+						const filmhistory = [...this.state.filmhistory];
+						filmhistory.push(hash[1].split('_')[1]);
+
+						this.setState({ filmhistory, historyv: ['home', 'film'], loaded: true, activePanel: 'film', filmid: hash[1].split('_')[1]})
 						connect.send("VKWebAppSetLocation", {"location": "home"});
 					}
 					break;
@@ -87,12 +94,30 @@ class App extends React.Component {
 
 	goBack = () => {
     const historyv = [...this.state.historyv];
+
+		const from = this.state.activePanel;
+		if (from === 'film'){
+			var filmhistory = [...this.state.filmhistory];
+			filmhistory.pop();
+			this.setState({ filmhistory: filmhistory, currentFilm: null })
+		}
+
     historyv.pop();
+
     const activePanel = historyv[historyv.length - 1];
     if (activePanel === 'home') {
       connect.send('VKWebAppDisableSwipeBack');
+			this.setState({ historyv, activePanel });
     }
-    this.setState({ historyv, activePanel, currentFilm: null });
+		else if (activePanel === 'film'){
+			const filmhistory = [...this.state.filmhistory];
+			fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${filmhistory[filmhistory.length-1]}?id=${this.state.user.id}`)
+				.then(res => res.json())
+				.then(json => this.setState({ historyv, activePanel, currentFilm: json }));
+		}
+		else{
+			this.setState({ historyv, activePanel });
+		}
   }
 
 	go = (e) => {
@@ -106,7 +131,7 @@ class App extends React.Component {
 	    if (this.state.activePanel === 'home') {
 	      connect.send('VKWebAppEnableSwipeBack');
 	    }
-	    this.setState({ historyv, activePanel: e.currentTarget.dataset.to, currentFilm: null });
+	    this.setState({ historyv, currentFilm: null, activePanel: e.currentTarget.dataset.to, search: e.currentTarget.dataset.search});
 			connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
 		}
 	};
@@ -115,17 +140,15 @@ class App extends React.Component {
 	 this.setState({ activePanel: e.currentTarget.dataset.story })
  }
 
- updateToken = (e) => {
-	 console.log(e);
- };
-
 	openFilm = (e) => {
 		window.history.pushState({lol: 1}, "lol 1");
 		const historyv = [...this.state.historyv];
     historyv.push(e.currentTarget.dataset.to);
 
-		this.setState({ historyv, activePanel: 'film',
-		 								filmid:      e.currentTarget.dataset.fid});
+		const filmhistory = [...this.state.filmhistory];
+		filmhistory.push(Number(e.currentTarget.dataset.fid));
+
+		this.setState({ filmhistory: filmhistory, historyv, activePanel: 'film', filmid: e.currentTarget.dataset.fid});
 
 		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}?id=${this.state.user.id}`)
 			.then(res => res.json())
@@ -172,6 +195,7 @@ class App extends React.Component {
 						<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
+						<Genre id="genre" search={this.state.search} go={this.go} openFilm={this.openFilm} />
 						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 					</View>
 				</Epic>
