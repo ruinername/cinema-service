@@ -203,8 +203,8 @@ class App extends React.Component {
 						<Home collections={this.state.collections} id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
-						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
 						<Collections id="collections" go={this.go}/>
+						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
 						<Genre id="genre" search={this.state.search} go={this.go} openFilm={this.openFilm} />
 						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 					</View>
