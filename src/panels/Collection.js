@@ -39,8 +39,7 @@ class Collection extends React.Component {
             {osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
           </HeaderButton>}
         >
-
-    			{this.state.title}
+    			Коллекция
     		</PanelHeader>
         {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
         {this.state.list && this.state.list.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.list.map(item =>{

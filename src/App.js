@@ -16,6 +16,7 @@ import Featured from './panels/Featured';
 import Settings from './panels/Settings';
 import Genre from './panels/Genre';
 import Collection from './panels/Collection';
+import Collections from './panels/Collections';
 
 class App extends React.Component {
 	constructor(props) {
@@ -203,6 +204,7 @@ class App extends React.Component {
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
 						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
+						<Collections id="collections" go={this.go}/>
 						<Genre id="genre" search={this.state.search} go={this.go} openFilm={this.openFilm} />
 						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 					</View>
