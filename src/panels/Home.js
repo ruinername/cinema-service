@@ -9,11 +9,23 @@ const itemStyle = {
 	flexShrink: 0,
 	width: 130,
 	height: 'auto',
-	flexDirection:
-	'column',
+	flexDirection: 'column',
 	alignItems: 'center',
 	fontSize: 16,
 	paddingLeft: 4
+};
+
+const collectionStyle = {
+	flexShrink: 0,
+	width: "80%",
+	margin: "auto",
+	textAlign: "center",
+	flexDirection: 'column',
+	alignItems: 'center',
+	fontSize: 16,
+	paddingLeft: 4,
+	background: '#f4f4f4',
+	borderRadius: 6
 };
 
 const imgStyle = {
@@ -38,7 +50,7 @@ const genre = {
 	fontSize: 14,
 };
 
-const Home = ({id, openFilm, activePreview, go, futurePreview, setid }) => (
+const Home = ({collections, id, openFilm, activePreview, go, futurePreview, setid }) => (
 
 
 	<Panel id={id}>
@@ -92,6 +104,22 @@ const Home = ({id, openFilm, activePreview, go, futurePreview, setid }) => (
 						</div>
 					</HorizontalScroll>
 				</Group>
+				<Group style={{ paddingBottom: 8 }}>
+						<Header level="2" aside={<Link data-to='collections' onClick={go}>Показать все</Link>}>
+								Коллекции
+						</Header>
+							<div style={{ display: 'flex' }}>
+							{	collections &&
+								collections.map(function(item, i){
+									return <div onClick={go} data-data={item._id} data-to="collection" key={i} style={{ ...collectionStyle }}>
+										{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
+										<img style={{borderRadius: 3, marginTop: 20, width: 200, marginBottom: 8 }} src={item.image}/>
+										<p style={{fontWeight: 'bold', color: "#5a5a5a"}}>{item.title}</p>
+									</div>
+								})
+							}
+							</div>
+					</Group>
 
 	</Panel>
 );

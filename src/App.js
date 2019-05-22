@@ -15,7 +15,7 @@ import Active from './panels/Active';
 import Featured from './panels/Featured';
 import Settings from './panels/Settings';
 import Genre from './panels/Genre';
-import history from './history';
+import Collection from './panels/Collection';
 
 class App extends React.Component {
 	constructor(props) {
@@ -30,9 +30,11 @@ class App extends React.Component {
 			authToken: null,
 			tokenWithScope: null,
 			loaded: false,
+			collections: null,
 			historyv: ['home'],
 			search: null,
-			filmhistory: []
+			filmhistory: [],
+			additionalData: null
 		};
 	}
 
@@ -90,6 +92,10 @@ class App extends React.Component {
 		fetch(`https://cinema.voloshinskii.ru/future/preview`)
 	    .then(res => res.json())
 	    .then(json => this.setState({ futurePreview: json }));
+
+		fetch(`https://cinema.voloshinskii.ru/collection/getList`)
+			.then(res => res.json())
+			.then(json => this.setState({ collections: json }));
 	}
 
 	goBack = () => {
@@ -132,6 +138,7 @@ class App extends React.Component {
 	      connect.send('VKWebAppEnableSwipeBack');
 	    }
 	    this.setState({ historyv, currentFilm: null, activePanel: e.currentTarget.dataset.to, search: e.currentTarget.dataset.search});
+			if(e.currentTarget.dataset.data) this.setState({additionalData: e.currentTarget.dataset.data});
 			connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
 		}
 	};
@@ -192,9 +199,10 @@ class App extends React.Component {
 						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
 					</View>
 					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.goBack} history={this.state.historyv}>
-						<Home id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
+						<Home collections={this.state.collections} id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
+						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
 						<Genre id="genre" search={this.state.search} go={this.go} openFilm={this.openFilm} />
 						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 					</View>
