@@ -191,7 +191,7 @@ export default class Film extends React.Component{
                 <VK>
                   <Playlist ownerId={this.props.currentFilm.playlist.owner}
                             playlistId={this.props.currentFilm.playlist.playlist}
-                            hash={'f61be84a9faff53712'}
+                            hash={this.props.currentFilm.playlist.hash}
                   />
                 </VK>
               </Div>
