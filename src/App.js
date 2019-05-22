@@ -111,7 +111,7 @@ class App extends React.Component {
     }
 		else if (activePanel === 'film'){
 			const filmhistory = [...this.state.filmhistory];
-			fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${filmhistory[filmhistory.length-1]}?id=${this.state.user.id}`)
+			fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${filmhistory.slice(-1)[0]}?id=${this.state.user.id}`)
 				.then(res => res.json())
 				.then(json => this.setState({ historyv, activePanel, currentFilm: json }));
 		}
@@ -143,10 +143,10 @@ class App extends React.Component {
 	openFilm = (e) => {
 		window.history.pushState({lol: 1}, "lol 1");
 		const historyv = [...this.state.historyv];
-    historyv.push(e.currentTarget.dataset.to);
+    historyv.push('film');
 
 		const filmhistory = [...this.state.filmhistory];
-		filmhistory.push(Number(e.currentTarget.dataset.fid));
+		filmhistory.push(e.currentTarget.dataset.fid);
 
 		this.setState({ filmhistory: filmhistory, historyv, activePanel: 'film', filmid: e.currentTarget.dataset.fid});
 
