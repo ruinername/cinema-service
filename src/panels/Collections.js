@@ -4,7 +4,7 @@ import {Panel, PanelHeader, HeaderButton, platform, IOS, Search, List, Cell, Spi
 
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
-
+import {CenteredDiv} from '../components/Exporter';
 const osname = platform();
 
 class Collections extends React.Component {
@@ -47,6 +47,7 @@ class Collections extends React.Component {
         {this.state.futureList.length == 0 && <Spinner size="large" style={{marginTop: 30}}/>}
         {this.state.futureList.length > 0 &&
           <List>
+            {this.searchRes().length === 0 && <CenteredDiv>Поиск не дал результатов</CenteredDiv>}
             {this.searchRes().map(item => <Cell data-to="collection" data-data={item._id} key={item._id} onClick={this.props.go}>{item.title}</Cell>)}
           </List>
         }

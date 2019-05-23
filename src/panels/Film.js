@@ -39,6 +39,7 @@ export default class Film extends React.Component{
 	}
 
   componentDidMount(){
+    connect.send('VKWebAppDisableSwipeBack');
     connect.send("VKWebAppSetLocation", {"location": `film_${this.props.filmid}`});
   }
 
@@ -191,10 +192,12 @@ export default class Film extends React.Component{
             <Group title='Плейлист'>
               <Div>
                 <VK>
+                  <Link href={`https://vk.com/audio?z=audio_playlist-${this.props.currentFilm.playlist.owner}_${this.props.currentFilm.playlist.playlist}`}>
                   <Playlist ownerId={this.props.currentFilm.playlist.owner}
                             playlistId={this.props.currentFilm.playlist.playlist}
                             hash={this.props.currentFilm.playlist.hash}
                   />
+                  </Link>
                 </VK>
               </Div>
             </Group>
@@ -214,7 +217,7 @@ export default class Film extends React.Component{
             </div>
           }
 
-          { this.state.qr &&
+          { this.props.currentFilm && this.state.qr &&
             <DivBottom title='Поделиться фильмом' onClose={this.QRModal}>
             <Div>
               <InfoRow><div style={{width: '256px', margin: 'auto', marginBottom: '10px'}} dangerouslySetInnerHTML={{__html: qr.createQR(`https://vk.com/app6977050#film_${this.props.currentFilm.tmdbId}`, 256, 'qr-code-class', true)}}/></InfoRow>
@@ -227,7 +230,7 @@ export default class Film extends React.Component{
             </DivBottom>
           }
 
-          { this.state.feedBack &&
+          { this.props.currentFilm && this.state.feedBack &&
             <DivBottom title='Написать отзыв' onClose={this.feedBackModal}>
               <FeedBackForm filmid={this.props.currentFilm._id} close={this.feedBackModal} token={this.props.authToken}/>
             </DivBottom>

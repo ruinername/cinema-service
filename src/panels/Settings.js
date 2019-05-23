@@ -90,7 +90,7 @@ class Settings extends React.Component {
         }
         </List>
         </Group>
-        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.0</p>
+        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.1</p>
         <p style={{color: 'grey', textAlign: 'center'}}>Данные о фильмах взяты с помощью API TMDb</p>
     	</Panel>
 		);

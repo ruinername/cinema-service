@@ -18,6 +18,8 @@ import Genre from './panels/Genre';
 import Collection from './panels/Collection';
 import Collections from './panels/Collections';
 
+import CenteredDiv from './components/CenteredDiv';
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -39,10 +41,16 @@ class App extends React.Component {
 		};
 	}
 
+	componentDidCatch(error, info) {
+    this.setState({ hasError: true });
+  }
+
 	componentDidUpdate(){
 		window.onpopstate  = (e) => {
-			 e.preventDefault();
-			 this.goBack();
+			if(this.state.historyv !== ['home']){
+				e.preventDefault();
+				this.goBack();
+			}
 		 }
 	}
 
@@ -165,10 +173,11 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<ConfigProvider>
-				<Epic activeStory={this.state.activePanel} tabbar={
-					['home', 'featured', 'settings'].includes(this.state.activePanel) &&
-	        <Tabbar>
+			<ConfigProvider isWebView={true}>
+			{this.state.hasError && <CenteredDiv>Нам неприятно это осозновать, но что-то вызвало непредвиденную ошибку в работе приложения :(<br/><br/> Пожалуйста, нажмите в правом верхнем углу три точки => очистить кеш, чтобы дать нам второй шанс</CenteredDiv>}
+			{!this.state.hasError &&
+			 <Epic activeStory={this.state.activePanel} tabbar={
+	        ['home', 'featured', 'settings'].includes(this.state.activePanel) && <Tabbar>
 	          <TabbarItem
 	            onClick={this.onStoryChange}
 	            selected={this.state.activePanel === 'home'}
@@ -209,7 +218,7 @@ class App extends React.Component {
 						<Genre id="genre" search={this.state.search} go={this.go} openFilm={this.openFilm} />
 						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 					</View>
-				</Epic>
+				</Epic>}
 			</ConfigProvider>
 		);
 	}

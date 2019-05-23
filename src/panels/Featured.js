@@ -39,7 +39,7 @@ class Featured extends React.Component {
         .then(json => this.setState({ list: json.user && json.user.films, loaded: true }));
     }
     else{
-      this.setState({error: true})
+      this.setState({error: true});
       connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""});
     }
   }
@@ -55,7 +55,7 @@ class Featured extends React.Component {
         {!this.state.error && !this.state.loaded && <Spinner size="large" style={{marginTop: 30}}/>}
         {!this.state.error && this.state.loaded && this.state.list.length == 0 &&
         <CenteredDiv>В Вашем списке пока что нет ни одного фильма</CenteredDiv>}
-        {this.state.list && this.state.list.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.list.map(item =>{
+        {this.state.list && this.state.list.length > 0 && <div style={{paddingTop: '10px'}}>{this.state.list.map(item =>{
           return <FilmListElem datafid={item.tmdbId} data-fid={item.tmdbId} onClick={this.props.openFilm} key={item._id} title={item.title} image={item.image}/>
         })}</div>}
     	</Panel>

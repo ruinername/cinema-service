@@ -54,7 +54,7 @@ class Popular extends React.Component {
       connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":this.props.token.access_token}});
     }
   }
-  
+
   share(){
     connect.send("VKWebAppTapticImpactOccurred", {"style": "light"});
     connect.send("VKWebAppShare");
@@ -78,7 +78,7 @@ class Popular extends React.Component {
             <Button onClick={this.share} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Давайте!</Button>
           </CenteredDiv>
         }
-        {!this.state.error && this.state.loaded && this.state.response.length > 0 && <div style={{paddingTop: '35px'}}>{this.state.response.map(item =>{
+        {!this.state.error && this.state.loaded && this.state.response.length > 0 && <div style={{paddingTop: '10px'}}>{this.state.response.map(item =>{
           return <FilmListElem data-fid={item.data.tmdbId} datafid={item.data.tmdbId} onClick={this.props.openFilm} popularCount={item.count} key={item.data._id} title={item.data.title} image={item.data.image}/>
         })}</div>}
 
