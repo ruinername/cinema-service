@@ -9,7 +9,7 @@ export default class GenresRender extends React.Component{
 
   render(){
     return(
-      <div style={{margin: '10px 0' }}>
+      <div style={{marginTop: '15px'}}>
         <HorizontalScroll style={{overflow: 'unset'}}>
           <div style={{ display: 'flex', paddingLeft: '10px'}}>
             {this.props.genres.map(item => {

@@ -168,10 +168,14 @@ export default class Film extends React.Component{
               </Div>
             </Group>
             {this.props.currentFilm && this.props.currentFilm.tmdbFullData.genres && <Genres to="genre" go={this.props.go} data-to="genre" genres={this.props.currentFilm.tmdbFullData.genres}/>}
-            {this.props.currentFilm && this.props.currentFilm.video &&
-              <iframe width="100%" height="204" style={{margin:'auto'}} src={`https://www.youtube.com/embed/${this.props.currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
-            }
           </div>
+
+          {this.props.currentFilm && this.props.currentFilm.video && <Group title='Трейлер' style={{marginTop: '30px'}}>
+            <Div>
+              <iframe width="100%" height="204" style={{margin:'auto'}} src={`https://www.youtube.com/embed/${this.props.currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
+            </Div>
+          </Group>
+          }
 
           <Group>
             <Div>
