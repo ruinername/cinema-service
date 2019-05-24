@@ -40,12 +40,12 @@ export class FeedBackForm extends React.Component {
     });
     await this.setState({loadeddata: true});
     var data = await response.json();
-
+    console.log(data);
     if(data.ok){
       await connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
       this.props.close();
     }
-    else if(data.error === "Wrong request"){
+    else if(data.error === "Wrong request" || data.error === "empty"){
       await connect.send("VKWebAppTapticNotificationOccurred", {"type": "error"});
       await this.setState({loading: false, loadeddata: false, error: 'Отзыв не может быть с пустым текстом и оценкой одновременно'});
     }
@@ -61,11 +61,11 @@ export class FeedBackForm extends React.Component {
     return (
       <div>
           {!this.state.loadeddata && <FormLayout>
-            {!this.state.error && <FormStatus title="Модерация">
+            {!this.state.error && <FormStatus style={{zIndex: -1}} title="Модерация">
               Твой отзыв будет опубликован сразу же после прохождения модерации. Обычно она занимает не более часа
             </FormStatus>
             }
-            {this.state.error && <FormStatus state="error" title="Ошибка">
+            {this.state.error && <FormStatus style={{zIndex: -1}} state="error" title="Ошибка">
               {this.state.error}
             </FormStatus>
             }
