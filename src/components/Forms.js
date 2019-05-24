@@ -51,7 +51,7 @@ export class FeedBackForm extends React.Component {
     return (
           <FormLayout>
             <FormStatus title="Модерация">
-              Ваш отзыв будет опубликован сразу же после прохождения модерации. Обычно она занимает не более часа
+              Твой отзыв будет опубликован сразу же после прохождения модерации. Обычно она занимает не более часа
             </FormStatus>
             <Textarea
                 type="text"

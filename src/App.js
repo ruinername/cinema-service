@@ -37,7 +37,7 @@ class App extends React.Component {
 			historyv: ['home'],
 			search: null,
 			filmhistory: [],
-			additionalData: null
+			additionalData: null,
 		};
 	}
 
@@ -120,7 +120,7 @@ class App extends React.Component {
     historyv.pop();
 
     const activePanel = historyv[historyv.length - 1];
-    if (activePanel === 'home') {
+    if (['home', 'featured', 'settings'].includes(activePanel)) {
       connect.send('VKWebAppDisableSwipeBack');
 			this.setState({ historyv, activePanel });
     }
@@ -136,6 +136,7 @@ class App extends React.Component {
   }
 
 	go = (e) => {
+		if(e)
 		if(e.currentTarget.dataset.to === 'home'){
 			this.goBack();
 		}
@@ -143,9 +144,9 @@ class App extends React.Component {
 			window.history.pushState({lol: 1}, "lol 1");
 			const historyv = [...this.state.historyv];
 	    historyv.push(e.currentTarget.dataset.to);
-	    if (this.state.activePanel === 'home') {
-	      connect.send('VKWebAppEnableSwipeBack');
-	    }
+
+	    if (this.state.activePanel === 'home') connect.send('VKWebAppEnableSwipeBack');
+
 	    this.setState({ historyv, currentFilm: null, activePanel: e.currentTarget.dataset.to, search: e.currentTarget.dataset.search});
 			if(e.currentTarget.dataset.data) this.setState({additionalData: e.currentTarget.dataset.data});
 			connect.send("VKWebAppSetLocation", {"location": e.currentTarget.dataset.to});
@@ -153,18 +154,20 @@ class App extends React.Component {
 	};
 
 	onStoryChange = (e) => {
-	 this.setState({ activePanel: e.currentTarget.dataset.story })
+	 var historyv = [...this.state.historyv];
+	 historyv[0] = e.currentTarget.dataset.story;
+	 this.setState({ historyv, activePanel: e.currentTarget.dataset.story })
  }
 
 	openFilm = (e) => {
 		window.history.pushState({lol: 1}, "lol 1");
 		const historyv = [...this.state.historyv];
     historyv.push('film');
-
+		connect.send('VKWebAppDisableSwipeBack');
 		const filmhistory = [...this.state.filmhistory];
 		filmhistory.push(e.currentTarget.dataset.fid);
 
-		this.setState({ filmhistory: filmhistory, historyv, activePanel: 'film', filmid: e.currentTarget.dataset.fid});
+		this.setState({ filmhistory, historyv, activePanel: 'film', filmid: e.currentTarget.dataset.fid});
 
 		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}?id=${this.state.user.id}`)
 			.then(res => res.json())
@@ -174,7 +177,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<ConfigProvider isWebView={true}>
-			{this.state.hasError && <CenteredDiv>Нам неприятно это осозновать, но что-то вызвало непредвиденную ошибку в работе приложения :(<br/><br/> Пожалуйста, нажмите в правом верхнем углу три точки => очистить кеш, чтобы дать нам второй шанс</CenteredDiv>}
+			{this.state.hasError && <CenteredDiv>Нам неприятно это осознавать, но что-то вызвало непредвиденную ошибку в работе приложения :(<br/><br/> Пожалуйста, нажми в правом верхнем углу на три точки => очистить кеш, чтобы дать нам второй шанс</CenteredDiv>}
 			{!this.state.hasError &&
 			 <Epic activeStory={this.state.activePanel} tabbar={
 	        ['home', 'featured', 'settings'].includes(this.state.activePanel) && <Tabbar>
@@ -205,18 +208,16 @@ class App extends React.Component {
 					<View id="settings" activePanel="settings">
 						<Settings token={this.state.authToken} id="settings" go={this.go} />
 					</View>
-					<View id="film" activePanel="film">
-						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
-					</View>
-					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.goBack} history={this.state.historyv}>
+					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.state.activePanel !== 'film' && this.goBack} history={this.state.historyv}>
 						<Home collections={this.state.collections} id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
+						<Featured openFilm={this.openFilm} token={this.state.authToken} id="featured" go={this.go} />
+						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
 						<Collections id="collections" go={this.go}/>
 						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
 						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
 						<Genre id="genre" search={this.state.search} go={this.go} openFilm={this.openFilm} />
-						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 					</View>
 				</Epic>}
 			</ConfigProvider>

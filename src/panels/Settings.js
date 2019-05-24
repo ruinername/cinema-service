@@ -84,13 +84,13 @@ class Settings extends React.Component {
         <Group title="Настройки профиля">
         <List>
         {this.state.notifications !== null &&
-          <Cell multiline={true} description={this.state.notifications ? "Молодец, так держать! Теперь ты будешь в курсе всех интересующих тебя новинок 😎" : "Включи, чтобы мы могли отправлять тебе уведомления о вышедших фильмах из твоего списка"} asideContent={<Switch defaultChecked={this.state.notifications} onClick={this.subscribe}/>}>
+          <Cell multiline={true} description={this.state.notifications ? "Молодец, так держать! Теперь ты будешь в курсе всех интересующих тебя новинок 😎" : "Включи, чтобы мы могли отправлять тебе уведомления о вышедших фильмах из твоего списка"} asideContent={<Switch checked={this.state.notifications} defaultChecked={this.state.notifications} onClick={this.subscribe}/>}>
             Уведомления
           </Cell>
         }
         </List>
         </Group>
-        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.1</p>
+        <p style={{color: 'grey', textAlign: 'center'}}>Номер сборки: 1.0.2</p>
         <p style={{color: 'grey', textAlign: 'center'}}>Данные о фильмах взяты с помощью API TMDb</p>
     	</Panel>
 		);

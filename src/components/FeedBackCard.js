@@ -37,7 +37,7 @@ export default class FeedBackCard extends React.Component{
     return(
       <div>
         <Cell description={rateList[this.props.rate]} before={<Avatar src={this.state.user.photo_50}/>}>
-          <Link style={{color: 'black'}} href={`https://vk.com/id${this.state.user.id}`}>{this.state.user.first_name} {this.state.user.last_name}</Link>
+          <Link style={{color: 'black'}} href={this.state.user.id != 0 && `https://vk.com/id${this.state.user.id}`}>{this.state.user.first_name} {this.state.user.last_name}</Link>
         </Cell>
         <p style={{padding: "0 12px"}}>{this.props.text}</p>
       </div>
