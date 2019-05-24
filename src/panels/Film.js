@@ -104,7 +104,7 @@ export default class Film extends React.Component{
     return(
       <Panel id={this.props.id}>
     		<PanelHeader
-    			left={<HeaderButton onClick={this.props.go} data-to="home">
+    			left={!this.state.qr && !this.state.feedBack && <HeaderButton onClick={this.props.go} data-to="home">
     				{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
     			</HeaderButton>}
     		>
