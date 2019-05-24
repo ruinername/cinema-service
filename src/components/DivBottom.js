@@ -10,7 +10,7 @@ export default class DivBottom extends React.Component{
     return(
       <div>
         <div onClick={this.props.onClose} style={{position: 'fixed', zIndex: '1999', background: 'rgba(0, 0, 0, 0.55)', width: '100%', height: '100%', bottom: 0}}/>
-        <div style={{
+        <div id="fixed" style={{
           height:'80%',
           position: 'fixed',
           bottom: 0,
