@@ -211,13 +211,13 @@ class App extends React.Component {
 					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.state.activePanel !== 'film' && this.goBack} history={this.state.historyv}>
 						<Home collections={this.state.collections} id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 						<Featured openFilm={this.openFilm} token={this.state.authToken} id="featured" go={this.go} />
+						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
 						<Collections id="collections" go={this.go}/>
 						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
 						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
 						<Genre id="genre" search={this.state.search} go={this.go} openFilm={this.openFilm} />
-						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 					</View>
 				</Epic>}
 			</ConfigProvider>
