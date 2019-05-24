@@ -208,7 +208,7 @@ class App extends React.Component {
 					<View id="settings" activePanel="settings">
 						<Settings token={this.state.authToken} id="settings" go={this.go} />
 					</View>
-					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.state.activePanel !== 'film' && this.goBack} history={this.state.historyv}>
+					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={true} history={this.state.historyv}>
 						<Home collections={this.state.collections} id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 						<Featured openFilm={this.openFilm} token={this.state.authToken} id="featured" go={this.go} />
 						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
