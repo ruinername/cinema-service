@@ -40,7 +40,6 @@ export default class Film extends React.Component{
 	}
 
   componentDidMount(){
-    connect.send("VKWebAppScroll", {"top": 0, "speed": 0});
     connect.send('VKWebAppDisableSwipeBack');
     connect.send("VKWebAppSetLocation", {"location": `film_${this.props.filmid}`});
   }
@@ -193,16 +192,16 @@ export default class Film extends React.Component{
 
           {this.props.currentFilm && this.props.currentFilm.playlist &&
             <Group title='Плейлист'>
-              <Div>
-                <VK>
-                  <Link href={`https://vk.com/audio?z=audio_playlist-${this.props.currentFilm.playlist.owner}_${this.props.currentFilm.playlist.playlist}`}>
-                  <Playlist ownerId={this.props.currentFilm.playlist.owner}
-                            playlistId={this.props.currentFilm.playlist.playlist}
-                            hash={this.props.currentFilm.playlist.hash}
-                  />
-                  </Link>
-                </VK>
-              </Div>
+                <Div style={{position: 'relative'}}>
+                  <a style={{display: 'block', position: 'absolute', top: 0, width: '100%', height: '100%'}} href={`https://vk.com/audio?z=audio_playlist-${this.props.currentFilm.playlist.owner}_${this.props.currentFilm.playlist.playlist}/${this.props.currentFilm.playlist.hack}`}/>
+                  <VK>
+                    <Playlist style={{pointerEvents: 'none'}}
+                              ownerId={this.props.currentFilm.playlist.owner}
+                              playlistId={this.props.currentFilm.playlist.playlist}
+                              hash={this.props.currentFilm.playlist.hash}
+                    />
+                  </VK>
+                </Div>
             </Group>
           }
 
