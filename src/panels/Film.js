@@ -193,7 +193,7 @@ export default class Film extends React.Component{
           {this.props.currentFilm && this.props.currentFilm.playlist &&
             <Group title='Плейлист'>
                 <Div style={{position: 'relative'}}>
-                  <a style={{display: 'block', position: 'absolute', top: 0, width: '100%', height: '100%'}} href={`https://vk.com/audio?z=audio_playlist-${this.props.currentFilm.playlist.owner}_${this.props.currentFilm.playlist.playlist}/${this.props.currentFilm.playlist.hack}`}/>
+                  <a style={{display: 'block', position: 'absolute', top: 0, width: '95%', height: '100%'}} href={`https://vk.com/audio?z=audio_playlist-${this.props.currentFilm.playlist.owner}_${this.props.currentFilm.playlist.playlist}/${this.props.currentFilm.playlist.hack}`}/>
                   <VK>
                     <Playlist style={{pointerEvents: 'none'}}
                               ownerId={this.props.currentFilm.playlist.owner}
