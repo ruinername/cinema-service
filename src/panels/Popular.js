@@ -74,7 +74,7 @@ class Popular extends React.Component {
         {this.state.error && <CenteredDiv>Для работы приложению необходимо иметь доступ к списку Ваших друзей</CenteredDiv>}
         {!this.state.error && this.state.loaded && this.state.response.length == 0 &&
           <CenteredDiv>
-            <span>Ни один из Ваших друзей ещё не пользуется нашим сервисом. Но это можно легко исправить!</span>
+            <span style={{paddingBottom: '20px'}}>Ни один из Ваших друзей ещё не пользуется нашим сервисом. Но это можно легко исправить!</span>
             <Button onClick={this.share} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Давайте!</Button>
           </CenteredDiv>
         }

@@ -30,7 +30,8 @@ export default class ClickImage extends React.Component{
             left: '40%',
             color: 'white',
             fontWeight: 'bold',
-            fontSize: 19
+            fontSize: 19,
+            paddingRight: 20,
           }}>
             {this.props.title}
           </span>
