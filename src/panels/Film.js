@@ -40,7 +40,6 @@ export default class Film extends React.Component{
 	}
 
   componentDidMount(){
-    connect.send('VKWebAppDisableSwipeBack');
     connect.send("VKWebAppSetLocation", {"location": `film_${this.props.filmid}`});
   }
 
