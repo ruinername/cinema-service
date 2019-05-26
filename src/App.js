@@ -1,6 +1,6 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import { View, Epic, Tabbar, TabbarItem, ConfigProvider } from '@vkontakte/vkui';
+import { View, Epic, Tabbar, TabbarItem, ConfigProvider, Button } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import Icon28Favorite from '@vkontakte/icons/dist/28/favorite';
 import Icon24Home from '@vkontakte/icons/dist/24/home';
@@ -177,7 +177,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<ConfigProvider isWebView={true}>
-			{this.state.hasError && <CenteredDiv>Нам неприятно это осозновать, но что-то вызвало непредвиденную ошибку в работе приложения :(<br/><br/> Пожалуйста, нажмите в правом верхнем углу три точки => очистить кеш, чтобы дать нам второй шанс</CenteredDiv>}
+			{this.state.hasError && <CenteredDiv><span style={{paddingBottom: '20px'}}>Нам неприятно это осознавать, но что-то вызвало непредвиденную ошибку в работе приложения :(</span><Button onClick={() => window.location.reload()} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Перезагрузить сервис</Button></CenteredDiv>}
 			{!this.state.hasError &&
 			 <Epic activeStory={this.state.activePanel} tabbar={
 	        ['home', 'featured', 'settings'].includes(this.state.activePanel) && <Tabbar>

@@ -11,7 +11,10 @@ export default class CenteredDiv extends React.Component{
         left: "50%",
         transform: "translate(-50%, -50%)",
         color: "#656565",
-        textAlign: "center"
+        textAlign: "center",
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column"
       }}>
         {this.props.children}
       </div>

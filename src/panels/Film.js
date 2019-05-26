@@ -64,7 +64,7 @@ export default class Film extends React.Component{
       connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""}).then(data => {
         this.watch(data.data.access_token, this.props.currentFilm._id);
         this.props.authToken = data.data.access_token;
-      });
+      }).catch(()=> this.setState({watchLoaded: true}));
     }
   }
 
@@ -116,8 +116,8 @@ export default class Film extends React.Component{
                           title={this.props.currentFilm.title}
               />
             }
-            <Group style={{marginTop: 0, overflow: 'auto'}}>
-              <Div>
+            <Group>
+              <Div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
                 {this.props.currentFilm && this.props.currentFilm.tmdbFullData.vote_average > 0 &&
                   <InfoRow style={{display: 'inline-block'}} title='Рейтинг'>
                     <span style={{color: '#528bcc', fontWeight: 'bold', fontSize: 20}}>
@@ -127,9 +127,16 @@ export default class Film extends React.Component{
                 }
 
                 {this.props.currentFilm && this.props.currentFilm.tmdbFullData.runtime > 0 &&
-                  <InfoRow style={{display: 'inline-block', float: 'right'}} title='Продолжительность'>
+                  <InfoRow style={{display: 'inline-block'}} title='Продолжительность'>
                     <span style={{color: 'grey', fontWeight: 'bold', fontSize: 20}}>
                       {this.props.currentFilm.tmdbFullData.runtime} мин
+                    </span>
+                  </InfoRow>
+                }
+                {this.props.currentFilm && this.props.currentFilm.date && new Date(this.props.currentFilm.date) > new Date() &&
+                  <InfoRow style={{display: 'inline-block'}} title='Премьера'>
+                    <span style={{color: 'grey', fontWeight: 'bold', fontSize: 20}}>
+                      {new Date(this.props.currentFilm.tmdbFullData.release_date).toLocaleString('ru', {month: 'long', day: 'numeric'})}
                     </span>
                   </InfoRow>
                 }
@@ -173,15 +180,9 @@ export default class Film extends React.Component{
           </div>
 
           <Group>
-            <Div>
-              {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.release_date) && <InfoRow title='Премьера'>{new Date(this.props.currentFilm.tmdbFullData.release_date).toLocaleString('ru', {year: 'numeric',month: 'long',day: 'numeric'})}</InfoRow>}
-            </Div>
-            <Div>
-              {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.budget > 0) && <InfoRow title='Общий бюджет'>{this.props.currentFilm.tmdbFullData.budget.toLocaleString('ru')}$</InfoRow>}
-            </Div>
-            <Div>
-              {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.revenue > 0) && <InfoRow title='Сборы'>{this.props.currentFilm.tmdbFullData.revenue.toLocaleString('ru')}$</InfoRow>}
-            </Div>
+            {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.release_date) && <Div><InfoRow title='Премьера'>{new Date(this.props.currentFilm.tmdbFullData.release_date).toLocaleString('ru', {year: 'numeric',month: 'long',day: 'numeric'})}</InfoRow></Div>}
+            {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.budget > 0)   && <Div><InfoRow title='Общий бюджет'>{this.props.currentFilm.tmdbFullData.budget.toLocaleString('ru')}$</InfoRow></Div>}
+            {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.revenue > 0)  && <Div><InfoRow title='Сборы'>{this.props.currentFilm.tmdbFullData.revenue.toLocaleString('ru')}$</InfoRow></Div>}
           </Group>
 
           {this.props.currentFilm && this.props.currentFilm.video && <Group title='Трейлер' style={{marginTop: '30px'}}>

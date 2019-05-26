@@ -25,6 +25,9 @@ class Popular extends React.Component {
     connect.subscribe((e) => {
       switch (e.detail.type) {
         case 'VKWebAppAccessTokenReceived':
+          if(e.detail.data.scope.search("friends") === -1){
+            break;
+          }
           this.setState({ tokenWithScope: e.detail.data, error: false });
           connect.send("VKWebAppCallAPIMethod", {"method": "friends.getAppUsers", "params": {"v": 5.95, "access_token":e.detail.data.access_token}});
           break;
