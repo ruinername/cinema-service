@@ -21,7 +21,14 @@ class Genre extends React.Component {
     this.searchRes = this.searchRes.bind(this);
 	}
 
-  onChange (search) { this.setState({ search }); }
+  onChange (search) {
+    if(this.state.futureList.length == 0){
+      fetch(`https://cinema.voloshinskii.ru/search/genre/${this.props.search}`)
+        .then(res => res.json())
+        .then(json => this.setState({ futureList: json }));
+    }
+    this.setState({ search });
+  }
 
   searchRes() {
       const search = this.state.search.toLowerCase();

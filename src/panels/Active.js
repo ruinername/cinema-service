@@ -21,7 +21,14 @@ class Active extends React.Component {
     this.searchRes = this.searchRes.bind(this);
 	}
 
-  onChange (search) { this.setState({ search }); }
+  onChange (search) {
+    if(this.state.activeList.length == 0){
+      fetch(`https://cinema.voloshinskii.ru/active/preview?limit=10000`)
+        .then(res => res.json())
+        .then(json => this.setState({ activeList: json }));
+    }
+    this.setState({ search });
+  }
 
   searchRes() {
       const search = this.state.search.toLowerCase();
