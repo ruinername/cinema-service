@@ -6,7 +6,8 @@
   "homepage": "https://ruinername.github.io/cinema-service/",
   "scripts": {
     "start": "cross-env PORT=10888 react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && ren build docs",
+    "build-unix": "react-scripts build && mv build docs",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },

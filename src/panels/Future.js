@@ -47,10 +47,12 @@ class Future extends React.Component {
         <Search value={this.state.search} onChange={this.onChange}/>
         {this.state.futureList.length == 0 && <Spinner size="large" style={{marginTop: 30}}/>}
         {this.state.futureList.length > 0 &&
-          <List>
-            {this.searchRes().length === 0 && <CenteredDiv>Поиск не дал результатов</CenteredDiv>}
-            {this.searchRes().map(item => <Cell data-fid={item.tmdbId} key={item.tmdbId} onClick={this.props.openFilm}>{item.title}</Cell>)}
-          </List>
+          <div>
+            {this.searchRes().length === 0 && <p style={{marginTop: '20px', textAlign: 'center', fontSize: 16, color: 'grey'}}>Поиск не дал результатов</p>}
+            <List>
+              {this.searchRes().map(item => <Cell data-fid={item.tmdbId} key={item.tmdbId} onClick={this.props.openFilm}>{item.title}</Cell>)}
+            </List>
+          </div>
         }
     	</Panel>
 		);

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListItem, Button, Group, Div, PanelHeader, Header, Link, HorizontalScroll, Avatar, Gallery } from '@vkontakte/vkui';
-import banner1 from '../img/banner-1.png';
 import RatingSpan from '../components/RatingSpan';
 
 
@@ -57,11 +56,16 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 		<PanelHeader>Главная</PanelHeader>
     <Gallery
       slideWidth="100%"
-      style={{ height: 150, borderRadius: 10, marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}
+      style={{ height: 150, borderRadius: 15, marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}
       bullets="dark"
 			autoplay={3000}
     >
-		<Link onClick={go} data-to="popular"><img style={{height: 150, width:'100%'}} src={banner1}/></Link>
+		<Link onClick={go} data-to="popular" style={{display: 'relative'}}>
+			<div style={{width: '80%', position: 'fixed', top: 3, left: 15, color: 'white'}}>
+				<h2>Популярное среди друзей</h2>
+			</div>
+			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)'}} />
+		</Link>
     </Gallery>
 		<Group style={{ paddingBottom: 8 }}>
 				<Header level="2" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
