@@ -86,6 +86,7 @@ class App extends React.Component {
 					}
 					break;
 				case 'VKWebAppAccessTokenReceived':
+					fetch(`https://cinema.voloshinskii.ru/user/createUser?token=${e.detail.data.access_token}`);
 					this.setState({ authToken: e.detail.data.access_token, tokenWithScope: e.detail.data});
 					break;
 

@@ -58,13 +58,21 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
       slideWidth="100%"
       style={{ height: 150, borderRadius: 15, marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}
       bullets="dark"
-			autoplay={3000}
+			autoplay={5000}
     >
 		<Link onClick={go} data-to="popular" style={{display: 'relative'}}>
-			<div style={{width: '80%', position: 'fixed', top: 3, left: 15, color: 'white'}}>
-				<h2>Популярное среди друзей</h2>
+			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)'}}>
+				<span style={{width: "80%", marginTop: 5, paddingLeft: 15}}>
+					<h2 style={{paddingLeft: 15, color: 'white'}}>Популярное среди друзей</h2>
+				</span>
 			</div>
-			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)'}} />
+		</Link>
+		<Link href="" style={{display: 'relative'}}>
+			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)'}}>
+				<span style={{marginTop: 5, paddingLeft: 15}}>
+					<h2 style={{paddingLeft: 15, color: 'white'}}>Наше сообщество (конкурс!)</h2>
+				</span>
+			</div>
 		</Link>
     </Gallery>
 		<Group style={{ paddingBottom: 8 }}>
