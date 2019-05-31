@@ -29,6 +29,6 @@ workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 workbox.routing.registerNavigationRoute("/cinema-service/index.html", {
-  
+
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
