@@ -56,19 +56,19 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 		<PanelHeader>Главная</PanelHeader>
     <Gallery
       slideWidth="100%"
-      style={{ height: 150, borderRadius: 15, marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}
+      style={{ height: 150, marginLeft: 15, marginRight: 15, marginTop: 15, marginBottom: 15 }}
       bullets="dark"
 			autoplay={5000}
     >
-		<Link onClick={go} data-to="popular" style={{display: 'relative'}}>
-			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)'}}>
+		<Link onClick={go} data-to="popular" style={{display: 'relative', borderRadius: 15}}>
+			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)', borderRadius: 15}}>
 				<span style={{width: "80%", marginTop: 5, paddingLeft: 15}}>
 					<h2 style={{paddingLeft: 15, color: 'white'}}>Популярное среди друзей</h2>
 				</span>
 			</div>
 		</Link>
-		<Link href="" style={{display: 'relative'}}>
-			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)'}}>
+		<Link href="https://vk.com/findfilmapp" style={{display: 'relative', borderRadius: 15}}>
+			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)', borderRadius: 15}}>
 				<span style={{marginTop: 5, paddingLeft: 15}}>
 					<h2 style={{paddingLeft: 15, color: 'white'}}>Наше сообщество (конкурс!)</h2>
 				</span>
