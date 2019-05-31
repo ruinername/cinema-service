@@ -69,9 +69,9 @@ export default class Film extends React.Component{
   }
 
 
-  share(filmid){
+  share(filmid, title){
     connect.send("VKWebAppTapticImpactOccurred", {"style": "light"});
-      connect.send("VKWebAppShowWallPostBox", {"message": `https://vk.com/app6977050#film_${filmid}`});
+      connect.send("VKWebAppShowWallPostBox", {"message": `Я иду на фильм: ${title}! https://vk.com/app6977050#film_${filmid}. Хочешь со мной 🍿🍿?`});
   }
 
   QRModal(){
