@@ -176,7 +176,7 @@ export default class Film extends React.Component{
                 }
               </Div>
             </Group>
-            {this.props.currentFilm && this.props.currentFilm.tmdbFullData.genres && <Genres to="genre" go={this.props.go} data-to="genre" genres={this.props.currentFilm.tmdbFullData.genres}/>}
+            {this.props.currentFilm && this.props.currentFilm.tmdbFullData.genres.length !== 0 && <Genres to="genre" go={this.props.go} data-to="genre" genres={this.props.currentFilm.tmdbFullData.genres}/>}
           </div>
 
           <Group>
