@@ -42,7 +42,7 @@ class FuturePopular extends React.Component {
     				{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
     			</HeaderButton>}
     		>
-    			Ожидаемые новинки
+    			Ожидаемые
     		</PanelHeader>
         <Search value={this.state.search} onChange={this.onChange}/>
         {this.state.futureList.length == 0 && <Spinner size="large" style={{marginTop: 30}}/>}

@@ -148,7 +148,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 				</Group>
 					<Group style={{ paddingBottom: 8 }}>
 							<Header level="2" aside={<Link data-to='futurepopular' onClick={go}>Показать все</Link>}>
-									Будущие бестселлеры
+								Ожидаемые
 							</Header>
 							<HorizontalScroll>
 								<div style={{ display: 'flex' }}>
