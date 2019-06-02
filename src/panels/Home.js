@@ -39,6 +39,7 @@ const nameStyle = {
 	marginTop: 0,
 	marginBottom: 0,
 	padding: 3,
+	paddingBottom: 0,
 	overflow: 'hidden',
 	display: '-webkit-box',
 	WebkitLineClamp: 2,
