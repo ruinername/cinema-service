@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListItem, Button, Group, Div, PanelHeader, Header, Link, HorizontalScroll, Avatar, Gallery } from '@vkontakte/vkui';
 import RatingSpan from '../components/RatingSpan';
+import DatePreview from '../components/DatePreview';
 
 
 const itemStyle = {
@@ -49,7 +50,7 @@ const genre = {
 	fontSize: 14,
 };
 
-const Home = ({collections, id, openFilm, activePreview, go, futurePreview, setid }) => (
+const Home = ({collections, id, openFilm, activePreview, go, futurePreview, setid, futurePopular, activePopular }) => (
 
 
 	<Panel id={id}>
@@ -77,7 +78,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 		<Link href="https://vk.com/findfilmapp" style={{display: 'relative', borderRadius: 15}}>
 			<div style={{height: 'auto', width: '100%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)', borderRadius: 15}}>
 				<span style={{marginTop: 5, paddingLeft: 15}}>
-					<h2 style={{paddingLeft: 15, color: 'white'}}>Наше сообщество (конкурс!)</h2>
+					<h2 style={{paddingLeft: 15, color: 'white'}}>Наше сообщество</h2>
 				</span>
 			</div>
 		</Link>
@@ -103,6 +104,26 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
           </div>
         </HorizontalScroll>
       </Group>
+			{/*<Group style={{ paddingBottom: 8 }}>
+					<Header level="2" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
+							В центре внимания
+					</Header>
+					<HorizontalScroll>
+						<div style={{ display: 'flex' }}>
+							{	activePopular &&
+								activePopular.map(function(item, i){
+									return <Link onClick={openFilm} data-fid={item.tmdbId} data-to="film" key={i} style={{ ...itemStyle }}>
+										<div style={{position: 'relative'}}>
+											{item.tmdbFullData.vote_average && <RatingSpan rating={item.tmdbFullData.vote_average}/>}
+											<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
+										</div>
+										<p style={nameStyle}>{item.title}</p>
+									</Link>
+								})
+							}
+						</div>
+					</HorizontalScroll>
+				</Group>*/}
 			<Group style={{ paddingBottom: 8 }}>
 					<Header level="2" aside={<Link data-to='future' onClick={go}>Показать все</Link>}>
 							Скоро в кино
@@ -112,7 +133,8 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 						{	futurePreview &&
 							futurePreview.map(function(item, i){
 								return <Link onClick={openFilm} data-fid={item.tmdbId} data-to="film" key={i} style={{ ...itemStyle }}>
-									<div style={{display: 'relative'}}>
+									<div style={{position: 'relative'}}>
+										{item.date && <DatePreview date={item.date}/>}
 										<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
 									</div>
 									{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
@@ -123,6 +145,27 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 						</div>
 					</HorizontalScroll>
 				</Group>
+					<Group style={{ paddingBottom: 8 }}>
+							<Header level="2" aside={<Link data-to='futurepopular' onClick={go}>Показать все</Link>}>
+									Будущие бестселлеры
+							</Header>
+							<HorizontalScroll>
+								<div style={{ display: 'flex' }}>
+								{	futurePopular &&
+									futurePopular.map(function(item, i){
+										return <Link onClick={openFilm} data-fid={item.tmdbId} data-to="film" key={i} style={{ ...itemStyle }}>
+											<div style={{position: 'relative'}}>
+												{item.date && <DatePreview date={item.date}/>}
+												<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
+											</div>
+											{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
+											<p style={nameStyle}>{item.title}</p>
+										</Link>
+									})
+								}
+								</div>
+							</HorizontalScroll>
+						</Group>
 				<Group style={{ paddingBottom: 8 }}>
 						<Header level="2" aside={<Link data-to='collections' onClick={go}>Показать все</Link>}>
 								Коллекции

@@ -11,6 +11,7 @@ import Home from './panels/Home';
 import Popular from './panels/Popular';
 import Film from './panels/Film';
 import Future from './panels/Future';
+import FuturePopular from './panels/FuturePopular';
 import Active from './panels/Active';
 import Featured from './panels/Featured';
 import Settings from './panels/Settings';
@@ -102,6 +103,14 @@ class App extends React.Component {
 		fetch(`https://cinema.voloshinskii.ru/future/preview`)
 	    .then(res => res.json())
 	    .then(json => this.setState({ futurePreview: json }));
+
+		fetch(`https://cinema.voloshinskii.ru/active/popular`)
+			.then(res => res.json())
+			.then(json => this.setState({ activePopular: json }));
+
+		fetch(`https://cinema.voloshinskii.ru/future/popular`)
+			.then(res => res.json())
+			.then(json => this.setState({ futurePopular: json }));
 
 		fetch(`https://cinema.voloshinskii.ru/collection/getList`)
 			.then(res => res.json())
@@ -210,10 +219,11 @@ class App extends React.Component {
 						<Settings token={this.state.authToken} id="settings" go={this.go} />
 					</View>
 					<View id={this.state.activePanel} activePanel={this.state.activePanel} onSwipeBack={this.state.activePanel !== 'film' && this.goBack} history={this.state.historyv}>
-						<Home collections={this.state.collections} id="home" activePreview={this.state.activePreview} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
+						<Home collections={this.state.collections} id="home" activePreview={this.state.activePreview} activePopular={this.state.activePopular} futurePopular={this.state.futurePopular} futurePreview={this.state.futurePreview} go={this.go} openFilm={this.openFilm} setid={this.setid} />
 						<Featured openFilm={this.openFilm} token={this.state.authToken} id="featured" go={this.go} />
 						<Popular openFilm={this.openFilm} token={this.state.tokenWithScope} updateToken={this.updateToken} id="popular" go={this.go} />
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
+						<FuturePopular id="futurepopular" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
 						<Collections id="collections" go={this.go}/>
 						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
