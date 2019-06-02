@@ -134,10 +134,10 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 							futurePreview.map(function(item, i){
 								return <Link onClick={openFilm} data-fid={item.tmdbId} data-to="film" key={i} style={{ ...itemStyle }}>
 									<div style={{position: 'relative'}}>
-										{item.date && <DatePreview date={item.date}/>}
-										<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
+										<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8, boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.9)" }}></img>
 									</div>
 									{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
+									{item.date && <DatePreview date={item.date}/>}
 									<p style={nameStyle}>{item.title}</p>
 								</Link>
 							})
@@ -155,10 +155,10 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 									futurePopular.map(function(item, i){
 										return <Link onClick={openFilm} data-fid={item.tmdbId} data-to="film" key={i} style={{ ...itemStyle }}>
 											<div style={{position: 'relative'}}>
-												{item.date && <DatePreview date={item.date}/>}
-												<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8 }}></img>
+												<img src={item.image} size={64} style={{...imgStyle, marginBottom: 8}}></img>
 											</div>
 											{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
+											{item.date && <DatePreview date={item.date}/>}
 											<p style={nameStyle}>{item.title}</p>
 										</Link>
 									})

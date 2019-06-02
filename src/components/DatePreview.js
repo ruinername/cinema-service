@@ -4,15 +4,11 @@ export default class DatePreview extends React.Component{
   render(){
     return(
       <span style={{
-        padding: '2px 10px',
         borderRadius: 15,
-        backgroundColor: 'white',
-        position: 'absolute',
-        bottom: '13%',
-        fontWeight: 'bold',
+        fontWeight: '600',
         fontSize: 14,
-        right: '0%',
-        boxShadow: '0 12px 30px 0 rgba(35,39,42,.4)',
+        color: 'grey',
+        marginLeft: '3px'
       }}>
         с {new Date(this.props.date).toLocaleString('ru', {month: 'long', day: 'numeric'})}
       </span>
