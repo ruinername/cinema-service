@@ -76,7 +76,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 				</span>
 			</div>
 		</Link>
-		<Link href="https://vk.com/findfilmapp" style={{display: 'relative', borderRadius: 15}}>
+		<Link href="https://vk.com/findfilmgroup" style={{display: 'relative', borderRadius: 15}}>
 			<div style={{height: 'auto', width: '90%', marginLeft: '5%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)', borderRadius: 15}}>
 				<span style={{marginTop: 5, paddingLeft: 15}}>
 					<h2 style={{paddingLeft: 15, color: 'white'}}>Наше сообщество</h2>
