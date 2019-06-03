@@ -85,6 +85,11 @@ class App extends React.Component {
 						this.setState({ filmhistory, historyv: ['home', 'film'], loaded: true, activePanel: 'film', filmid: hash[1].split('_')[1]})
 						connect.send("VKWebAppSetLocation", {"location": "home"});
 					}
+
+					else if(hash[1] && hash[1].split('_')[0] === 'collection' && this.state.loaded === false){
+						this.setState({ historyv: ['home', 'collection'], loaded: true, activePanel: 'collection', additionalData: hash[1].split('_')[1]})
+					}
+
 					break;
 				case 'VKWebAppAccessTokenReceived':
 					fetch(`https://cinema.voloshinskii.ru/user/createUser?token=${e.detail.data.access_token}`);

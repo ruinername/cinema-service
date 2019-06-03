@@ -25,7 +25,8 @@ const collectionStyle = {
 	fontSize: 16,
 	paddingLeft: 4,
 	background: '#f4f4f4',
-	borderRadius: 6
+	borderRadius: 6,
+	paddingBottom: 5
 };
 
 const imgStyle = {
@@ -171,13 +172,15 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 						<Header level="2" aside={<Link data-to='collections' onClick={go}>Показать все</Link>}>
 								Коллекции
 						</Header>
-							<div style={{ display: 'flex' }}>
+							<div style={{ display: 'flex', flexDirection: 'column', }}>
 							{	collections &&
 								collections.map(function(item, i){
-									return <div onClick={go} data-data={item._id} data-to="collection" key={i} style={{ ...collectionStyle }}>
-										{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
-										<img style={{borderRadius: 3, marginTop: 20, width: 200, marginBottom: 8 }} src={item.image}/>
-										<p style={{fontWeight: 'bold', color: "#5a5a5a"}}>{item.title}</p>
+									return <div>
+										<div onClick={go} data-data={item._id} data-to="collection" key={i} style={{ ...collectionStyle }}>
+											{/*<p style={{...nameStyle, ...genre}}>{item.genre}</p>*/}
+											<img style={{borderRadius: 3, marginTop: 20, width: 200, marginBottom: 8 }} src={item.image}/>
+											<p style={{fontWeight: 'bold', color: "#5a5a5a"}}>{item.title}</p>
+										</div><br/>
 									</div>
 								})
 							}
