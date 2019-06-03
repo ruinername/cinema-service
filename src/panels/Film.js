@@ -136,7 +136,7 @@ export default class Film extends React.Component{
                 {this.props.currentFilm && this.props.currentFilm.date && new Date(this.props.currentFilm.date) > new Date() &&
                   <InfoRow style={{display: 'inline-block'}} title='Премьера'>
                     <span style={{color: 'grey', fontWeight: 'bold', fontSize: 20}}>
-                      {new Date(this.props.currentFilm.tmdbFullData.release_date).toLocaleString('ru', {month: 'long', day: 'numeric'})}
+                      {new Date(this.props.currentFilm.date).toLocaleString('ru', {month: 'long', day: 'numeric'})}
                     </span>
                   </InfoRow>
                 }
@@ -180,7 +180,7 @@ export default class Film extends React.Component{
           </div>
 
           <Group>
-            {this.props.currentFilm &&  !(this.props.currentFilm.date && new Date(this.props.currentFilm.date) > new Date()) && (this.props.currentFilm.tmdbFullData.release_date) && <Div><InfoRow title='Премьера'>{new Date(this.props.currentFilm.tmdbFullData.release_date).toLocaleString('ru', {year: 'numeric',month: 'long',day: 'numeric'})}</InfoRow></Div>}
+            {this.props.currentFilm &&  !(this.props.currentFilm.date && new Date(this.props.currentFilm.date) > new Date()) && <Div><InfoRow title='Премьера'>{new Date(this.props.currentFilm.date).toLocaleString('ru', {year: 'numeric',month: 'long',day: 'numeric'})}</InfoRow></Div>}
             {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.budget > 0)   && <Div><InfoRow title='Общий бюджет'>{this.props.currentFilm.tmdbFullData.budget.toLocaleString('ru')}$</InfoRow></Div>}
             {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.revenue > 0)  && <Div><InfoRow title='Сборы'>{this.props.currentFilm.tmdbFullData.revenue.toLocaleString('ru')}$</InfoRow></Div>}
           </Group>
