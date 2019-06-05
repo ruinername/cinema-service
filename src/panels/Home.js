@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListItem, Button, Group, Div, PanelHeader, Header, Link, HorizontalScroll, Avatar, Gallery } from '@vkontakte/vkui';
+import { Panel, ListItem, Button, Group, Div, PanelHeader, Header, Link, HorizontalScroll, Avatar, Gallery, List, Cell } from '@vkontakte/vkui';
 import RatingSpan from '../components/RatingSpan';
 import DatePreview from '../components/DatePreview';
-
+import StyledButton from '../components/StyledButton';
+import Icon24BrowserForward from '@vkontakte/icons/dist/24/browser_forward';
 
 const itemStyle = {
 	flexShrink: 0,
@@ -57,36 +58,20 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 
 	<Panel id={id}>
 		<PanelHeader>Главная</PanelHeader>
-    <Gallery
-      slideWidth="100%"
-      style={{ height: 150, marginTop: 15, marginBottom: 15 }}
-      bullets="dark"
-			autoplay={5000}
-    >
-		<Link href="https://vk.com/findfilmapp?w=wall-182657745_9" style={{display: 'relative', borderRadius: 15}}>
-			<div style={{height: 'auto', width: '90%', marginLeft: '5%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)', borderRadius: 15}}>
-				<span style={{marginTop: 5, paddingLeft: 15}}>
-					<h2 style={{paddingLeft: 15, color: 'white'}}>Розыгрыш билетов</h2>
-				</span>
-			</div>
-		</Link>
-		<Link onClick={go} data-to="popular" style={{display: 'relative', borderRadius: 15}}>
-			<div style={{height: 'auto', width: '90%', marginLeft: '5%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)', borderRadius: 15}}>
-				<span style={{width: "80%", marginTop: 5, paddingLeft: 15}}>
-					<h2 style={{paddingLeft: 15, color: 'white'}}>Популярное среди друзей</h2>
-				</span>
-			</div>
-		</Link>
-		<Link href="https://vk.com/findfilmgroup" style={{display: 'relative', borderRadius: 15}}>
-			<div style={{height: 'auto', width: '90%', marginLeft: '5%', height: '100%', background: 'linear-gradient(to right, #606c88, #3f4c6b)', borderRadius: 15}}>
-				<span style={{marginTop: 5, paddingLeft: 15}}>
-					<h2 style={{paddingLeft: 15, color: 'white'}}>Наше сообщество</h2>
-				</span>
-			</div>
-		</Link>
-    </Gallery>
+
 		<Group style={{ paddingBottom: 8 }}>
-				<Header level="2" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
+				<Header level="1">
+						Полезные ссылки
+				</Header>
+				<List>
+          <Cell onClick={go} data-to="popular" asideContent={<Icon24BrowserForward />} multiline description="В данном разделе мы собрали самые популярные фильмы среди твоих друзей!">Популярное среди друзей</Cell>
+					<Cell href="https://vk.com/findfilmgroup" asideContent={<Icon24BrowserForward />} multiline description="Узнавай о новинках кино и интересных фактах у нас в группе!">Наш паблик</Cell>
+					<Cell href="https://vk.com/findfilmgroup?w=wall-182657745_9" asideContent={<Icon24BrowserForward />} multiline description="Участвуй прямо сейчас!">Розыгрыш билетов в кино</Cell>
+        </List>
+    </Group>
+
+		<Group style={{ paddingBottom: 8 }}>
+				<Header level="1" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
 						Сейчас в кино
 				</Header>
         <HorizontalScroll>
@@ -107,7 +92,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
         </HorizontalScroll>
       </Group>
 			{/*<Group style={{ paddingBottom: 8 }}>
-					<Header level="2" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
+					<Header level="1" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
 							В центре внимания
 					</Header>
 					<HorizontalScroll>
@@ -127,7 +112,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 					</HorizontalScroll>
 				</Group>*/}
 			<Group style={{ paddingBottom: 8 }}>
-					<Header level="2" aside={<Link data-to='future' onClick={go}>Показать все</Link>}>
+					<Header level="1" aside={<Link data-to='future' onClick={go}>Показать все</Link>}>
 							Скоро в кино
 					</Header>
 					<HorizontalScroll>
@@ -148,7 +133,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 					</HorizontalScroll>
 				</Group>
 					<Group style={{ paddingBottom: 8 }}>
-							<Header level="2" aside={<Link data-to='futurepopular' onClick={go}>Показать все</Link>}>
+							<Header level="1" aside={<Link data-to='futurepopular' onClick={go}>Показать все</Link>}>
 								Ожидаемые
 							</Header>
 							<HorizontalScroll>
@@ -169,7 +154,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 							</HorizontalScroll>
 						</Group>
 				<Group style={{ paddingBottom: 8 }}>
-						<Header level="2" aside={<Link data-to='collections' onClick={go}>Показать все</Link>}>
+						<Header level="1" aside={<Link data-to='collections' onClick={go}>Показать все</Link>}>
 								Коллекции
 						</Header>
 							<div style={{ display: 'flex', flexDirection: 'column', }}>
