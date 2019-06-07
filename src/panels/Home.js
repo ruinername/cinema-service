@@ -66,7 +66,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 				<List>
           <Cell onClick={go} data-to="popular" asideContent={<Icon24BrowserForward />} multiline description="В данном разделе мы собрали самые популярные фильмы среди твоих друзей!">Популярное среди друзей</Cell>
 					<Cell href="https://vk.com/findfilmgroup" asideContent={<Icon24BrowserForward />} multiline description="Узнавай о новинках кино и интересных фактах у нас в группе!">Наш паблик</Cell>
-					<Cell href="https://vk.com/findfilmgroup?w=wall-182657745_9" asideContent={<Icon24BrowserForward />} multiline description="Участвуй прямо сейчас!">Розыгрыш билетов в кино</Cell>
+					
         </List>
     </Group>
 
