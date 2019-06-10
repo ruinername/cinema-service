@@ -18,6 +18,7 @@ import Settings from './panels/Settings';
 import Genre from './panels/Genre';
 import Collection from './panels/Collection';
 import Collections from './panels/Collections';
+import Event from './panels/Event';
 
 import CenteredDiv from './components/CenteredDiv';
 
@@ -168,10 +169,15 @@ class App extends React.Component {
 		}
 	};
 
-	onStoryChange = (e) => {
-	 var historyv = [...this.state.historyv];
-	 historyv[0] = e.currentTarget.dataset.story;
-	 this.setState({ historyv, activePanel: e.currentTarget.dataset.story })
+	onStoryChange = async (e) => {
+	const from = this.state.activePanel;
+	if (from === 'film'){
+		var filmhistory = [...this.state.filmhistory];
+		filmhistory.pop();
+		this.setState({ filmhistory: filmhistory, currentFilm: null })
+	}
+	 var historyv = [e.currentTarget.dataset.story];
+	 await this.setState({ historyv, activePanel: e.currentTarget.dataset.story })
  }
 
 	openFilm = (e) => {
@@ -192,10 +198,10 @@ class App extends React.Component {
 	render() {
 		return (
 			<ConfigProvider isWebView={true}>
-			{this.state.hasError && <CenteredDiv><span style={{paddingBottom: '20px'}}>Нам неприятно это осознавать, но что-то вызвало непредвиденную ошибку в работе приложения :(</span><Button onClick={() => window.location.reload()} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Перезагрузить сервис</Button></CenteredDiv>}
+			{this.state.hasError && <CenteredDiv><span style={{paddingBottom: '20px'}}>Нам неприятно это осознавать, но что-то вызвало непредвиденную ошибку в работе приложения :(</span><Button onClick={() => window.location.replace()} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Перезагрузить сервис</Button></CenteredDiv>}
 			{!this.state.hasError &&
 			 <Epic activeStory={this.state.activePanel} tabbar={
-	        ['home', 'featured', 'settings'].includes(this.state.activePanel) && <Tabbar>
+	        <Tabbar>
 	          <TabbarItem
 	            onClick={this.onStoryChange}
 	            selected={this.state.activePanel === 'home'}
@@ -230,6 +236,7 @@ class App extends React.Component {
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<FuturePopular id="futurepopular" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
+						<Event id="event" go={this.go} />
 						<Collections id="collections" go={this.go}/>
 						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
 						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />

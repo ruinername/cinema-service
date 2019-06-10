@@ -61,14 +61,12 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 
 		<Group style={{ paddingBottom: 8 }}>
 				<Header level="1">
-						Полезные ссылки
+						События
 				</Header>
 				<List>
-          <Cell onClick={go} data-to="popular" asideContent={<Icon24BrowserForward />} multiline description="В данном разделе мы собрали самые популярные фильмы среди твоих друзей!">Популярное среди друзей</Cell>
-					<Cell href="https://vk.com/findfilmgroup" asideContent={<Icon24BrowserForward />} multiline description="Узнавай о новинках кино и интересных фактах у нас в группе!">Наш паблик</Cell>
-					
-        </List>
-    </Group>
+					<Cell onClick={go} data-to="event" asideContent={<Icon24BrowserForward />} multiline description="Реши, кто из них больше достоин Питера Паркера!">🕷 Мэри Джейн vs Гвен Стейси</Cell>
+				</List>
+		</Group>
 
 		<Group style={{ paddingBottom: 8 }}>
 				<Header level="1" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
@@ -91,6 +89,18 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
           </div>
         </HorizontalScroll>
       </Group>
+
+			<Group style={{ paddingBottom: 8 }}>
+					<Header level="1">
+							Полезные ссылки
+					</Header>
+					<List>
+						<Cell onClick={go} data-to="popular" asideContent={<Icon24BrowserForward />} multiline description="В данном разделе мы собрали самые популярные фильмы среди твоих друзей!">Популярное среди друзей</Cell>
+						<Cell href="https://vk.com/findfilmgroup" asideContent={<Icon24BrowserForward />} multiline description="Узнавай о новинках кино и интересных фактах у нас в группе!">Наш паблик</Cell>
+					</List>
+			</Group>
+
+
 			{/*<Group style={{ paddingBottom: 8 }}>
 					<Header level="1" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
 							В центре внимания

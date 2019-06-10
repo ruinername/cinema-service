@@ -13,7 +13,10 @@ class Settings extends React.Component {
   constructor(props) {
 		super(props);
     this.state = {
-      loaded: false
+      loaded: false,
+      switchState: {
+        disabled: false
+      }
     }
     this._isMounted = false;
     this.subscribe = this.subscribe.bind(this);
@@ -45,13 +48,13 @@ class Settings extends React.Component {
           if(e.detail.data.result){
             connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
             fetch(`https://cinema.voloshinskii.ru/user/subscribe?token=${this.props.token}`)
-            this._isMounted && this.setState({notifications: true});
+            this._isMounted && this.setState({notifications: true, switchState: { disabled: false } });
           }
             break;
 
         case 'VKWebAppDenyNotificationsResult':
           fetch(`https://cinema.voloshinskii.ru/user/unsubscribe?token=${this.props.token}`)
-          this._isMounted && this.setState({notifications: false});
+          this._isMounted && this.setState({notifications: false, switchState: { disabled: false } });
           break;
       }
     });
@@ -62,6 +65,7 @@ class Settings extends React.Component {
   }
 
   subscribe(event){
+    this.setState({ switchState: { disabled: true } });
     connect.send("VKWebAppTapticImpactOccurred", {"style": "heavy"});
     if(!this.state.notifications){
       connect.send("VKWebAppAllowNotifications", {});
@@ -84,7 +88,7 @@ class Settings extends React.Component {
         <Group title="Настройки профиля">
         <List>
         {this.state.notifications !== null &&
-          <Cell multiline={true} description={this.state.notifications ? "Молодец, так держать! Теперь ты будешь в курсе всех интересующих тебя новинок 😎" : "Включи, чтобы мы могли отправлять тебе уведомления о вышедших фильмах из твоего списка"} asideContent={<Switch checked={this.state.notifications} defaultChecked={this.state.notifications} onClick={this.subscribe}/>}>
+          <Cell multiline={true} description={this.state.notifications ? "Молодец, так держать! Теперь ты будешь в курсе всех интересующих тебя новинок 😎" : "Включи, чтобы мы могли отправлять тебе уведомления о вышедших фильмах из твоего списка"} asideContent={<Switch { ...this.state.switchState } checked={this.state.notifications} defaultChecked={this.state.notifications} onClick={this.subscribe}/>}>
             Уведомления
           </Cell>
         }

@@ -133,7 +133,7 @@ export default class Film extends React.Component{
                     </span>
                   </InfoRow>
                 }
-                {this.props.currentFilm && this.props.currentFilm.date && new Date(this.props.currentFilm.date) > new Date() &&
+                {this.props.currentFilm && this.props.currentFilm.date &&
                   <InfoRow style={{display: 'inline-block'}} title='Премьера'>
                     <span style={{color: 'grey', fontWeight: 'bold', fontSize: 20}}>
                       {new Date(this.props.currentFilm.date).toLocaleString('ru', {month: 'long', day: 'numeric'})}
@@ -185,7 +185,7 @@ export default class Film extends React.Component{
             {this.props.currentFilm && (this.props.currentFilm.tmdbFullData.revenue > 0)  && <Div><InfoRow title='Сборы'>{this.props.currentFilm.tmdbFullData.revenue.toLocaleString('ru')}$</InfoRow></Div>}
           </Group>
 
-          {this.props.currentFilm && this.props.currentFilm.video && <Group title='Трейлер' style={{marginTop: '30px'}}>
+          {this.props.currentFilm && this.props.currentFilm.video && <Group title='Трейлер'>
             <iframe width="100%" height="204" style={{margin:'auto'}} src={`https://www.youtube.com/embed/${this.props.currentFilm.video}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
           </Group>
           }
@@ -208,7 +208,7 @@ export default class Film extends React.Component{
 
           {this.props.currentFilm && this.props.currentFilm.feedbacks.length > 0 &&
             <div>
-            <Group style={{marginTop: "40px"}}>
+            <Group>
                <Header level="2">
                  Отзывы
                </Header>

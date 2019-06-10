@@ -24,8 +24,13 @@ class Popular extends React.Component {
 
     connect.subscribe((e) => {
       switch (e.detail.type) {
+        case 'VKWebAppAccessTokenFailed':
+            this.setState({error: true});
+          break;
+
         case 'VKWebAppAccessTokenReceived':
           if(e.detail.data.scope.search("friends") === -1){
+            this.setState({error: true});
             break;
           }
           this.setState({ tokenWithScope: e.detail.data, error: false });
@@ -50,7 +55,6 @@ class Popular extends React.Component {
     });
 
     if (!this.props.token || this.props.token.scope.search("friends") === -1){
-      this.setState({error: true})
       connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": "friends"});
     }
     else{
