@@ -45,7 +45,8 @@ const nameStyle = {
 	overflow: 'hidden',
 	display: '-webkit-box',
 	WebkitLineClamp: 2,
-	WebkitBoxOrient: 'vertical'
+	WebkitBoxOrient: 'vertical',
+	color: 'black'
 };
 
 const genre = {
