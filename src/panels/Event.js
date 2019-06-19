@@ -7,12 +7,20 @@ import Icon24Back from '@vkontakte/icons/dist/24/back';
 import CenteredDiv from '../components/CenteredDiv';
 import { Card, H2, H4 } from '@voloshinskii/kekui';
 import Icon24Users from '@vkontakte/icons/dist/24/users';
-import first from '../img/first.png';
-import second from '../img/second.png';
+import images from '../img/images';
 
 var imageToBlob = require( 'image-to-blob' );
 
 const osname = platform();
+
+function dataURLtoFile(dataurl, filename) {
+var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+}
 
 class Event extends React.Component {
   constructor(props) {
@@ -43,21 +51,17 @@ class Event extends React.Component {
          fetch(`https://cinema.voloshinskii.ru/event/setSide?token=${data.access_token}&side=${side}`);
          this.setState({side: side});
 
-        var file = side ? first : second;
+        var dataURL = side ? images.first : images.second;
 
-        imageToBlob(file, async (err, blob) => {
-            var formData = new FormData();
-            formData.append('file', blob);
-            var uri = await connect.send("VKWebAppCallAPIMethod", {"method": "stories.getPhotoUploadServer", "params": { "link_url": "https://vk.com/app6977050#event", "link_text": "vote", "add_to_news": 1, "v": 5.95, "access_token":data.access_token}});
-            fetch(uri.data.response.upload_url, {
-              mode: 'no-cors',
-              headers: {
-                 'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-                 'Content-Type': 'multipart/form-data'
-              },
-              method: 'POST',
-              body: formData
-          });
+        var file = dataURLtoFile(dataURL, 'image.png');
+        console.log(file);
+
+        var formData = new FormData();
+        formData.append('file', file);
+        var uri = await connect.send("VKWebAppCallAPIMethod", {"method": "stories.getPhotoUploadServer", "params": { "link_url": "https://vk.com/app6977050#event", "link_text": "go_to", "add_to_news": 1, "v": 5.95, "access_token":data.access_token}});
+        fetch(uri.data.response.upload_url, {
+            method: 'POST',
+            body: formData
         });
      }
   }
