@@ -13,6 +13,26 @@ import second from '../img/second.png';
 
 const osname = platform();
 
+function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
+}
+
 class Event extends React.Component {
   constructor(props) {
 	super(props);
@@ -44,12 +64,28 @@ class Event extends React.Component {
 
         var formData = new FormData();
         var file = side ? first : second;
-        formData.append('file', file);
-        var uri = await connect.send("VKWebAppCallAPIMethod", {"method": "stories.getPhotoUploadServer", "params": { "link_url": "https://vk.com/app6977050#event", "link_text": "vote", "add_to_news": 1, "v": 5.95, "access_token":data.access_token}});
-        fetch(uri.data.response.upload_url, {
-          method: 'POST',
-          body: formData
-      });
+        let img = new Image();
+
+        img.setAttribute('crossOrigin', 'anonymous');
+
+        img.onload = async function () {
+            var canvas = document.createElement("canvas");
+            canvas.width =this.width;
+            canvas.height =this.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(this, 0, 0);
+            var dataURL = canvas.toDataURL("image/png");
+            var blob = dataURItoBlob(dataURL);
+            formData.append('file', blob);
+            var uri = await connect.send("VKWebAppCallAPIMethod", {"method": "stories.getPhotoUploadServer", "params": { "link_url": "https://vk.com/app6977050#event", "link_text": "vote", "add_to_news": 1, "v": 5.95, "access_token":data.access_token}});
+            fetch(uri.data.response.upload_url, {
+              method: 'POST',
+              body: formData
+          });
+
+         };
+
+         img.src = file;
      }
   }
 
