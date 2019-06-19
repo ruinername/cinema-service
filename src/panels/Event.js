@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Panel, PanelHeader, HeaderButton, platform, IOS, Search, List, Cell, Spinner} from '@vkontakte/vkui';
 import connect from '@vkontakte/vkui-connect-promise';
-
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import CenteredDiv from '../components/CenteredDiv';
@@ -11,27 +10,9 @@ import Icon24Users from '@vkontakte/icons/dist/24/users';
 import first from '../img/first.png';
 import second from '../img/second.png';
 
+var imageToBlob = require( 'image-to-blob' );
+
 const osname = platform();
-
-function dataURItoBlob(dataURI) {
-    // convert base64/URLEncoded data component to raw binary data held in a string
-    var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
-        byteString = atob(dataURI.split(',')[1]);
-    else
-        byteString = unescape(dataURI.split(',')[1]);
-
-    // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-    // write the bytes of the string to a typed array
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ia], {type:mimeString});
-}
 
 class Event extends React.Component {
   constructor(props) {
@@ -62,30 +43,22 @@ class Event extends React.Component {
          fetch(`https://cinema.voloshinskii.ru/event/setSide?token=${data.access_token}&side=${side}`);
          this.setState({side: side});
 
-        var formData = new FormData();
         var file = side ? first : second;
-        let img = new Image();
 
-        img.setAttribute('crossOrigin', 'anonymous');
-
-        img.onload = async function () {
-            var canvas = document.createElement("canvas");
-            canvas.width =this.width;
-            canvas.height =this.height;
-            var ctx = canvas.getContext("2d");
-            ctx.drawImage(this, 0, 0);
-            var dataURL = canvas.toDataURL("image/png");
-            var blob = dataURItoBlob(dataURL);
+        imageToBlob(file, async (err, blob) => {
+            var formData = new FormData();
             formData.append('file', blob);
             var uri = await connect.send("VKWebAppCallAPIMethod", {"method": "stories.getPhotoUploadServer", "params": { "link_url": "https://vk.com/app6977050#event", "link_text": "vote", "add_to_news": 1, "v": 5.95, "access_token":data.access_token}});
             fetch(uri.data.response.upload_url, {
+              mode: 'no-cors',
+              headers: {
+                 'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+                 'Content-Type': 'multipart/form-data'
+              },
               method: 'POST',
               body: formData
           });
-
-         };
-
-         img.src = file;
+        });
      }
   }
 

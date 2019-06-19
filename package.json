@@ -29,6 +29,7 @@
     "babel-eslint": "^9.0.0",
     "core-js": "^2.6.5",
     "history": "^4.9.0",
+    "image-to-blob": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
