@@ -65,6 +65,7 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 						События
 				</Header>
 				<List>
+					<Cell href="https://vk.com/findfilmgroup?w=wall-182657745_35" asideContent={<Icon24BrowserForward />} multiline description="Прямо сейчас мы разыгрываем сертификаты в кино. Скорей участвуй!">Розыгрыш билетов</Cell>
 					<Cell onClick={go} data-to="event" asideContent={<Icon24BrowserForward />} multiline description="Реши, кто из них больше достоин Питера Паркера!">🕷 Мэри Джейн vs Гвен Стейси</Cell>
 				</List>
 		</Group>
