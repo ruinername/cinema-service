@@ -208,15 +208,15 @@ export default class Film extends React.Component{
 
 
           {this.props.currentFilm && this.props.currentFilm.feedbacks.length > 0 &&
-            <div>
-            <Group>
-               <Header level="2">
-                 Отзывы
-               </Header>
-             </Group>
-            {this.props.currentFilm.feedbacks.map(item =>{
-              return <FeedBackCard token={this.props.authToken} key={item._id}{...item}/>
-            })}
+            <div style={{marginBottom: '80px'}}>
+                <Group>
+                   <Header level="2">
+                     Отзывы
+                   </Header>
+                 </Group>
+                {this.props.currentFilm.feedbacks.map(item =>{
+                  return <FeedBackCard token={this.props.authToken} key={item._id}{...item}/>
+                })}
             </div>
           }
 
