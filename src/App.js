@@ -205,26 +205,27 @@ class App extends React.Component {
 			{this.state.hasError && <CenteredDiv><span style={{paddingBottom: '20px'}}>Нам неприятно это осознавать, но что-то вызвало непредвиденную ошибку в работе приложения :(</span><Button onClick={() => window.location.replace()} size="xl" style={{width:"90%", margin: "auto"}} level="secondary">Перезагрузить сервис</Button></CenteredDiv>}
 			{!this.state.hasError &&
 			 <Epic activeStory={this.state.activePanel} tabbar={
-	        <Tabbar>
-	          <TabbarItem
-	            onClick={this.onStoryChange}
-	            selected={this.state.historyv[0] === 'home'}
-	            data-story="home"
-	            text="Главная"
-	          ><Icon24Home/></TabbarItem>
-						<TabbarItem
-	            onClick={this.onStoryChange}
-	            selected={this.state.historyv[0] === 'featured'}
-	            data-story="featured"
-	            text="Список"
-	          ><Icon28Favorite/></TabbarItem>
-			<TabbarItem
-				onClick={this.onStoryChange}
-			 	selected={this.state.historyv[0] === 'settings'}
-				data-story="settings"
-				text="Настройки"
-			><Icon28Settings/></TabbarItem>
-	        </Tabbar>
+		        <Tabbar>
+
+		          <TabbarItem
+		            onClick={this.onStoryChange}
+		            selected={this.state.historyv[0] === 'home'}
+		            data-story="home"
+		            text="Главная"
+		          ><Icon24Home/></TabbarItem>
+							<TabbarItem
+		            onClick={this.onStoryChange}
+		            selected={this.state.historyv[0] === 'featured'}
+		            data-story="featured"
+		            text="Список"
+		          ><Icon28Favorite/></TabbarItem>
+				<TabbarItem
+					onClick={this.onStoryChange}
+				 	selected={this.state.historyv[0] === 'settings'}
+					data-story="settings"
+					text="Настройки"
+				><Icon28Settings/></TabbarItem>
+		        </Tabbar>
 	      }>
 
 					<View id="featured" activePanel="featured">

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Panel, PanelHeader, HeaderButton, platform, IOS, Group, Button, Header, Div, InfoRow, List, Cell, Spinner, Counter, Link} from '@vkontakte/vkui';
+import {Panel, PanelHeader, HeaderButton, platform, IOS, Group, Button, Header, Div, InfoRow, List, Cell, Spinner, Counter, Link, FixedLayout} from '@vkontakte/vkui';
 import qr from '@vkontakte/vk-qr';
 import settings from '../constants.js';
 import connect from '@vkontakte/vkui-connect-promise';
@@ -99,6 +99,7 @@ export default class Film extends React.Component{
   }
 
   render(){
+
     return(
       <Panel id={this.props.id}>
     		<PanelHeader
@@ -237,6 +238,15 @@ export default class Film extends React.Component{
               <FeedBackForm filmid={this.props.currentFilm._id} close={this.feedBackModal} token={this.props.authToken}/>
             </DivBottom>
           }
+
+          { this.props.currentFilm && this.props.currentFilm.sellId &&
+              <FixedLayout style={{borderTop: '0.5px solid grey', background: 'white'}} vertical="bottom">
+                  <div style={{background: 'white', padding: '10px 0'}}>
+                    <Button size="xl" style={{width:"90%", margin: 'auto', color: 'white'}} component="a" href={`https://kinohod.ru/widget/movies/${this.props.currentFilm.sellId}?from=list&apikey=3f6cf802-6ca5-3b6f-850d-af2cfe21d849`} class="kh_boxoffice" level="primary">Купить билеты 🍿</Button>
+                  </div>
+              </FixedLayout>
+          }
+
       </Panel>
   )}
 }
