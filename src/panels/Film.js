@@ -109,7 +109,7 @@ export default class Film extends React.Component{
     		>
     			Фильм
     		</PanelHeader>
-        <div style={{paddingBottom: '120px'}}>
+        <div style={{marginBottom: '70px'}}>
             <div style={{background: 'white'}}>
                 {!this.props.currentFilm && <div style={{zIndex: 10000, position: 'absolute', background: 'white', top: 0, width: '100%', height: '100%'}}><Spinner size="large" style={{marginTop: 30}}/></div>}
                 {this.props.currentFilm &&
