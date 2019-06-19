@@ -48,9 +48,14 @@ class Settings extends React.Component {
           if(e.detail.data.result){
             connect.send("VKWebAppTapticNotificationOccurred", {"type": "success"});
             fetch(`https://cinema.voloshinskii.ru/user/subscribe?token=${this.props.token}`)
-            this._isMounted && this.setState({notifications: true, switchState: { disabled: false } });
+            this._isMounted && this.setState({notifications: true});
           }
-            break;
+          this._isMounted && this.setState({switchState: { disabled: false } });
+        break;
+
+        case 'VKWebAppAllowNotificationsFailed':
+          this._isMounted && this.setState({switchState: { disabled: false } });
+        break;
 
         case 'VKWebAppDenyNotificationsResult':
           fetch(`https://cinema.voloshinskii.ru/user/unsubscribe?token=${this.props.token}`)

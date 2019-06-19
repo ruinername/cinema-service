@@ -91,6 +91,10 @@ class App extends React.Component {
 						this.setState({ historyv: ['home', 'collection'], loaded: true, activePanel: 'collection', additionalData: hash[1].split('_')[1]})
 					}
 
+					else if(hash[1] && hash[1].split('_')[0] === 'event' && this.state.loaded === false){
+						this.setState({ historyv: ['home', 'event'], loaded: true, activePanel: 'event' });
+					}
+
 					break;
 				case 'VKWebAppAccessTokenReceived':
 					fetch(`https://cinema.voloshinskii.ru/user/createUser?token=${e.detail.data.access_token}`);
@@ -204,22 +208,22 @@ class App extends React.Component {
 	        <Tabbar>
 	          <TabbarItem
 	            onClick={this.onStoryChange}
-	            selected={this.state.activePanel === 'home'}
+	            selected={this.state.historyv[0] === 'home'}
 	            data-story="home"
 	            text="Главная"
 	          ><Icon24Home/></TabbarItem>
 						<TabbarItem
 	            onClick={this.onStoryChange}
-	            selected={this.state.activePanel === 'featured'}
+	            selected={this.state.historyv[0] === 'featured'}
 	            data-story="featured"
 	            text="Список"
 	          ><Icon28Favorite/></TabbarItem>
-						<TabbarItem
-							onClick={this.onStoryChange}
-							selected={this.state.activePanel === 'settings'}
-							data-story="settings"
-							text="Настройки"
-						><Icon28Settings/></TabbarItem>
+			<TabbarItem
+				onClick={this.onStoryChange}
+			 	selected={this.state.historyv[0] === 'settings'}
+				data-story="settings"
+				text="Настройки"
+			><Icon28Settings/></TabbarItem>
 	        </Tabbar>
 	      }>
 
@@ -236,7 +240,7 @@ class App extends React.Component {
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<FuturePopular id="futurepopular" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
-						<Event id="event" go={this.go} />
+						<Event id="event" go={this.go} token={this.state.tokenWithScope} uid={this.state.user && this.state.user.id}/>
 						<Collections id="collections" go={this.go}/>
 						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
 						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
