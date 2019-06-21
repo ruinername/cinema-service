@@ -157,7 +157,7 @@ export default class Film extends React.Component{
                   {this.props.currentFilm && !this.props.currentFilm.going && <Button align='left' size="xl" style={{width: '100%', display: "inline-block", marginRight:'1%'}}  disabled={!this.state.watchLoaded} level="primary" onClick={() => { this.watch(this.props.authToken, this.props.currentFilm._id) }}>{this.state.watchLoaded ? "Иду на фильм" : <Spinner size="regular"/>}</Button>}
                   {this.props.currentFilm && this.props.currentFilm.going && <Button  align='left' size="xl" style={{width: '100%', display: "inline-block",  marginRight:'1%'}} disabled={!this.state.watchLoaded} level="primary" onClick={() => {  this.watch(this.props.authToken, this.props.currentFilm._id) }}>{this.state.watchLoaded ? "Удалить из списка" : <Spinner size="regular"/>}</Button>}
                   {this.props.currentFilm && <Button size="xl" onClick={this.QRModal} style={{width:"16%", display: "inline-block"}} level="secondary"><Icon24Qr/></Button>}
-                  {this.props.currentFilm && this.props.authToken && new Date(this.props.currentFilm.date) < new Date() && <Button size="xl" onClick={this.feedBackModal} style={{width:"16%", display: "inline-block", marginLeft:'1%'}} level="secondary"><Icon24LogoLivejournal/></Button>}
+                  {this.props.currentFilm && this.props.authToken && (new Date(this.props.currentFilm.date) < new Date() || this.props.user.vip) && <Button size="xl" onClick={this.feedBackModal} style={{width:"16%", display: "inline-block", marginLeft:'1%'}} level="secondary"><Icon24LogoLivejournal/></Button>}
                 </div>
 
                 <Group>
@@ -236,7 +236,7 @@ export default class Film extends React.Component{
 
               { this.props.currentFilm && this.state.feedBack &&
                 <DivBottom title='Написать отзыв' onClose={this.feedBackModal}>
-                  <FeedBackForm filmid={this.props.currentFilm._id} close={this.feedBackModal} token={this.props.authToken}/>
+                  <FeedBackForm pre={ new Date(this.props.currentFilm.date) < new Date() ? false : true } filmid={this.props.currentFilm._id} close={this.feedBackModal} token={this.props.authToken} user={this.props.user}/>
                 </DivBottom>
               }
 

@@ -9,7 +9,8 @@ export class FeedBackForm extends React.Component {
     this.state = {
       feedback: '',
       rate: 0,
-      anon: false
+      anon: false,
+      limit: (this.props.user && this.props.user.vip) ? 700 : 420
     }
     this.submit = this.submit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -19,13 +20,27 @@ export class FeedBackForm extends React.Component {
 
   onChange(e) {
     const { name, value } = e.currentTarget;
-    if(value.length <= 420) this.setState({ [name]: value, error: false});
+    if(value.length <= this.state.limit) this.setState({ [name]: value, error: false});
   }
 
   anonF(){
     connect.send("VKWebAppTapticImpactOccurred", {"style": "heavy"});
     var val = !this.state.anon;
     this.setState({anon: val, error: false});
+  }
+
+  async componentDidMount(){
+      if(this.props.user && this.props.user.vip){
+          var response = await fetch(`https://cinema.voloshinskii.ru/feedback/byToken?filmId=${this.props.filmid}&token=${this.props.token}`, {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            }
+          });
+          var data = await response.json();
+          if(data.feedback) this.setState({rate: data.feedback.rate, feedback: data.feedback.text});
+      }
   }
 
   async submit(){
@@ -78,8 +93,9 @@ export class FeedBackForm extends React.Component {
                   onChange={this.onChange}
                   placeholder="Напиши всё, что думаешь об этом фильме. В рамках приличия, конечно же"
               />
-              <div style={{textAlign: 'right', marginRight: '12px', color: 'grey', marginTop: '5px'}}>{420 - this.state.feedback.length}</div>
+              <div style={{textAlign: 'right', marginRight: '12px', color: 'grey', marginTop: '5px'}}>{this.state.limit - this.state.feedback.length}</div>
             </div>
+            {!this.props.pre &&
             <Slider
                 min={0}
                 max={10}
@@ -87,6 +103,7 @@ export class FeedBackForm extends React.Component {
                 top={`Ваша оценка: ${rateList[this.state.rate]}`}
                 step={1}
               />
+            }
             <Checkbox
               name="anon"
               onClick={this.anonF}

@@ -22,6 +22,17 @@ export default class FeedBackCard extends React.Component{
     }
   }
 
+  renderVIP(){
+      return(
+          <span>
+              <span style={{background: '#fece14', padding: '3px 4px'}}>
+                VIP
+              </span>
+              <a href="https://vk.com" target="_blank"> (?)</a>
+          </span>
+      )
+  }
+
   renderPreparedUser(rateList){
     return(
       <div>
@@ -39,7 +50,7 @@ export default class FeedBackCard extends React.Component{
       {this.props.token &&
         <Link style={{color: 'black'}} href={this.state.user.id != 0 && `https://vk.com/id${this.state.user.id}`}>
           <Cell description={rateList[this.props.rate]} before={<Avatar src={this.state.user.photo_50}/>}>
-            {this.state.user.first_name} {this.state.user.last_name}
+            {this.state.user.first_name} {this.state.user.last_name} {this.props.user.vip && this.renderVIP()}
           </Cell>
         </Link>
       }

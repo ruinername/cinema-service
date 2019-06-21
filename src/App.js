@@ -40,6 +40,7 @@ class App extends React.Component {
 			search: null,
 			filmhistory: [],
 			additionalData: null,
+			user: null
 		};
 	}
 
@@ -71,6 +72,7 @@ class App extends React.Component {
 						.then(json => {
 							if(json.result){
 								connect.send("VKWebAppGetAuthToken", {"app_id": 6977050, "scope": ""});
+								this.setState({user: json.user});
 							}
 						});
 
@@ -244,7 +246,7 @@ class App extends React.Component {
 						<Event id="event" go={this.go} token={this.state.tokenWithScope} uid={this.state.user && this.state.user.id}/>
 						<Collections id="collections" go={this.go}/>
 						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
-						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} />
+						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} user={this.state.user} />
 						<Genre id="genre" search={this.state.search} go={this.go} openFilm={this.openFilm} />
 					</View>
 				</Epic>}
