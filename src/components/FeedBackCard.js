@@ -28,7 +28,7 @@ export default class FeedBackCard extends React.Component{
               <span style={{background: '#fece14', padding: '3px 4px'}}>
                 VIP
               </span>
-              <a href="https://vk.com" target="_blank"> (?)</a>
+              <a href="https://vk.com/@findfilmgroup-premium-funkcii"> (?)</a>
           </span>
       )
   }
