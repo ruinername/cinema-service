@@ -64,7 +64,7 @@ class App extends React.Component {
 			switch (e.detail.type) {
 
 				case 'VKWebAppGetUserInfoResult':
-					this.setState({ user: e.detail.data});
+					this.setState({ userVk: e.detail.data});
 					var hash = window.location.href.split('#');
 
 					fetch(`https://cinema.voloshinskii.ru/user/active?id=${e.detail.data.id}`)
@@ -78,7 +78,7 @@ class App extends React.Component {
 
 					if(hash[1] && hash[1].split('_')[0] === 'film' && this.state.loaded === false){
 
-						fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${hash[1].split('_')[1]}?id=${this.state.user.id}`)
+						fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${hash[1].split('_')[1]}?id=${this.state.userVk.id}`)
 							.then(res => res.json())
 							.then(json => this.setState({ currentFilm: json }));
 
@@ -148,7 +148,7 @@ class App extends React.Component {
     }
 		else if (activePanel === 'film'){
 			const filmhistory = [...this.state.filmhistory];
-			fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${filmhistory.slice(-1)[0]}?id=${this.state.user.id}`)
+			fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${filmhistory.slice(-1)[0]}?id=${this.state.userVk.id}`)
 				.then(res => res.json())
 				.then(json => this.setState({ historyv, activePanel, currentFilm: json }));
 		}
@@ -196,7 +196,7 @@ class App extends React.Component {
 
 		this.setState({ filmhistory, historyv, activePanel: 'film', filmid: e.currentTarget.dataset.fid});
 
-		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}?id=${this.state.user.id}`)
+		fetch(`https://cinema.voloshinskii.ru/film/gettmdb/${e.currentTarget.dataset.fid}?id=${this.state.userVk.id}`)
 			.then(res => res.json())
 			.then(json => this.setState({ currentFilm: json }));
 	};
@@ -243,7 +243,7 @@ class App extends React.Component {
 						<Future id="future" go={this.go} openFilm={this.openFilm} />
 						<FuturePopular id="futurepopular" go={this.go} openFilm={this.openFilm} />
 						<Active id="active" go={this.go} openFilm={this.openFilm} />
-						<Event id="event" go={this.go} token={this.state.tokenWithScope} uid={this.state.user && this.state.user.id}/>
+						<Event id="event" go={this.go} token={this.state.tokenWithScope} uid={this.state.user && this.state.userVk.id}/>
 						<Collections id="collections" go={this.go}/>
 						<Collection id="collection" cid={this.state.additionalData} go={this.go} openFilm={this.openFilm} />
 						<Film filmid={this.state.filmid} authToken={this.state.authToken} currentFilm={this.state.currentFilm} id="film" go={this.go} user={this.state.user} />
