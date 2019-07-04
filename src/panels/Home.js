@@ -65,10 +65,16 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 						События
 				</Header>
 				<List>
-					<Cell href="https://vk.com/findfilmgroup?w=wall-182657745_35" asideContent={<Icon24BrowserForward />} multiline description="Прямо сейчас мы разыгрываем сертификаты в кино. Скорей участвуй!">Розыгрыш билетов</Cell>
 					<Cell onClick={go} data-to="event" asideContent={<Icon24BrowserForward />} multiline description="Реши, кто из них больше достоин Питера Паркера!">🕷 Мэри Джейн vs Гвен Стейси</Cell>
 				</List>
 		</Group>
+
+		<a href="https://vk.com/findfilmgroup?w=wall-182657745_124">
+			<div style={{color: 'white', margin: '5px 3%', padding: '9px 15px', backgroundImage: 'linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114))', borderRadius: 15}}>
+				<h2>Премиум бесплатно!</h2>
+				<p>В честь 200 тысяч пользователей в нашем сервисе мы решили давать премиум за подписку!</p>
+			</div>
+		</a>
 
 		<Group style={{ paddingBottom: 8 }}>
 				<Header level="1" aside={<Link data-to='active' onClick={go}>Показать все</Link>}>
