@@ -60,14 +60,14 @@ const Home = ({collections, id, openFilm, activePreview, go, futurePreview, seti
 	<Panel id={id}>
 		<PanelHeader>Главная</PanelHeader>
 
-		<Group style={{ paddingBottom: 8 }}>
+		{/* <Group style={{ paddingBottom: 8 }}>
 				<Header level="1">
 						События
 				</Header>
 				<List>
 					<Cell onClick={go} data-to="event" asideContent={<Icon24BrowserForward />} multiline description="Реши, кто из них больше достоин Питера Паркера!">🕷 Мэри Джейн vs Гвен Стейси</Cell>
 				</List>
-		</Group>
+		</Group> */}
 
 		<a href="https://vk.com/findfilmgroup?w=wall-182657745_124">
 			<div style={{color: 'white', margin: '5px 3%', padding: '9px 15px', backgroundImage: 'linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114))', borderRadius: 15}}>
